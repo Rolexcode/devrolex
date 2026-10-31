@@ -18,3 +18,24 @@
 @media(max-width:900px){.site-shell{padding:0 5%}.hero-main{grid-template-columns:1fr .8fr;gap:3%}.hero-art{min-height:360px}.art-disc{width:185px;height:185px}.art-disc:before{width:140px;height:140px}.disc-cut{height:200px}.disc-core{width:60px;height:60px;top:62px;left:62px}.orbit-one{width:260px;height:260px}.orbit-two{width:330px;height:330px}.project-grid{gap:4%}.project-visual{min-height:315px}.about-section{grid-template-columns:.55fr 1.45fr;gap:5%}}
 @media(max-width:650px){.site-shell{padding:0 22px}.topbar{height:72px}.menu-toggle{display:block;padding:8px 0 8px 8px}.nav-links{display:none;position:absolute;z-index:10;top:71px;left:0;right:0;padding:22px;background:var(--paper);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.nav-open{display:flex}.nav-links a{padding:14px 0;border-bottom:1px solid var(--line)}.nav-links .nav-contact{justify-content:center;margin-top:12px;border:1px solid #bfc4b9;padding:13px}.hero{padding-top:45px}.hero-kicker{font-size:7px;letter-spacing:.06em}.kicker-line{width:18px}.hero-location{font-size:7px}.hero-main{display:flex;flex-direction:column;align-items:stretch;padding:55px 0 35px;gap:44px}.hero h1{font-size:clamp(62px,15vw,92px)}.hero-bottom{margin-top:28px}.hero-description{font-size:12px}.hero-art{min-height:330px}.hero-meta{font-size:7px;gap:10px}.meta-center{display:none}.intro-strip{display:block;padding:30px 0}.intro-strip p{font-size:19px}.strip-index{display:block;margin-top:20px}.section-pad{padding:76px 0}.section-heading{display:block;margin-bottom:35px}.section-heading h2{font-size:55px}.section-aside{margin-top:20px;max-width:340px}.project{padding-top:18px}.project-grid{display:flex;flex-direction:column;align-items:stretch;gap:20px}.project-visual{min-height:290px}.visual-window,.campus-card,.zen-panel{width:82%}.project-info{padding:7px 0 14px}.project-info h3{font-size:39px}.project-description{margin-top:15px}.project-actions{gap:15px}.preview-panel{padding:7px}.preview-panel iframe{height:440px}.preview-toolbar{font-size:7px}.work-footnote{font-size:7px;gap:12px}.capability-grid{grid-template-columns:1fr;gap:18px}.capability{min-height:175px}.capability h3{margin-top:30px}.services-note{grid-template-columns:1fr;gap:13px}.about-section{display:block}.about-label{margin-bottom:38px}.about-content h2{font-size:48px}.about-columns{grid-template-columns:1fr;gap:15px}.contact-section{margin:0 -22px;padding:65px 22px 70px}.contact-section h2{font-size:clamp(65px,16vw,95px)}.contact-bottom{display:flex;flex-direction:column;align-items:stretch}.email-button{justify-content:center;font-size:7px;padding:15px 10px}.footer{min-height:120px;flex-wrap:wrap;padding:22px 0}.footer-note{order:3;width:100%}.footer-socials{margin-left:auto}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
+/* Refined hero and real project surfaces */
+.hero-main{grid-template-columns:1fr;padding:82px 0 72px}
+.hero-copy{max-width:100%}
+.hero h1{max-width:1120px}
+.hero-bottom{max-width:610px}
+.hero-kicker{gap:13px}
+.project-live-visual{position:relative;display:block;padding:0;min-height:365px;background:#e7e9e1;overflow:hidden}
+.project-live-visual iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.visual-open-link{position:absolute;right:13px;bottom:13px;display:inline-flex;align-items:center;gap:7px;padding:10px 12px;background:rgba(244,242,236,.94);color:#24352c;font:8px var(--mono);letter-spacing:.08em;border:1px solid #d4d9ce}
+.visual-open-link:hover{background:var(--green)}
+.project-native-preview{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(24px,5vw,54px);background:#1d2d25;color:var(--paper)}
+.native-preview-label{font:9px var(--mono);letter-spacing:.12em;color:#b6c8a8}
+.project-native-preview h4{margin:28px 0 15px;font-size:clamp(30px,4vw,50px);font-weight:500;line-height:.98;letter-spacing:-.06em}
+.project-native-preview h4 em{font-family:var(--serif);font-weight:500;color:var(--green)}
+.project-native-preview p{max-width:300px;margin:0;color:#c0c9bd;font-size:12px;line-height:1.7}
+.project-native-preview a{display:inline-flex;align-items:center;gap:8px;margin-top:25px;padding-bottom:7px;border-bottom:1px solid #879a7d;color:var(--green);font:9px var(--mono);letter-spacing:.08em}
+@media(max-width:650px){
+  .hero-main{padding:55px 0 48px}
+  .project-live-visual{min-height:290px}
+}
