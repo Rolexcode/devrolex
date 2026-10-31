@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDown, ArrowUpRight, Check, Code2, Github, Globe2, Layers3, Linkedin, Mail, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowDownRight, ArrowUpRight, Check, Code2, Github, Globe2, Layers3, Linkedin, Mail, Menu, X } from "lucide-react";
 
 const projects = [
   { number:"01", name:"Ìròyìn", type:"AI-powered news experience", year:"2026", description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.", contribution:"Product thinking · Frontend · AI integration", stack:["Next.js","Tailwind CSS","Sahara AI","Groq"], url:"https://iroyin.vercel.app/", repo:"https://github.com/Rolexcode/iroyin", preview:"https://iroyin.vercel.app/", visual:"iroyin" },
