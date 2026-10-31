@@ -36,21 +36,19 @@ export default function Home() {
     </header>
 
     <section className="hero" id="top">
-      <div className="hero-kicker"><span className="status-dot"/><span>AVAILABLE FOR SELECT PROJECTS & OPPORTUNITIES</span></div>
       <div className="hero-main">
         <div className="hero-copy">
           <p className="eyebrow">FULL-STACK DEVELOPER & DIGITAL PRODUCT BUILDER</p>
           <h1>I turn ideas<br/>into <span className="serif-word">useful</span><br/>digital things<span className="accent-dot">.</span></h1>
-          <div className="hero-bottom"><p className="hero-description">I design and build websites, web applications and digital products — bringing thoughtful interfaces and reliable engineering together.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
+          <div className="hero-bottom"><p className="hero-description">I build websites and web applications, from the interface people use to the functionality behind it.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
         </div>
       </div>
-      <div className="hero-meta"><span>INDEPENDENT DEVELOPER</span><span className="meta-center">DESIGN-MINDED. ENGINEERING-LED.</span><span>SCROLL TO EXPLORE <ArrowDownRight size={13}/></span></div>
     </section>
 
-    <section className="intro-strip"><p>Good digital products don&apos;t happen by accident. They come from understanding the problem, caring about the details and building with intention.</p><span className="strip-index">A NOTE ON HOW I WORK&nbsp; ↘</span></section>
+    <section className="intro-strip"><p>I like building products where the details matter — from the first screen someone sees to the functionality working behind it.</p><span className="strip-index">A NOTE ON HOW I WORK&nbsp; ↘</span></section>
 
     <section className="work-section section-pad" id="work">
-      <div className="section-heading"><div><p className="eyebrow">A FEW THINGS I&apos;VE BEEN BUILDING</p><h2>Selected <span className="serif-word">work</span><span className="accent-dot">.</span></h2></div><p className="section-aside">A selection of products and experiments shaped by real problems, curiosity and a bias toward making.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">A FEW THINGS I&apos;VE BEEN BUILDING</p><h2>Selected <span className="serif-word">work</span><span className="accent-dot">.</span></h2></div><p className="section-aside">A closer look at the products I’ve built, the problems they address and the work behind them.</p></div>
       <div className="project-list">{projects.map(project=><article className="project" key={project.number}>
         <div className="project-topline"><span>{project.number} / SELECTED PROJECT</span><span>{project.year}</span></div>
         <div className="project-grid">
@@ -66,7 +64,6 @@ export default function Home() {
           </div>
         </div>
       </article>)}</div>
-      <div className="work-footnote"><span>MORE IN PROGRESS</span><span>I&apos;M ALWAYS BUILDING, TESTING AND LEARNING.</span></div>
     </section>
 
     <section className="services-section section-pad" id="services">
@@ -90,6 +87,6 @@ export default function Home() {
       <div className="contact-bottom"><p>Have a project, an opportunity or an interesting problem to solve? I&apos;d like to hear about it.</p><button className="email-button" type="button" onClick={copyEmail}>{copied?<><Check size={17}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={17}/></>}</button></div>
     </section>
 
-    <footer className="footer"><a className="wordmark footer-mark" href="#top"><span className="wordmark-symbol">r.</span><span>ROLEX<span className="wordmark-period">/</span>CODE</span></a><span className="footer-note">THOUGHTFULLY BUILT IN LAGOS, NIGERIA.</span><div className="footer-socials"><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a><a href="mailto:olaleyeolabodejeremiah@gmail.com" aria-label="Email"><Mail size={17}/></a></div><span className="copyright">© 2026</span></footer>
+    <footer className="footer"><a className="wordmark footer-mark" href="#top"><span className="wordmark-symbol">r.</span><span>ROLEX<span className="wordmark-period">/</span>CODE</span></a><span className="footer-note"></span><div className="footer-socials"><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a><a href="mailto:olaleyeolabodejeremiah@gmail.com" aria-label="Email"><Mail size={17}/></a></div><span className="copyright">© 2026</span></footer>
   </div></main>;
 }
