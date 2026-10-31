@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDown, ArrowDownRight, ArrowUpRight, Check, Code2, Github, Globe2, Layers3, Linkedin, Mail, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Check, Code2, Github, Globe2, Layers3, Linkedin, Mail, Menu, X } from "lucide-react";
 
 const projects = [
   { number:"01", name:"Ìròyìn", type:"AI-powered news experience", year:"2026", description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.", contribution:"Product thinking · Frontend · AI integration", stack:["Next.js","Tailwind CSS","Sahara AI","Groq"], url:"https://iroyin.vercel.app/", repo:"https://github.com/Rolexcode/iroyin", preview:"https://iroyin.vercel.app/", visual:"iroyin" },
@@ -19,7 +19,6 @@ function ArrowLink({href,children,external=false}:{href:string;children:React.Re
 }
 
 export default function Home() {
-  const [activePreview,setActivePreview] = useState<string|null>(null);
   const [menuOpen,setMenuOpen] = useState(false);
   const [copied,setCopied] = useState(false);
   async function copyEmail() {
@@ -37,19 +36,12 @@ export default function Home() {
     </header>
 
     <section className="hero" id="top">
-      <div className="hero-kicker"><span className="status-dot"/><span>AVAILABLE FOR SELECT PROJECTS & OPPORTUNITIES</span><span className="kicker-line"/><span className="hero-location">LAGOS, NG</span></div>
+      <div className="hero-kicker"><span className="status-dot"/><span>AVAILABLE FOR SELECT PROJECTS & OPPORTUNITIES</span></div>
       <div className="hero-main">
         <div className="hero-copy">
           <p className="eyebrow">FULL-STACK DEVELOPER & DIGITAL PRODUCT BUILDER</p>
           <h1>I turn ideas<br/>into <span className="serif-word">useful</span><br/>digital things<span className="accent-dot">.</span></h1>
           <div className="hero-bottom"><p className="hero-description">I design and build websites, web applications and digital products — bringing thoughtful interfaces and reliable engineering together.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
-        </div>
-        <div className="hero-art" aria-label="Abstract geometric illustration">
-          <div className="art-index">FIG. 001 — FORM / FUNCTION</div><div className="art-grid"/>
-          <div className="art-orbit orbit-one"/><div className="art-orbit orbit-two"/>
-          <div className="art-disc"><span className="disc-cut"/><span className="disc-core"/></div>
-          <div className="art-cross cross-one">+</div><div className="art-cross cross-two">+</div>
-          <div className="art-caption"><span>IDEAS, MADE</span><span>INTERACTIVE.</span></div><span className="art-coordinate">06° 27&apos; N / 03° 24&apos; E</span>
         </div>
       </div>
       <div className="hero-meta"><span>INDEPENDENT DEVELOPER</span><span className="meta-center">DESIGN-MINDED. ENGINEERING-LED.</span><span>SCROLL TO EXPLORE <ArrowDownRight size={13}/></span></div>
@@ -62,21 +54,17 @@ export default function Home() {
       <div className="project-list">{projects.map(project=><article className="project" key={project.number}>
         <div className="project-topline"><span>{project.number} / SELECTED PROJECT</span><span>{project.year}</span></div>
         <div className="project-grid">
-          <div className={"project-visual "+project.visual}>
-            {project.visual==="iroyin"&&<><div className="visual-window"><div className="window-bar"><i/><i/><i/><span>IROYIN / THE DAILY</span></div><div className="iroyin-layout"><div className="iroyin-masthead">Ìròyìn<span>.</span></div><div className="iroyin-rule"/><div className="iroyin-tag">THE WORLD, IN YOUR LANGUAGE</div><div className="iroyin-headline">Stories that<br/><em>sound like home.</em></div><div className="iroyin-languages"><b>EN</b><b>PID</b><b>YO</b></div><div className="iroyin-bottom">NEWS / CULTURE / PEOPLE</div></div></div><span className="visual-stamp">01 — LANGUAGE</span></>}
-            {project.visual==="campus"&&<><div className="campus-card"><div className="campus-nav"><span>campus<span>gig</span></span><small>FIND YOUR NEXT GIG ↗</small></div><div className="campus-content"><div className="campus-pill">OPPORTUNITY IS CLOSER THAN YOU THINK</div><div className="campus-title">Your next<br/><i>thing</i> starts here.</div><div className="campus-lines"><span/><span/><span/></div><div className="campus-cta">EXPLORE GIGS&nbsp; ↗</div></div><div className="campus-orb"/></div><span className="visual-stamp">02 — OPPORTUNITY</span></>}
-            {project.visual==="zenguard"&&<><div className="zen-panel"><div className="zen-top"><span>ZEN / GUARD</span><span className="zen-live">● SYSTEM ACTIVE</span></div><div className="zen-glyph">Z<span>.</span></div><div className="zen-lines"><span/><span/><span/></div><div className="zen-bottom"><span>AGENT INTERFACE</span><span>BASE NETWORK ↗</span></div></div><span className="visual-stamp">03 — AUTONOMY</span></>}
+          <div className={"project-visual project-live-visual "+project.visual}>
+            {project.preview ? <><iframe src={project.preview} title={project.name+" live website preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/><a className="visual-open-link" href={project.url} target="_blank" rel="noreferrer">OPEN LIVE PROJECT <ArrowUpRight size={13}/></a></> : <div className="project-native-preview"><span className="native-preview-label">NOT A WEBSITE</span><h4>Built to work<br/><em>inside Telegram.</em></h4><p>ZenGuard is an autonomous agent experience. Explore the live bot directly.</p><a href={project.url} target="_blank" rel="noreferrer">OPEN TELEGRAM BOT <ArrowUpRight size={14}/></a></div>}
           </div>
           <div className="project-info"><div className="project-title-row"><div><p className="project-type">{project.type}</p><h3>{project.name}</h3></div><span className="project-arrow"><ArrowUpRight size={22}/></span></div>
             <p className="project-description">{project.description}</p><p className="project-role">{project.contribution}</p>
             <div className="tag-list">{project.stack.map(tag=><span key={tag}>{tag}</span>)}</div>
             <div className="project-actions">
-              {project.preview&&<button className="text-button" type="button" onClick={()=>setActivePreview(activePreview===project.number?null:project.number)} aria-expanded={activePreview===project.number}>{activePreview===project.number?"Close preview":"Try live preview"} <ArrowUpRight size={14}/></button>}
-              <ArrowLink href={project.url} external>Visit project</ArrowLink>{project.repo&&<ArrowLink href={project.repo} external>Source code</ArrowLink>}
+              <ArrowLink href={project.url} external>{project.preview ? "Open live project" : "Open Telegram bot"}</ArrowLink>{project.repo&&<ArrowLink href={project.repo} external>Source code</ArrowLink>}
             </div>
           </div>
         </div>
-        {activePreview===project.number&&project.preview&&<div className="preview-panel"><div className="preview-toolbar"><span><span className="status-dot"/> LIVE SITE PREVIEW</span><a href={project.url} target="_blank" rel="noreferrer">Open in new tab <ArrowUpRight size={13}/></a></div><iframe src={project.preview} title={project.name+" live preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/><p className="preview-note">If the site does not load here, use “Open in new tab” to explore it directly.</p></div>}
       </article>)}</div>
       <div className="work-footnote"><span>MORE IN PROGRESS</span><span>I&apos;M ALWAYS BUILDING, TESTING AND LEARNING.</span></div>
     </section>
@@ -102,6 +90,6 @@ export default function Home() {
       <div className="contact-bottom"><p>Have a project, an opportunity or an interesting problem to solve? I&apos;d like to hear about it.</p><button className="email-button" type="button" onClick={copyEmail}>{copied?<><Check size={17}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={17}/></>}</button></div>
     </section>
 
-    <footer className="footer"><a className="wordmark footer-mark" href="#top"><span className="wordmark-symbol">r.</span><span>ROLEX<span className="wordmark-period">/</span>CODE</span></a><span className="footer-note">BUILT WITH INTENTION IN LAGOS, NIGERIA.</span><div className="footer-socials"><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a><a href="mailto:olaleyeolabodejeremiah@gmail.com" aria-label="Email"><Mail size={17}/></a></div><span className="copyright">© 2026</span></footer>
+    <footer className="footer"><a className="wordmark footer-mark" href="#top"><span className="wordmark-symbol">r.</span><span>ROLEX<span className="wordmark-period">/</span>CODE</span></a><span className="footer-note">THOUGHTFULLY BUILT IN LAGOS, NIGERIA.</span><div className="footer-socials"><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a><a href="mailto:olaleyeolabodejeremiah@gmail.com" aria-label="Email"><Mail size={17}/></a></div><span className="copyright">© 2026</span></footer>
   </div></main>;
 }
