@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDown, ArrowDownRight, ArrowUpRight, Check, Code2, Github, Globe2, Layers3, Linkedin, Mail, Menu, X } from "lucide-react";
 
 const projects = [
@@ -21,12 +21,14 @@ function ArrowLink({href,children,external=false}:{href:string;children:React.Re
 
 export default function Home() {
   const [menuOpen,setMenuOpen] = useState(false);
+  const [showLoader,setShowLoader] = useState(true);
+  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 2250); return () => window.clearTimeout(timer); }, []);
   const [copied,setCopied] = useState(false);
   async function copyEmail() {
     try { await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com"); setCopied(true); window.setTimeout(()=>setCopied(false),1800); }
     catch { window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"; }
   }
-  return <main><div className="site-shell">
+  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Loading portfolio"><div className="loader-terminal"><div className="loader-chrome"><span/><span/><span/><small>ROLEX&lt;/&gt;CODE / SYSTEM</small></div><p className="loader-prompt"><span>rolex@devrolex:~$</span> initialize --portfolio</p><p className="loader-typing">I build products<span className="typing-cursor">_</span></p><p className="loader-foot">LOADING EXPERIENCE <span>·</span> READY TO EXPLORE</p></div></div>}<div className={showLoader?"site-shell site-entering":"site-shell"}>
     <header className="topbar">
       <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
       <button className="menu-toggle" type="button" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
@@ -53,7 +55,8 @@ export default function Home() {
       <div className="project-list">{projects.map(project=><article className="project" key={project.number}>
         <div className="project-topline"><span>SELECTED WORK</span><span>{project.year}</span></div>
         <div className="project-grid">
-          <div className={"project-visual project-live-visual "+project.visual}>\n            <span className="preview-kind">{project.preview ? "LIVE SITE PREVIEW" : "PROJECT SNAPSHOT"}</span>
+          <div className={"project-visual project-live-visual "+project.visual}>
+            <span className="preview-kind">{project.preview ? "LIVE SITE PREVIEW" : "PROJECT SNAPSHOT"}</span>
             {project.preview ? <><iframe src={project.preview} title={project.name+" live website preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/><a className="visual-open-link" href={project.url} target="_blank" rel="noreferrer">OPEN LIVE PROJECT <ArrowUpRight size={13}/></a></> : project.visual === "nexus" ? <div className="project-native-preview"><span className="native-preview-label">CAMPUS INTELLIGENCE / LASU EPE</span><h4>See the issue.<br/><em>Track the response.</em></h4><p>Campus discovery, verified incident reports and a transparent path from report to resolution.</p><a href={project.repo} target="_blank" rel="noreferrer">EXPLORE THE BUILD <ArrowUpRight size={14}/></a></div> : <div className="project-native-preview"><span className="native-preview-label">ZERION HACKATHON BUILD</span><h4>Portfolio watch.<br/><em>On-chain action.</em></h4><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p><a href={project.url} target="_blank" rel="noreferrer">LAUNCH ZENGUARD ON TELEGRAM <ArrowUpRight size={14}/></a></div>}
           </div>
           <div className="project-info"><div className="project-title-row"><div><p className="project-type">{project.type}</p><h3>{project.name}</h3></div><span className="project-arrow"><ArrowUpRight size={22}/></span></div>
