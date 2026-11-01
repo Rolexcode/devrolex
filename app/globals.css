@@ -350,3 +350,5 @@
  .scene-overline,.terminal-screen,.scene-endline,.line-two,.line-four,.line-six,.line-seven,.line-eight{opacity:1;animation:none!important;transform:none}
  .typed{width:auto;animation:none!important}
 }
+
+.typed-four{animation-name:type-four-fixed;animation-duration:.9s;animation-timing-function:steps(15,end)}@keyframes type-four-fixed{to{width:15ch}}
