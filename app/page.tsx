@@ -41,17 +41,17 @@ export default function Home() {
         <div className="hero-copy">
           <p className="eyebrow">FULL-STACK DEVELOPER & DIGITAL PRODUCT BUILDER</p>
           <h1>I build the<br/><span className="serif-word">whole</span><br/>product<span className="accent-dot">.</span></h1>
-          <div className="hero-bottom"><p className="hero-description">Websites, web apps and the systems behind them. I take projects from a rough brief to a working product.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
+          <div className="hero-bottom"><p className="hero-description">I turn ideas into working digital products — shaping the experience, building the system and taking the whole thing through to launch.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
         </div>
       </div>
     </section>
 
-    <section className="intro-strip"><p>I like seeing a project through: figuring out what it needs, building the interface, connecting the moving parts and getting it live.</p><span className="strip-index">HOW I LIKE TO WORK&nbsp; ↘</span></section>
+    <section className="intro-strip"><p>You bring the idea. I’ll help turn it into a product people can actually use — from the first screen to the logic, integrations and details that make it work.</p><span className="strip-index">FROM IDEA TO LIVE PRODUCT&nbsp; ↘</span></section>
 
     <section className="work-section section-pad" id="work">
-      <div className="section-heading"><div><p className="eyebrow">A FEW THINGS I&apos;VE BEEN BUILDING</p><h2>Selected <span className="serif-word">work</span><span className="accent-dot">.</span></h2></div><p className="section-aside">A few builds, each with a different problem to solve — and a different set of decisions behind it.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">IDEAS TAKEN THROUGH TO REALITY</p><h2>From the <span className="serif-word">build</span> up<span className="accent-dot">.</span></h2></div><p className="section-aside">Different problems. Different approaches. Each one taken beyond the idea and into a working product.</p></div>
       <div className="project-list">{projects.map(project=><article className="project" key={project.number}>
-        <div className="project-topline"><span>{project.number} / SELECTED PROJECT</span><span>{project.year}</span></div>
+        <div className="project-topline"><span>{project.number} / PRODUCT BUILD</span><span>{project.year}</span></div>
         <div className="project-grid">
           <div className={"project-visual project-live-visual "+project.visual}>\n            <span className="preview-kind">{project.preview ? "LIVE SITE PREVIEW" : "PROJECT SNAPSHOT"}</span>
             {project.preview ? <><iframe src={project.preview} title={project.name+" live website preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/><a className="visual-open-link" href={project.url} target="_blank" rel="noreferrer">OPEN LIVE PROJECT <ArrowUpRight size={13}/></a></> : project.visual === "nexus" ? <div className="project-native-preview"><span className="native-preview-label">CAMPUS INTELLIGENCE / LASU EPE</span><h4>See the issue.<br/><em>Track the response.</em></h4><p>Campus discovery, verified incident reports and a transparent path from report to resolution.</p><a href={project.repo} target="_blank" rel="noreferrer">EXPLORE THE BUILD <ArrowUpRight size={14}/></a></div> : <div className="project-native-preview"><span className="native-preview-label">ZERION HACKATHON BUILD</span><h4>Portfolio watch.<br/><em>On-chain action.</em></h4><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p><a href={project.url} target="_blank" rel="noreferrer">LAUNCH ZENGUARD ON TELEGRAM <ArrowUpRight size={14}/></a></div>}
@@ -77,7 +77,6 @@ export default function Home() {
       <div className="about-label"><p className="eyebrow">A LITTLE ABOUT ME</p><span className="about-number">04 / THE PERSON BEHIND THE SCREEN</span></div>
       <div className="about-content"><h2>Curious by nature.<br/><span className="serif-word">Intentional</span> by practice.</h2>
         <div className="about-columns"><p>I&apos;m Olabode Olaleye. I build websites and software, and I enjoy being involved beyond the screen — understanding what needs to work, making the pieces fit and taking the build through to launch.</p><p>I pay attention to the details people notice and the ones they don&apos;t: the flow through a page, the logic behind a feature, and whether the whole thing holds together when it&apos;s live.</p></div>
-        <div className="toolkit"><span className="toolkit-label">CURRENT TOOLKIT</span><div className="toolkit-tags">{["JavaScript","TypeScript","React","Next.js","Node.js","Tailwind CSS","PostgreSQL","Git","Solana","AI integrations"].map(item=><span key={item}>{item}</span>)}</div></div>
         <div className="about-links"><ArrowLink href="https://github.com/Rolexcode" external>GitHub profile</ArrowLink><ArrowLink href="https://www.linkedin.com/in/olabode-olaleye-62290124" external>LinkedIn</ArrowLink></div>
       </div>
     </section>
