@@ -22,13 +22,17 @@ function ArrowLink({href,children,external=false}:{href:string;children:React.Re
 export default function Home() {
   const [menuOpen,setMenuOpen] = useState(false);
   const [showLoader,setShowLoader] = useState(true);
-  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 2250); return () => window.clearTimeout(timer); }, []);
+  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 3400); return () => window.clearTimeout(timer); }, []);
   const [copied,setCopied] = useState(false);
   async function copyEmail() {
     try { await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com"); setCopied(true); window.setTimeout(()=>setCopied(false),1800); }
     catch { window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"; }
   }
-  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Loading portfolio"><div className="loader-terminal"><div className="loader-chrome"><span/><span/><span/><small>ROLEX&lt;/&gt;CODE / SYSTEM</small></div><p className="loader-prompt"><span>rolex@devrolex:~$</span> initialize --portfolio</p><p className="loader-typing">I build products<span className="typing-cursor">_</span></p><p className="loader-foot">LOADING EXPERIENCE <span>·</span> READY TO EXPLORE</p></div></div>}<div className={showLoader?"site-shell site-entering":"site-shell"}>
+  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Preparing portfolio"><div className="intro-frame">
+<div className="intro-topline"><span className="intro-brand">ROLEX<span>&lt;/&gt;</span>CODE</span><span className="intro-index">INDEPENDENT DIGITAL PRACTICE <i>—</i> 2026</span></div>
+<div className="intro-stage"><div className="intro-grid" aria-hidden="true"></div><div className="intro-orbit orbit-a" aria-hidden="true"></div><div className="intro-orbit orbit-b" aria-hidden="true"></div><div className="intro-core" aria-hidden="true"><span>&lt;/&gt;</span></div><div className="intro-fragment fragment-a" aria-hidden="true"><i></i><i></i><i></i></div><div className="intro-fragment fragment-b" aria-hidden="true"><i></i><i></i><i></i></div>
+<div className="intro-wording"><p>IDEAS, ENGINEERED.</p><h2>From thought<br/>to <em>something real.</em></h2></div><span className="intro-coordinate coordinate-a">06°27′N / 03°24′E</span><span className="intro-coordinate coordinate-b">DESIGN × ENGINEERING</span></div>
+<div className="intro-bottom"><span className="intro-status"><i></i> BUILDING THE EXPERIENCE</span><span className="intro-progress"><i></i></span><span className="intro-percent">100%</span></div></div></div>}<div className={showLoader?"site-shell site-entering":"site-shell"}>
     <header className="topbar">
       <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
       <button className="menu-toggle" type="button" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
