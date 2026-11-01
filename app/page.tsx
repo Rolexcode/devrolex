@@ -28,7 +28,7 @@ export default function Home() {
   }
   return <main><div className="site-shell">
     <header className="topbar">
-      <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span>ROLEX<span className="wordmark-period">/</span>CODE</span></a>
+      <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
       <button className="menu-toggle" type="button" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
       <nav className={menuOpen?"nav-links nav-open":"nav-links"}>
         <a href="#work" onClick={()=>setMenuOpen(false)}>Work</a><a href="#services" onClick={()=>setMenuOpen(false)}>What I do</a><a href="#about" onClick={()=>setMenuOpen(false)}>About</a>
@@ -49,9 +49,9 @@ export default function Home() {
     <section className="intro-strip"><p>You bring the idea. I’ll help turn it into a product people can actually use — from the first screen to the logic, integrations and details that make it work.</p><span className="strip-index">FROM IDEA TO LIVE PRODUCT&nbsp; ↘</span></section>
 
     <section className="work-section section-pad" id="work">
-      <div className="section-heading"><div><p className="eyebrow">IDEAS TAKEN THROUGH TO REALITY</p><h2>From the <span className="serif-word">build</span> up<span className="accent-dot">.</span></h2></div><p className="section-aside">Different problems. Different approaches. Each one taken beyond the idea and into a working product.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">A FEW BUILDS</p><h2>Some of my <span className="serif-word">work</span><span className="accent-dot">.</span></h2></div><p className="section-aside">A look at what I’ve been making.</p></div>
       <div className="project-list">{projects.map(project=><article className="project" key={project.number}>
-        <div className="project-topline"><span>{project.number} / PRODUCT BUILD</span><span>{project.year}</span></div>
+        <div className="project-topline"><span>{project.number} / WORK</span><span>{project.year}</span></div>
         <div className="project-grid">
           <div className={"project-visual project-live-visual "+project.visual}>\n            <span className="preview-kind">{project.preview ? "LIVE SITE PREVIEW" : "PROJECT SNAPSHOT"}</span>
             {project.preview ? <><iframe src={project.preview} title={project.name+" live website preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/><a className="visual-open-link" href={project.url} target="_blank" rel="noreferrer">OPEN LIVE PROJECT <ArrowUpRight size={13}/></a></> : project.visual === "nexus" ? <div className="project-native-preview"><span className="native-preview-label">CAMPUS INTELLIGENCE / LASU EPE</span><h4>See the issue.<br/><em>Track the response.</em></h4><p>Campus discovery, verified incident reports and a transparent path from report to resolution.</p><a href={project.repo} target="_blank" rel="noreferrer">EXPLORE THE BUILD <ArrowUpRight size={14}/></a></div> : <div className="project-native-preview"><span className="native-preview-label">ZERION HACKATHON BUILD</span><h4>Portfolio watch.<br/><em>On-chain action.</em></h4><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p><a href={project.url} target="_blank" rel="noreferrer">LAUNCH ZENGUARD ON TELEGRAM <ArrowUpRight size={14}/></a></div>}
