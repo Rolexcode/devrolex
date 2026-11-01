@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowDown, ArrowDownRight, ArrowUpRight, Check, Code2, Github, Globe2, Layers3, Linkedin, Mail, Menu, X } from "lucide-react";
 
 const projects = [
@@ -20,13 +20,13 @@ function ArrowLink({href,children,external=false}:{href:string;children:React.Re
 }
 
 export default function Home() {
-  const [menuOpen,setMenuOpen] = useState(false);\n  const [introVisible,setIntroVisible] = useState(true);\n  useEffect(()=>{ const timer=window.setTimeout(()=>setIntroVisible(false),2200); return ()=>window.clearTimeout(timer); },[]);
+  const [menuOpen,setMenuOpen] = useState(false);
   const [copied,setCopied] = useState(false);
   async function copyEmail() {
     try { await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com"); setCopied(true); window.setTimeout(()=>setCopied(false),1800); }
     catch { window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"; }
   }
-  return <main><div className={introVisible?"site-shell site-entering":"site-shell"}>{introVisible&&<div className="intro-loader" aria-label="Introduction"><div className="loader-terminal"><div className="loader-chrome"><span></span><span></span><span></span><small>ROLEX / PORTFOLIO</small></div><p className="loader-prompt"><span>~</span> whoami</p><p className="loader-typing">Hi, I&apos;m Rolex<span className="typing-cursor">_</span></p><p className="loader-foot">FULL-STACK DEVELOPER <span>·</span> DIGITAL PRODUCT BUILDER</p></div></div>}
+  return <main><div className="site-shell">
     <header className="topbar">
       <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
       <button className="menu-toggle" type="button" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
@@ -46,7 +46,7 @@ export default function Home() {
       </div>
     </section>
 
-    <section className="intro-strip"><p>You bring the idea. I’ll help turn it into a product people can actually use — from the first screen to the logic, integrations and details that make it work.</p><span className="strip-index">FROM IDEA TO LIVE PRODUCT&nbsp; ↘</span></section>
+    <section className="intro-strip"><p>Got an idea? I can help bring it to life — from the first screen to the logic, integrations and details that make it work.</p><span className="strip-index">IDEA TO EXECUTION&nbsp; ↘</span></section>
 
     <section className="work-section section-pad" id="work">
       <div className="section-heading"><div><p className="eyebrow">A FEW BUILDS</p><h2>Some of my <span className="serif-word">work</span><span className="accent-dot">.</span></h2></div><p className="section-aside">A look at what I’ve been making.</p></div>
@@ -74,7 +74,7 @@ export default function Home() {
     </section>
 
     <section className="about-section section-pad" id="about">
-      <div className="about-label"><p className="eyebrow">A LITTLE ABOUT ME</p><span className="about-number">THE PERSON BEHIND THE SCREEN</span></div>
+      <div className="about-label"><p className="eyebrow">BEHIND THE WORK</p><span className="about-number">THE PERSON BEHIND THE WORK</span></div>
       <div className="about-content"><h2>Curious by nature.<br/><span className="serif-word">Intentional</span> by practice.</h2>
         <div className="about-columns"><p>I&apos;m Olabode Olaleye. I build websites and software, and I enjoy being involved beyond the screen — understanding what needs to work, making the pieces fit and taking the build through to launch.</p><p>I pay attention to the details people notice and the ones they don&apos;t: the flow through a page, the logic behind a feature, and whether the whole thing holds together when it&apos;s live.</p></div>
         <div className="about-links"><ArrowLink href="https://github.com/Rolexcode" external>GitHub profile</ArrowLink><ArrowLink href="https://www.linkedin.com/in/olabode-olaleye-62290124b" external>LinkedIn</ArrowLink></div>
