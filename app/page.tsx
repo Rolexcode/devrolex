@@ -22,17 +22,24 @@ function ArrowLink({href,children,external=false}:{href:string;children:React.Re
 export default function Home() {
   const [menuOpen,setMenuOpen] = useState(false);
   const [showLoader,setShowLoader] = useState(true);
-  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 3400); return () => window.clearTimeout(timer); }, []);
+  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 3900); return () => window.clearTimeout(timer); }, []);
   const [copied,setCopied] = useState(false);
   async function copyEmail() {
     try { await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com"); setCopied(true); window.setTimeout(()=>setCopied(false),1800); }
     catch { window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"; }
   }
-  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Preparing portfolio"><div className="intro-frame">
-<div className="intro-topline"><span className="intro-brand">ROLEX<span>&lt;/&gt;</span>CODE</span><span className="intro-index">INDEPENDENT DIGITAL PRACTICE <i>—</i> 2026</span></div>
-<div className="intro-stage"><div className="intro-grid" aria-hidden="true"></div><div className="intro-orbit orbit-a" aria-hidden="true"></div><div className="intro-orbit orbit-b" aria-hidden="true"></div><div className="intro-core" aria-hidden="true"><span>&lt;/&gt;</span></div><div className="intro-fragment fragment-a" aria-hidden="true"><i></i><i></i><i></i></div><div className="intro-fragment fragment-b" aria-hidden="true"><i></i><i></i><i></i></div>
-<div className="intro-wording"><p>IDEAS, ENGINEERED.</p><h2>From thought<br/>to <em>something real.</em></h2></div><span className="intro-coordinate coordinate-a">06°27′N / 03°24′E</span><span className="intro-coordinate coordinate-b">DESIGN × ENGINEERING</span></div>
-<div className="intro-bottom"><span className="intro-status"><i></i> BUILDING THE EXPERIENCE</span><span className="intro-progress"><i></i></span><span className="intro-percent">100%</span></div></div></div>}<div className={showLoader?"site-shell site-entering":"site-shell"}>
+  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Opening portfolio"><div className="terminal-screen">
+<div className="terminal-heading"><span>ROLEX@DEVROLEX</span><span>SESSION 2026.11</span></div>
+<div className="terminal-body">
+<p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex ~ %</span> whoami</p>
+<p className="terminal-output line-two">Rolex Olaleye <span className="terminal-dim">/ full-stack developer</span></p>
+<p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex ~ %</span> npm run build</p>
+<p className="terminal-output line-four"><span className="terminal-ok">✓</span> compiling interface</p>
+<p className="terminal-output line-five"><span className="terminal-ok">✓</span> loading projects and capabilities</p>
+<p className="terminal-output line-six"><span className="terminal-ok">✓</span> experience ready</p>
+<p className="terminal-line line-seven"><span className="terminal-prompt">rolex@devrolex ~ %</span> <span className="terminal-command">open portfolio</span><span className="terminal-caret"></span></p>
+</div>
+</div></div><div className={showLoader?"site-shell site-entering":"site-shell"}>
     <header className="topbar">
       <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
       <button className="menu-toggle" type="button" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
