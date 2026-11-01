@@ -266,3 +266,23 @@
 }
 @keyframes fragment-a-mobile{to{opacity:1;transform:translate(-50%,-50%) translate(-55px,-52px) rotate(-8deg)}}@keyframes fragment-b-mobile{to{opacity:1;transform:translate(-50%,-50%) translate(43px,48px) rotate(7deg)}}
 @media(prefers-reduced-motion:reduce){.intro-loader{animation:none!important;display:none}.intro-loader *{animation:none!important}}
+
+/* Minimal terminal boot — no hero card, no decorative loader graphics */
+.intro-loader{position:fixed;z-index:100;inset:0;display:flex;align-items:center;justify-content:center;padding:28px;background:#090b09;color:#e8eae4;font-family:var(--mono);animation:terminal-exit .45s ease 3.35s forwards}
+.terminal-screen{width:min(680px,100%);margin-top:-3vh}
+.terminal-heading{display:flex;justify-content:space-between;gap:18px;padding-bottom:13px;border-bottom:1px solid #252a24;color:#8d9889;font:9px var(--mono);letter-spacing:.1em}
+.terminal-body{padding-top:27px;font:clamp(11px,1.5vw,13px)/2.05 var(--mono);letter-spacing:.005em}
+.terminal-body p{margin:0;white-space:pre-wrap}
+.terminal-line,.terminal-output{opacity:0;animation:terminal-line-in .12s linear forwards}
+.terminal-prompt{color:#b7d78a}
+.terminal-output{color:#a5ada0;padding-left:0}
+.terminal-dim{color:#788174}
+.terminal-ok{color:#b7d78a;margin-right:7px}
+.line-one{animation-delay:.12s}.line-two{animation-delay:.62s}.line-three{animation-delay:1.15s}.line-four{animation-delay:1.75s}.line-five{animation-delay:2.05s}.line-six{animation-delay:2.38s}.line-seven{animation-delay:2.8s}
+.terminal-command{color:#e8eae4}
+.terminal-caret{display:inline-block;width:7px;height:14px;margin-left:5px;vertical-align:-2px;background:#b7d78a;animation:terminal-blink .8s steps(2,start) infinite}
+@keyframes terminal-line-in{to{opacity:1}}
+@keyframes terminal-blink{to{visibility:hidden}}
+@keyframes terminal-exit{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media(max-width:650px){.intro-loader{padding:24px}.terminal-screen{margin-top:-8vh}.terminal-heading{font-size:8px}.terminal-body{font-size:11px;line-height:2.15}}
+@media(prefers-reduced-motion:reduce){.intro-loader{display:none!important;animation:none!important}.terminal-line,.terminal-output{opacity:1;animation:none!important}}
