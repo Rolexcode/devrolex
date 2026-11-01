@@ -61,7 +61,7 @@ export default function Home() {
           <p className="eyebrow">GOT AN IDEA? LET’S TALK ABOUT IT.</p>
           <h1>Let&apos;s bring<br/><span className="serif-word">it to life</span><span className="accent-dot">.</span></h1>
           <div className="hero-bottom"><p className="hero-description">Whatever you&apos;re imagining, I can help turn it into something real — from the first sketch of an idea to a finished digital product people can use.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
-          <aside className="hero-index" aria-label="Selected projects"><div className="hero-index-heading"><span>SELECTED WORK</span><span>2026</span></div>{projects.map(project=><a className="hero-index-item" href={"#project-"+project.visual} key={project.number}><span className="hero-index-name">{project.name}</span><span className="hero-index-type">{project.type}</span><ArrowUpRight size={15}/></a>)}<a className="hero-index-all" href="#work">Explore all work <ArrowDownRight size={14}/></a></aside>
+
         </div>
       </div>
     </section>
