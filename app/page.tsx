@@ -10,7 +10,7 @@ const projects = [
   { name:"ZenGuard", type:"On-chain portfolio agent", year:"2026", description:"Built for the Zerion hackathon, ZenGuard is a Telegram-based agent that monitors portfolio positions and can execute policy-scoped stop-loss and take-profit actions on Base.", role:"AI agent development · On-chain automation", stack:"Telegram · Base · AI agents · Web3", url:"https://t.me/ZerionAutonomousBot", repo:"https://github.com/Rolexcode/zerion-ai", preview:"", note:"Portfolio monitoring with actions governed by your rules." }
 ];
 
-const chapters = ["Cover","Selected work","CampusGig","Nexus","About","Contact"];
+const chapters = ["Cover","Selected work","CampusGig","Nexus","ZenGuard","About","Contact"];
 
 function ExternalLink({href,children}:{href:string;children:React.ReactNode}) {
   return <a className="book-link" href={href} target="_blank" rel="noreferrer">{children}<ArrowUpRight size={14}/></a>;
@@ -33,7 +33,7 @@ export default function Home() {
   });
   function turn(step:number){setDirection(step>0?"next":"prev");setPage(p=>Math.max(0,Math.min(chapters.length-1,p+step)));}
   async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800);}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com";}}
-  const activeProject = page===1 ? projects[0] : page===2 ? projects[1] : page===3 ? projects[2] : null;
+  const activeProject = page===1 ? projects[0] : page===2 ? projects[1] : page===3 ? projects[2] : page===4 ? projects[3] : null;
   return <main className="book-site">
     {showLoader && <div className="intro-loader" role="status" aria-label="Opening portfolio"><div className="terminal-scene">
       <div className="scene-top"><span>ROLEX@DEVROLEX</span><span>AN IDEA BECOMES REAL</span></div>
@@ -61,7 +61,7 @@ export default function Home() {
             {page===1&&<div className="page-note"><span className="folio-label">CHAPTER 01 / SELECTED WORK</span><h2>Here are some<br/>of my <em>works.</em></h2><p>Different ideas. Different challenges. Each one started with a problem worth solving.</p><span className="page-ornament">✳</span></div>}
             {page===2&&<div className="page-note"><span className="folio-label">CHAPTER 02 / PRODUCT BUILD</span><h2>From campus<br/>to <em>opportunity.</em></h2><p>Making it easier for students to find work, and for people to find the talent around them.</p><span className="page-ornament">02 — 04</span></div>}
             {page===3&&<div className="page-note"><span className="folio-label">CHAPTER 03 / COMMUNITY SYSTEMS</span><h2>See what's<br/>happening. <em>Act.</em></h2><p>Tools that turn scattered information into something people can understand and use.</p><span className="page-ornament">03 — 04</span></div>}
-            {page===4&&<div className="page-note"><span className="folio-label">A LITTLE ABOUT ME</span><h2>Curious by<br/>nature. <em>Builder</em><br/><em>by choice.</em></h2><p>I like getting into the details of an idea, figuring out what it needs, and building the experience and technology that bring it to life.</p><span className="page-ornament">LAGOS / ONLINE</span></div>}
+            {page===4&&<div className="page-note"><span className="folio-label">CHAPTER 04 / ON-CHAIN AUTOMATION</span><h2>Rules in place.<br/><em>Action</em> when<br/>it matters.</h2><p>A Telegram agent built to watch portfolio positions and act within defined risk rules.</p><span className="page-ornament">04 — 04</span></div>}{page===5&&<div className="page-note"><span className="folio-label">A LITTLE ABOUT ME</span><h2>Curious by<br/>nature. <em>Builder</em><br/><em>by choice.</em></h2><p>I like getting into the details of an idea, figuring out what it needs, and building the experience and technology that bring it to life.</p><span className="page-ornament">LAGOS / ONLINE</span></div>}
             {page===5&&<div className="page-note"><span className="folio-label">THE LAST PAGE IS A START</span><h2>Have something<br/>in <em>mind?</em></h2><p>A rough idea, a clear brief or a problem you want solved. I'd like to hear about it.</p><span className="page-ornament">LET'S MAKE IT REAL ↗</span></div>}
           </div>
           <div className="book-page book-right">
@@ -74,8 +74,8 @@ export default function Home() {
               <div className="project-page-meta"><span>{activeProject.role}</span><span>{activeProject.stack}</span></div>
               <div className="project-page-links"><ExternalLink href={activeProject.url}>Visit project</ExternalLink>{activeProject.repo&&<ExternalLink href={activeProject.repo}>Source code</ExternalLink>}</div>
             </div>}
-            {page===4&&<div className="about-page"><span className="folio-label">HOW I LIKE TO WORK</span><h2>From the first<br/>thought to the<br/><em>finished thing.</em></h2><div className="about-copy"><p>I'm Olabode Olaleye, a full-stack developer. I work across the interface, backend, integrations and the details that make a product feel considered.</p><p>Websites and landing pages. Full-stack applications. AI features, APIs and payment integrations.</p></div><div className="book-socials"><ExternalLink href="https://github.com/Rolexcode">GitHub</ExternalLink><ExternalLink href="https://www.linkedin.com/in/olabode-olaleye-62290124b">LinkedIn</ExternalLink></div></div>}
-            {page===5&&<div className="contact-page"><span className="folio-label">LET'S START A CONVERSATION</span><h2>Tell me<br/><em>about it.</em></h2><p>Let's figure out what we can make together.</p><button className="book-email" onClick={copyEmail}>{copied?<><Check size={15}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={15}/></>}</button><a className="contact-direct" href="mailto:olaleyeolabodejeremiah@gmail.com"><Mail size={15}/> Send an email</a></div>}
+            {page===5&&<div className="about-page"><span className="folio-label">HOW I LIKE TO WORK</span><h2>From the first<br/>thought to the<br/><em>finished thing.</em></h2><div className="about-copy"><p>I'm Olabode Olaleye, a full-stack developer. I work across the interface, backend, integrations and the details that make a product feel considered.</p><p>Websites and landing pages. Full-stack applications. AI features, APIs and payment integrations.</p></div><div className="book-socials"><ExternalLink href="https://github.com/Rolexcode">GitHub</ExternalLink><ExternalLink href="https://www.linkedin.com/in/olabode-olaleye-62290124b">LinkedIn</ExternalLink></div></div>}
+            {page===6&&<div className="contact-page"><span className="folio-label">LET'S START A CONVERSATION</span><h2>Tell me<br/><em>about it.</em></h2><p>Let's figure out what we can make together.</p><button className="book-email" onClick={copyEmail}>{copied?<><Check size={15}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={15}/></>}</button><a className="contact-direct" href="mailto:olaleyeolabodejeremiah@gmail.com"><Mail size={15}/> Send an email</a></div>}
           </div>
         </div>
       </section>
