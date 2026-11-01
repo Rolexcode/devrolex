@@ -22,23 +22,29 @@ function ArrowLink({href,children,external=false}:{href:string;children:React.Re
 export default function Home() {
   const [menuOpen,setMenuOpen] = useState(false);
   const [showLoader,setShowLoader] = useState(true);
-  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 3900); return () => window.clearTimeout(timer); }, []);
+  useEffect(() => { const timer = window.setTimeout(() => setShowLoader(false), 6900); return () => window.clearTimeout(timer); }, []);
   const [copied,setCopied] = useState(false);
   async function copyEmail() {
     try { await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com"); setCopied(true); window.setTimeout(()=>setCopied(false),1800); }
     catch { window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"; }
   }
-  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Opening portfolio"><div className="terminal-screen">
-<div className="terminal-heading"><span>ROLEX@DEVROLEX</span><span>SESSION 2026.11</span></div>
+  return <main>{showLoader && <div className="intro-loader" role="status" aria-label="Opening portfolio"><div className="terminal-scene">
+<div className="scene-top"><span>ROLEX@DEVROLEX</span><span>AN IDEA BECOMES REAL</span></div>
+<div className="scene-center"><p className="scene-overline">A QUICK LOOK BEHIND THE BUILD</p><div className="terminal-screen">
+<div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div>
 <div className="terminal-body">
-<p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex ~ %</span> whoami</p>
-<p className="terminal-output line-two">Rolex Olaleye <span className="terminal-dim">/ full-stack developer</span></p>
-<p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex ~ %</span> npm run build</p>
-<p className="terminal-output line-four"><span className="terminal-ok">✓</span> compiling interface</p>
-<p className="terminal-output line-five"><span className="terminal-ok">✓</span> loading projects and capabilities</p>
-<p className="terminal-output line-six"><span className="terminal-ok">✓</span> experience ready</p>
-<p className="terminal-line line-seven"><span className="terminal-prompt">rolex@devrolex ~ %</span> <span className="terminal-command">open portfolio</span><span className="terminal-caret"></span></p>
+<p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">whoami</span></p>
+<p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
+<p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_do_you_do</span></p>
+<p className="terminal-output line-four">I turn ideas into working digital products.</p>
+<p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">start_with_an_idea</span></p>
+<p className="terminal-output line-six"><span className="terminal-ok">→</span> shaping the experience</p>
+<p className="terminal-output line-seven"><span className="terminal-ok">→</span> building what makes it work</p>
+<p className="terminal-output line-eight"><span className="terminal-ok">→</span> getting it out into the world</p>
+<p className="terminal-line line-nine"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"></span></p>
 </div>
+</div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div>
+<div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span><span className="scene-live"><i></i> SESSION READY</span></div>
 </div></div>}<div className={showLoader?"site-shell site-entering":"site-shell"}>
     <header className="topbar">
       <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
@@ -52,19 +58,19 @@ export default function Home() {
     <section className="hero" id="top">
       <div className="hero-main">
         <div className="hero-copy">
-          <p className="eyebrow">FULL-STACK DEVELOPER & DIGITAL PRODUCT BUILDER</p>
-          <h1>I build<br/><span className="serif-word">products</span><span className="accent-dot">.</span></h1>
-          <div className="hero-bottom"><p className="hero-description">I turn ideas into working digital products — shaping the experience, building the system and taking the whole thing through to launch.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
+          <p className="eyebrow">GOT AN IDEA? LET’S TALK ABOUT IT.</p>
+          <h1>Let&apos;s bring<br/><span className="serif-word">it to life</span><span className="accent-dot">.</span></h1>
+          <div className="hero-bottom"><p className="hero-description">Whatever you&apos;re imagining, I can help turn it into something real — from the first sketch of an idea to a finished digital product people can use.</p><a className="round-link" href="#work" aria-label="Explore selected work"><ArrowDown size={20}/></a></div>
         </div>
       </div>
     </section>
 
-    <section className="intro-strip"><p>Got an idea? I can help bring it to life — from the first screen to the logic, integrations and details that make it work.</p><span className="strip-index">IDEA TO EXECUTION&nbsp; ↘</span></section>
+    <section className="intro-strip"><p>You bring the idea. We&apos;ll work out what it needs, shape how it should feel, and build the thing that makes it happen.</p><span className="strip-index">LET&apos;S MAKE IT REAL&nbsp; ↘</span></section>
 
     <section className="work-section section-pad" id="work">
-      <div className="section-heading"><div><p className="eyebrow">A FEW BUILDS</p><h2>Some of my <span className="serif-word">work</span><span className="accent-dot">.</span></h2></div><p className="section-aside">A look at what I’ve been making.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">IDEAS I&apos;VE HELPED MAKE REAL</p><h2>Here&apos;s what I&apos;ve <span className="serif-word">built</span><span className="accent-dot">.</span></h2></div><p className="section-aside">Different ideas, different challenges. Each one started with a problem worth solving.</p></div>
       <div className="project-list">{projects.map(project=><article className="project" key={project.number}>
-        <div className="project-topline"><span>SELECTED WORK</span><span>{project.year}</span></div>
+        <div className="project-topline"><span>MADE REAL</span><span>{project.year}</span></div>
         <div className="project-grid">
           <div className={"project-visual project-live-visual "+project.visual}>
             <span className="preview-kind">{project.preview ? "LIVE SITE PREVIEW" : "PROJECT SNAPSHOT"}</span>
@@ -82,23 +88,23 @@ export default function Home() {
     </section>
 
     <section className="services-section section-pad" id="services">
-      <div className="section-heading"><div><p className="eyebrow">FROM FIRST IDEA TO SHIPPED PRODUCT</p><h2>What I <span className="serif-word">do</span><span className="accent-dot">.</span></h2></div><p className="section-aside">I work across the layers of a digital product, with a focus on making the experience coherent from front to back.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">HERE&apos;S HOW I CAN HELP</p><h2>What we can <span className="serif-word">make</span><span className="accent-dot">.</span></h2></div><p className="section-aside">From the part people see to the systems working underneath, I can take on the pieces that turn an idea into a useful product.</p></div>
       <div className="capability-grid">{capabilities.map((item,index)=>{const Icon=item.icon;return <article className="capability" key={item.title}><div className="capability-top"><Icon size={22} strokeWidth={1.5}/></div><h3>{item.title}</h3><p>{item.text}</p><span className="capability-rule"/></article>;})}</div>
-      <div className="services-note"><span>HOW I CAN HELP</span><p>Business websites · Landing pages · Web applications · Dashboards · API integrations · AI-powered features</p></div>
+      <div className="services-note"><span>THINGS WE COULD BUILD</span><p>Business websites · Landing pages · Web apps · Dashboards · AI features · Payment flows · API integrations</p></div>
     </section>
 
     <section className="about-section section-pad" id="about">
-      <div className="about-label"><p className="eyebrow">BEHIND THE WORK</p><span className="about-number">THE PERSON BEHIND THE WORK</span></div>
-      <div className="about-content"><h2>Curious by nature.<br/><span className="serif-word">Intentional</span> by practice.</h2>
-        <div className="about-columns"><p>I&apos;m Olabode Olaleye. I build websites and software, and I enjoy being involved beyond the screen — understanding what needs to work, making the pieces fit and taking the build through to launch.</p><p>I pay attention to the details people notice and the ones they don&apos;t: the flow through a page, the logic behind a feature, and whether the whole thing holds together when it&apos;s live.</p></div>
+      <div className="about-label"><p className="eyebrow">A LITTLE ABOUT ME</p><span className="about-number">THE PERSON YOU&apos;LL BUILD WITH</span></div>
+      <div className="about-content"><h2>I like turning<br/><span className="serif-word">what if</span> into what&apos;s next.</h2>
+        <div className="about-columns"><p>I&apos;m Olabode Olaleye, a full-stack developer. I like getting into the details of an idea, figuring out what it needs, and building the experience and technology that bring it to life.</p><p>I can work across the whole process — the interface, the backend, integrations and the little decisions that make a product feel considered and work the way it should.</p></div>
         <div className="about-links"><ArrowLink href="https://github.com/Rolexcode" external>GitHub profile</ArrowLink><ArrowLink href="https://www.linkedin.com/in/olabode-olaleye-62290124b" external>LinkedIn</ArrowLink></div>
       </div>
     </section>
 
     <section className="contact-section section-pad" id="contact">
-      <div className="contact-top"><p className="eyebrow">HAVE A GOOD ONE IN MIND?</p><span>CONTACT</span></div>
-      <h2>Let&apos;s make<br/><span className="serif-word">something</span><br/>matter<span className="accent-dot">.</span></h2>
-      <div className="contact-bottom"><p>Have a project, an opportunity or an interesting problem to solve? I&apos;d like to hear about it.</p><button className="email-button" type="button" onClick={copyEmail}>{copied?<><Check size={17}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={17}/></>}</button></div>
+      <div className="contact-top"><p className="eyebrow">SO, WHAT ARE YOU THINKING?</p><span>YOUR IDEA STARTS HERE</span></div>
+      <h2>Tell me<br/><span className="serif-word">about it</span><span className="accent-dot">.</span></h2>
+      <div className="contact-bottom"><p>A rough idea, a clear brief or just a problem you want solved — tell me about it. Let&apos;s figure out what we can make.</p><button className="email-button" type="button" onClick={copyEmail}>{copied?<><Check size={17}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={17}/></>}</button></div>
     </section>
 
     <footer className="footer"><a className="wordmark footer-mark" href="#top"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a><span className="footer-note"></span><div className="footer-socials"><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={17}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124b" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a><a href="mailto:olaleyeolabodejeremiah@gmail.com" aria-label="Email"><Mail size={17}/></a></div><span className="copyright">© 2026</span></footer>
