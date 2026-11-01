@@ -1,85 +1,57 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { ArrowUpRight, BatteryFull, Check, ChevronRight, Code2, ExternalLink, FileText, Folder, Github, Globe2, Mail, Minus, Monitor, MoreHorizontal, Power, Search, Wifi, X } from "lucide-react";
 
 const projects = [
-  { name:"Ìròyìn", type:"AI-powered news experience", year:"2026", description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.", role:"Product thinking · Frontend · AI integration", stack:"Next.js · Tailwind CSS · Sahara AI · Groq", url:"https://iroyin.vercel.app/", repo:"https://github.com/Rolexcode/iroyin", preview:"https://iroyin.vercel.app/", note:"News, in the language that feels like home." },
-  { name:"CampusGig", type:"Student gig marketplace", year:"2026", description:"A marketplace connecting students to flexible work, with gig discovery, applications, messaging and a Solana USDC payment flow.", role:"Full-stack development · Product build", stack:"Next.js · TypeScript · Solana · USDC", url:"https://campus-gigtit6.vercel.app/", repo:"", preview:"https://campus-gigtit6.vercel.app/", note:"Making student talent easier to find and hire." },
-  { name:"Nexus", type:"Campus intelligence platform", year:"2026", description:"A campus platform for discovering places and services, reporting real-world issues, verifying community reports and tracking the response from report to resolution.", role:"Product design · Full-stack development · Mapping", stack:"Next.js · TypeScript · Leaflet · Firebase", url:"https://nexus-rho-blond.vercel.app/", repo:"https://github.com/Rolexcode/nexus", preview:"https://nexus-rho-blond.vercel.app/", note:"A clearer picture of what's happening on campus." },
-  { name:"ZenGuard", type:"On-chain portfolio agent", year:"2026", description:"Built for the Zerion hackathon, ZenGuard is a Telegram-based agent that monitors portfolio positions and can execute policy-scoped stop-loss and take-profit actions on Base.", role:"AI agent development · On-chain automation", stack:"Telegram · Base · AI agents · Web3", url:"https://t.me/ZerionAutonomousBot", repo:"https://github.com/Rolexcode/zerion-ai", preview:"", note:"Portfolio monitoring with actions governed by your rules." }
+ {id:"iroyin",name:"Ìròyìn",kind:"Web application",year:"2026",description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.",role:"Product thinking · Frontend · AI integration",stack:"Next.js · Tailwind CSS · Sahara AI · Groq",url:"https://iroyin.vercel.app/",repo:"https://github.com/Rolexcode/iroyin",preview:"https://iroyin.vercel.app/",file:"iroyin.app"},
+ {id:"campusgig",name:"CampusGig",kind:"Marketplace",year:"2026",description:"A marketplace connecting students to flexible work, with gig discovery, applications, messaging and a Solana USDC payment flow.",role:"Full-stack development · Product build",stack:"Next.js · TypeScript · Solana · USDC",url:"https://campus-gigtit6.vercel.app/",repo:"",preview:"https://campus-gigtit6.vercel.app/",file:"campusgig.app"},
+ {id:"nexus",name:"Nexus",kind:"Campus platform",year:"2026",description:"A campus platform for discovering places and services, reporting real-world issues, verifying community reports and tracking the response from report to resolution.",role:"Product design · Full-stack development · Mapping",stack:"Next.js · TypeScript · Leaflet · Firebase",url:"https://nexus-rho-blond.vercel.app/",repo:"https://github.com/Rolexcode/nexus",preview:"https://nexus-rho-blond.vercel.app/",file:"nexus.app"},
+ {id:"zenguard",name:"ZenGuard",kind:"On-chain agent",year:"2026",description:"A Telegram-based agent that monitors portfolio positions and can execute policy-scoped stop-loss and take-profit actions on Base.",role:"AI agent development · On-chain automation",stack:"Telegram · Base · AI agents · Web3",url:"https://t.me/ZerionAutonomousBot",repo:"https://github.com/Rolexcode/zerion-ai",preview:"",file:"zenguard.app"}
 ];
-
-const chapters = ["Cover","Selected work","CampusGig","Nexus","ZenGuard","About","Contact"];
-
-function ExternalLink({href,children}:{href:string;children:React.ReactNode}) {
-  return <a className="book-link" href={href} target="_blank" rel="noreferrer">{children}<ArrowUpRight size={14}/></a>;
-}
-
-export default function Home() {
-  const [page,setPage] = useState(0);
-  const [direction,setDirection] = useState<"next"|"prev">("next");
-  const [showLoader,setShowLoader] = useState(true);
-  const [copied,setCopied] = useState(false);
-  const [menuOpen,setMenuOpen] = useState(false);
-  useEffect(() => { const timer=window.setTimeout(()=>setShowLoader(false),6900); return ()=>window.clearTimeout(timer); }, []);
-  useEffect(() => {
-    function onKey(e:KeyboardEvent) {
-      if(e.key==="ArrowRight" || e.key==="PageDown"){e.preventDefault();turn(1);}
-      if(e.key==="ArrowLeft" || e.key==="PageUp"){e.preventDefault();turn(-1);}
-    }
-    window.addEventListener("keydown",onKey);
-    return ()=>window.removeEventListener("keydown",onKey);
-  });
-  function turn(step:number){setDirection(step>0?"next":"prev");setPage(p=>Math.max(0,Math.min(chapters.length-1,p+step)));}
-  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800);}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com";}}
-  const activeProject = page===1 ? projects[0] : page===2 ? projects[1] : page===3 ? projects[2] : page===4 ? projects[3] : null;
-  return <main className="book-site">
-    {showLoader && <div className="intro-loader" role="status" aria-label="Opening portfolio"><div className="terminal-scene">
-      <div className="scene-top"><span>ROLEX@DEVROLEX</span><span>AN IDEA BECOMES REAL</span></div>
-      <div className="scene-center"><p className="scene-overline">A QUICK LOOK BEHIND THE BUILD</p><div className="terminal-screen">
-        <div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
-          <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">whoami</span></p>
-          <p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
-          <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_do_you_do</span></p>
-          <p className="terminal-output line-four">I turn ideas into working digital products.</p>
-          <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">start_with_an_idea</span></p>
-          <p className="terminal-output line-six"><span className="terminal-ok">→</span> shaping the experience</p>
-          <p className="terminal-output line-seven"><span className="terminal-ok">→</span> building what makes it work</p>
-          <p className="terminal-output line-eight"><span className="terminal-ok">→</span> getting it out into the world</p>
-          <p className="terminal-line line-nine"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"></span></p>
-        </div></div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div>
-      <div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span><span className="scene-live"><i></i> SESSION READY</span></div>
-    </div></div>}
-    <div className={showLoader?"book-shell book-entering":"book-shell"}>
-      <header className="book-header"><a className="book-brand" href="#" onClick={e=>{e.preventDefault();setPage(0);}}>ROLEX<span>&lt;/&gt;</span>CODE</a><div className="book-header-right"><span>AN INTERACTIVE PORTFOLIO</span><button className="book-menu" onClick={()=>setMenuOpen(v=>!v)} aria-label="Toggle contents">{menuOpen?<X size={17}/>:<Menu size={17}/>}</button></div></header>
-      {menuOpen&&<nav className="book-contents">{chapters.map((name,i)=><button key={name} onClick={()=>{setDirection(i>page?"next":"prev");setPage(i);setMenuOpen(false);}}><span>0{i+1}</span>{name}</button>)}</nav>}
-      <section className="book-stage" aria-label="Portfolio book">
-        <div className={"book-spread "+(direction==="next"?"turn-next":"turn-prev")} key={page}>
-          <div className="book-page book-left">
-            {page===0&&<div className="cover-left"><span className="folio-label">A COLLECTION OF DIGITAL WORK</span><div className="cover-monogram">r<span>.</span></div><span className="cover-small">OLABODE OLALEYE<br/>FULL-STACK DEVELOPER</span></div>}
-            {page===1&&<div className="page-note"><span className="folio-label">CHAPTER 01 / SELECTED WORK</span><h2>Here are some<br/>of my <em>works.</em></h2><p>Different ideas. Different challenges. Each one started with a problem worth solving.</p><span className="page-ornament">✳</span></div>}
-            {page===2&&<div className="page-note"><span className="folio-label">CHAPTER 02 / PRODUCT BUILD</span><h2>From campus<br/>to <em>opportunity.</em></h2><p>Making it easier for students to find work, and for people to find the talent around them.</p><span className="page-ornament">02 — 04</span></div>}
-            {page===3&&<div className="page-note"><span className="folio-label">CHAPTER 03 / COMMUNITY SYSTEMS</span><h2>See what's<br/>happening. <em>Act.</em></h2><p>Tools that turn scattered information into something people can understand and use.</p><span className="page-ornament">03 — 04</span></div>}
-            {page===4&&<div className="page-note"><span className="folio-label">CHAPTER 04 / ON-CHAIN AUTOMATION</span><h2>Rules in place.<br/><em>Action</em> when<br/>it matters.</h2><p>A Telegram agent built to watch portfolio positions and act within defined risk rules.</p><span className="page-ornament">04 — 04</span></div>}{page===5&&<div className="page-note"><span className="folio-label">A LITTLE ABOUT ME</span><h2>Curious by<br/>nature. <em>Builder</em><br/><em>by choice.</em></h2><p>I like getting into the details of an idea, figuring out what it needs, and building the experience and technology that bring it to life.</p><span className="page-ornament">LAGOS / ONLINE</span></div>}
-            {page===5&&<div className="page-note"><span className="folio-label">THE LAST PAGE IS A START</span><h2>Have something<br/>in <em>mind?</em></h2><p>A rough idea, a clear brief or a problem you want solved. I'd like to hear about it.</p><span className="page-ornament">LET'S MAKE IT REAL ↗</span></div>}
-          </div>
-          <div className="book-page book-right">
-            {page===0&&<div className="cover-right"><span className="cover-edition">PORTFOLIO / 2026</span><h1>Ideas<br/>made <em>real.</em></h1><p>Thoughtful digital experiences, useful products and the technology behind them.</p><div className="cover-bottom"><span>OPEN TO EXPLORE</span><span>VOL. 01</span></div><div className="cover-seal">R<br/><i>✳</i><br/>C</div></div>}
-            {activeProject&&<div className="project-page">
-              <div className="project-page-top"><span>{activeProject.type}</span><span>{activeProject.year} / 0{page}</span></div>
-              <h2>{activeProject.name}<span>.</span></h2><p className="project-page-note">{activeProject.note}</p>
-              <div className="book-preview">{activeProject.preview?<iframe src={activeProject.preview} title={activeProject.name+" preview"} loading="lazy" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/>:<div className="zenguard-art"><span>ZEN GUARD / BASE</span><strong>WATCH<br/><em>THE POSITION.</em></strong><small>POLICY-BASED ON-CHAIN AUTOMATION</small></div>}</div>
-              <p className="project-page-description">{activeProject.description}</p>
-              <div className="project-page-meta"><span>{activeProject.role}</span><span>{activeProject.stack}</span></div>
-              <div className="project-page-links"><ExternalLink href={activeProject.url}>Visit project</ExternalLink>{activeProject.repo&&<ExternalLink href={activeProject.repo}>Source code</ExternalLink>}</div>
-            </div>}
-            {page===5&&<div className="about-page"><span className="folio-label">HOW I LIKE TO WORK</span><h2>From the first<br/>thought to the<br/><em>finished thing.</em></h2><div className="about-copy"><p>I'm Olabode Olaleye, a full-stack developer. I work across the interface, backend, integrations and the details that make a product feel considered.</p><p>Websites and landing pages. Full-stack applications. AI features, APIs and payment integrations.</p></div><div className="book-socials"><ExternalLink href="https://github.com/Rolexcode">GitHub</ExternalLink><ExternalLink href="https://www.linkedin.com/in/olabode-olaleye-62290124b">LinkedIn</ExternalLink></div></div>}
-            {page===6&&<div className="contact-page"><span className="folio-label">LET'S START A CONVERSATION</span><h2>Tell me<br/><em>about it.</em></h2><p>Let's figure out what we can make together.</p><button className="book-email" onClick={copyEmail}>{copied?<><Check size={15}/> EMAIL COPIED</>:<>OLALEYEOLABODEJEREMIAH@GMAIL.COM <ArrowUpRight size={15}/></>}</button><a className="contact-direct" href="mailto:olaleyeolabodejeremiah@gmail.com"><Mail size={15}/> Send an email</a></div>}
-          </div>
-        </div>
-      </section>
-      <footer className="book-controls"><div className="book-progress"><span>0{page+1}</span><div>{chapters.map((_,i)=><button aria-label={"Go to "+chapters[i]} key={i} className={i===page?"active":""} onClick={()=>{setDirection(i>page?"next":"prev");setPage(i);}}/>)}</div><span>0{chapters.length}</span></div><div className="book-nav"><button onClick={()=>turn(-1)} disabled={page===0}><ArrowLeft size={16}/><span>PREVIOUS</span></button><span className="book-chapter">{chapters[page]}</span><button onClick={()=>turn(1)} disabled={page===chapters.length-1}><span>{page===chapters.length-1?"END":"NEXT PAGE"}</span><ArrowRight size={16}/></button></div><div className="book-hint">USE ← → TO TURN PAGES</div></footer>
-    </div>
-  </main>;
+type WindowName="work"|"about"|"stack"|"contact"|"readme";
+const windowTitles:Record<WindowName,string>={work:"Projects — Finder",about:"About Me — TextEdit",stack:"System Overview",contact:"New Message — Mail",readme:"README.md — Code"};
+export default function Home(){
+ const [boot,setBoot]=useState(true);
+ const [opened,setOpened]=useState<WindowName[]>([]);
+ const [active,setActive]=useState<WindowName>("work");
+ const [selected,setSelected]=useState<string|null>(null);
+ const [time,setTime]=useState("");
+ const [copied,setCopied]=useState(false);
+ const [powerMenu,setPowerMenu]=useState(false);
+ useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
+ useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
+ function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name);setPowerMenu(false)}
+ function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
+ async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
+ const project=projects.find(p=>p.id===selected);
+ return <main className="os-site">
+ {boot&&<div className="intro-loader" role="status" aria-label="Starting portfolio"><div className="terminal-scene"><div className="scene-top"><span>ROLEX@DEVROLEX</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK LOOK BEHIND THE BUILD</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
+ <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">whoami</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
+ <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_do_you_do</span></p><p className="terminal-output line-four">I turn ideas into working digital products.</p>
+ <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">start_with_an_idea</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> shaping the experience</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> building what makes it work</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> getting it out into the world</p>
+ <p className="terminal-line line-nine"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"/></p></div></div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div><div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span><span className="scene-live"><i/> SESSION READY</span></div></div></div>}
+ <div className={boot?"os-desktop os-enter":"os-desktop"}>
+  <div className="os-menubar"><div className="os-menu-left"><span className="os-mark">r.</span><strong>Devrolex</strong><span className="menubar-app">Finder</span><span className="menubar-item">File</span><span className="menubar-item">View</span><span className="menubar-item">Go</span><span className="menubar-item">Window</span></div><div className="os-menu-right"><span>ROLEX@DEVROLEX</span><Wifi size={13}/><BatteryFull size={15}/><span>{time}</span></div></div>
+  <div className="desktop-wallpaper"><div className="wallpaper-grid"/><div className="wallpaper-glow"/><div className="desktop-signature"><span>OLABODE OLALEYE</span><strong>Ideas into<br/><em>digital products.</em></strong><small>FULL-STACK DEVELOPER / 2026</small></div>
+   <div className="desktop-icons">
+    <button className="desktop-icon" onDoubleClick={()=>openWindow("work")} onClick={()=>setSelected(null)}><span className="folder-icon"><Folder size={37} fill="currentColor"/></span><span>Work</span></button>
+    <button className="desktop-icon" onDoubleClick={()=>openWindow("about")}><span className="file-icon"><FileText size={34}/></span><span>About me.txt</span></button>
+    <button className="desktop-icon" onDoubleClick={()=>openWindow("stack")}><span className="app-icon"><Code2 size={28}/></span><span>Stack</span></button>
+    <button className="desktop-icon" onDoubleClick={()=>openWindow("contact")}><span className="mail-icon"><Mail size={31}/></span><span>Contact</span></button>
+   </div>
+   <div className="desktop-hint"><span className="hint-dot"/> DOUBLE-CLICK TO OPEN</div>
+   {opened.map(name=><section key={name} className={"os-window "+(active===name?"window-active":"")} onMouseDown={()=>setActive(name)}>
+    <header className="window-titlebar"><div className="window-controls"><button onClick={()=>closeWindow(name)} aria-label="Close"><X size={10}/></button><button onClick={()=>closeWindow(name)} aria-label="Minimize"><Minus size={10}/></button><button onClick={()=>setActive(name)} aria-label="Zoom"><span/></button></div><span>{windowTitles[name]}</span><MoreHorizontal size={15}/></header>
+    {name==="work"&&<div className="finder-window"><aside className="finder-sidebar"><span>FAVOURITES</span><button className="side-active"><Folder size={14}/> Projects</button><button onClick={()=>openWindow("about")}><FileText size={14}/> About</button><button onClick={()=>openWindow("stack")}><Code2 size={14}/> Applications</button><button onClick={()=>openWindow("contact")}><Mail size={14}/> Contact</button><div className="sidebar-bottom">ON THIS MAC<br/><small>Macintosh HD</small></div></aside><div className="finder-content"><div className="finder-toolbar"><span>Projects <ChevronRight size={12}/> {projects.length} items</span><Search size={14}/></div><div className="project-file-grid">{projects.map(p=><button key={p.id} className={"project-file "+(selected===p.id?"file-selected":"")} onClick={()=>setSelected(p.id)} onDoubleClick={()=>setSelected(p.id)}><span className="project-file-icon"><Globe2 size={29}/></span><strong>{p.file}</strong><small>{p.kind}</small></button>)}</div>{project&&<div className="finder-inspector"><div><span>SELECTED FILE</span><strong>{project.name}</strong><p>{project.description}</p><small>{project.stack}</small></div><div className="inspector-actions"><button onClick={()=>{if(project.url)window.open(project.url,"_blank","noopener,noreferrer")}}>Open project <ArrowUpRight size={13}/></button>{project.repo&&<a href={project.repo} target="_blank" rel="noreferrer">Source code <Github size={13}/></a>}</div></div>}</div></div>}
+    {name==="about"&&<div className="textedit-window"><div className="textedit-meta">ABOUT_ME.txt <span>Plain text</span></div><h2>Olabode Olaleye</h2><p className="textedit-role">Full-stack developer & digital product builder.</p><p>I like getting into the details of an idea, figuring out what it needs, and building the experience and technology that bring it to life.</p><p>I work across interfaces, backend systems, integrations and the details that make a product feel considered.</p><div className="textedit-footer">4 lines · UTF-8 · Plain text</div></div>}
+    {name==="stack"&&<div className="system-window"><div className="system-hero"><span className="system-chip"><Code2 size={24}/></span><div><h2>Developer workstation</h2><p>Tools I use to turn ideas into products.</p></div></div><div className="system-spec"><span>LANGUAGES</span><strong>TypeScript · JavaScript · Python · Rust · Solidity</strong></div><div className="system-spec"><span>FRONTEND</span><strong>React · Next.js · Tailwind CSS</strong></div><div className="system-spec"><span>BACKEND & DATA</span><strong>Node.js · Firebase · APIs · SQL</strong></div><div className="system-spec"><span>AI & WEB3</span><strong>AI integrations · Agents · Solana · EVM</strong></div><div className="system-spec"><span>WORKFLOW</span><strong>Git · GitHub · Vercel · Figma</strong></div></div>}
+    {name==="contact"&&<div className="mail-window"><div className="mail-toolbar"><span>To: <strong>olaleyeolabodejeremiah@gmail.com</strong></span><span>Subject: Let's build something</span></div><div className="mail-body">Hi Olabode,<br/><br/>I have an idea I'd like to bring to life...</div><div className="mail-actions"><a href="mailto:olaleyeolabodejeremiah@gmail.com?subject=Let's%20build%20something"><Mail size={14}/> Compose email <ArrowUpRight size={13}/></a><button onClick={copyEmail}>{copied?<><Check size={13}/> Copied</>:<>Copy address</>}</button></div></div>}
+    {name==="readme"&&<div className="readme-window"><span># README.md</span><h2>Welcome to my workspace.</h2><p>This is where ideas become products. Open the Work folder to explore selected projects, or use the desktop to find out more about me.</p><button onClick={()=>openWindow("work")}>Explore projects <ArrowUpRight size={13}/></button></div>}
+   </section>)}
+   <div className="os-dock"><button onClick={()=>openWindow("work")} title="Work"><Folder size={24} fill="currentColor"/></button><button onClick={()=>openWindow("about")} title="About"><FileText size={23}/></button><button onClick={()=>openWindow("stack")} title="Stack"><Code2 size={24}/></button><button onClick={()=>openWindow("contact")} title="Contact"><Mail size={24}/></button><i/><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" title="GitHub"><Github size={22}/></a></div>
+   <button className="desktop-power" onClick={()=>setPowerMenu(v=>!v)} aria-label="System menu"><Power size={14}/></button>{powerMenu&&<div className="power-menu"><strong>Devrolex Workstation</strong><span>Portfolio session active</span><button onClick={()=>{setOpened([]);setPowerMenu(false)}}>Close all windows</button><button onClick={()=>openWindow("readme")}>Open README</button></div>}
+  </div>
+ </div>
+ </main>
 }
