@@ -39,7 +39,7 @@ export default function Home() {
 <p className="terminal-output line-six"><span className="terminal-ok">✓</span> experience ready</p>
 <p className="terminal-line line-seven"><span className="terminal-prompt">rolex@devrolex ~ %</span> <span className="terminal-command">open portfolio</span><span className="terminal-caret"></span></p>
 </div>
-</div></div><div className={showLoader?"site-shell site-entering":"site-shell"}>
+</div></div>}<div className={showLoader?"site-shell site-entering":"site-shell"}>
     <header className="topbar">
       <a className="wordmark" href="#top" aria-label="Rolex home"><span className="wordmark-symbol">r.</span><span className="wordmark-name">ROLEX<span className="wordmark-code-mark">&lt;/&gt;</span>CODE</span></a>
       <button className="menu-toggle" type="button" aria-label={menuOpen?"Close menu":"Open menu"} aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={20}/>:<Menu size={20}/>}</button>
