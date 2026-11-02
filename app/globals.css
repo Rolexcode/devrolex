@@ -849,3 +849,5 @@
  .scene-status-track{margin:8px 0 6px}
  .scene-status small{font-size:7px}
 }
+
+.os-wordmark{display:inline-flex;align-items:center;gap:2px;font:700 14px var(--mono);letter-spacing:-.075em;color:#263126}.os-wordmark-tag{display:inline-flex;align-items:center;margin:0 1px;padding:2px 3px;border:1px solid #87967d;border-radius:4px;color:#617a4e;font:600 11px var(--mono);letter-spacing:-.12em;background:#edf1e8a8}.os-brand:hover .os-wordmark-tag{background:#e1e9d9}
