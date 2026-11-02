@@ -34,6 +34,28 @@ export default function Home(){
  const touchStart=useRef<number|null>(null);
  const wallpaperRef=useRef<HTMLDivElement>(null);
  useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
+ useEffect(()=>{
+  if(!boot)return;
+  let audio:AudioContext|null=null, interval:number|undefined, started=false;
+  const tick=()=>{
+   if(!audio||audio.state!=="running")return;
+   const oscillator=audio.createOscillator(),gain=audio.createGain();
+   oscillator.type="square";oscillator.frequency.value=880+Math.random()*180;
+   gain.gain.setValueAtTime(0.0001,audio.currentTime);
+   gain.gain.exponentialRampToValueAtTime(0.018,audio.currentTime+0.003);
+   gain.gain.exponentialRampToValueAtTime(0.0001,audio.currentTime+0.018);
+   oscillator.connect(gain);gain.connect(audio.destination);
+   oscillator.start();oscillator.stop(audio.currentTime+0.02);
+  };
+  const start=()=>{
+   if(started)return;started=true;
+   try{const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;if(!AudioContextClass)return;
+    audio=new AudioContextClass();void audio.resume();tick();interval=window.setInterval(tick,105);
+   }catch{}
+  };
+  window.addEventListener("pointerdown",start,{once:true});window.addEventListener("keydown",start,{once:true});
+  return()=>{window.removeEventListener("pointerdown",start);window.removeEventListener("keydown",start);if(interval)window.clearInterval(interval);if(audio)void audio.close()};
+ },[boot]);
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.key==="ArrowDown"||event.key==="PageDown"?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
@@ -41,8 +63,8 @@ export default function Home(){
  function goScene(direction:"next"|"prev"){setScene(v=>{const next=Math.max(0,Math.min(3,v+(direction==="next"?1:-1))) as Scene;if(next!==v)setFlipDirection(direction);return next})}
  function nextScene(){goScene("next")}
  function prevScene(){goScene("prev")}
- function handleWheel(event:React.WheelEvent<HTMLDivElement>){if((event.target as HTMLElement).closest(".os-window,.os-dock,button,a,input,textarea"))return;if(Math.abs(event.deltaY)<12)return;event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.deltaY>0?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}
- function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;if((event.target as HTMLElement).closest(".os-window,.os-dock,.os-menubar,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
+ function handleWheel(event:React.WheelEvent<HTMLDivElement>){if((event.target as HTMLElement).closest(".os-window,.os-dock,.scene-content-1,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(event.deltaY)<12)return;event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.deltaY>0?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}
+ function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;if((event.target as HTMLElement).closest(".os-window,.os-dock,.os-menubar,.scene-content-1,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
  function resetDesktop(){setScene(0);setOpened([]);setActive("work");setDesktopOS("mac");setOsMenuOpen(false)}
  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
  const project=projects.find(p=>p.id===selected);
@@ -107,7 +129,13 @@ export default function Home(){
     {name==="contact"&&<div className="mail-window"><div className="mail-toolbar"><span>LET'S TALK</span><strong>olaleyeolabodejeremiah@gmail.com</strong></div><h2>Have something<br/><em>in mind?</em></h2><p>Tell me what you're thinking. Let's see what we can build.</p><div className="mail-actions"><a href="mailto:olaleyeolabodejeremiah@gmail.com?subject=Let's%20build%20something"><Mail size={14}/> Compose email <ArrowUpRight size={13}/></a><button onClick={copyEmail}>{copied?<><Check size={13}/> Copied</>:<>Copy email</>}</button></div></div>}
     {name==="readme"&&<div className="readme-window"><span>WELCOME / dev{"</>"}rolex</span><h2>A workspace for<br/><em>ideas in motion.</em></h2><p>Move through the portfolio with the taskbar or scroll between pages. Open a project to explore the live build, then get in touch if you have something in mind.</p><div className="readme-actions"><button onClick={()=>openWindow("work")}>Explore projects <ArrowUpRight size={13}/></button><button onClick={()=>{setScene(0);closeWindow("readme")}}>Start the story</button></div></div>}
    </section>)}
-   <div className="os-dock" role="navigation" aria-label="Portfolio pages"><button className={scene===0?"is-active":""} onClick={()=>{setFlipDirection(scene>0?"prev":"next");setScene(0)}} title="Home" aria-label="Home"><House size={20}/></button><button className={scene===1?"is-active":""} onClick={()=>{setFlipDirection(scene>1?"prev":"next");setScene(1)}} title="Projects" aria-label="Projects"><BriefcaseBusiness size={20}/></button><button className={scene===2?"is-active":""} onClick={()=>{setFlipDirection(scene>2?"prev":"next");setScene(2)}} title="About" aria-label="About"><UserRound size={20}/></button><button className={scene===3?"is-active":""} onClick={()=>{setFlipDirection("next");setScene(3)}} title="Contact" aria-label="Contact"><Mail size={20}/></button><button className="os-os-trigger" onClick={()=>setOsMenuOpen(v=>!v)} aria-label="Change operating system" title="Change operating system" aria-expanded={osMenuOpen}><MonitorCog size={19}/></button></div>
+   <div className="os-dock" role="navigation" aria-label="Portfolio pages">
+   <button className={scene===0?"is-active":""} onClick={()=>{setFlipDirection(scene>0?"prev":"next");setScene(0)}} title="Home" aria-label="Home"><span className="dock-app-icon dock-home"><House size={22}/></span></button>
+   <button className={scene===1?"is-active":""} onClick={()=>{setFlipDirection(scene>1?"prev":"next");setScene(1)}} title="Projects" aria-label="Projects"><span className="dock-app-icon dock-projects"><BriefcaseBusiness size={22}/></span></button>
+   <button className={scene===2?"is-active":""} onClick={()=>{setFlipDirection(scene>2?"prev":"next");setScene(2)}} title="Approach" aria-label="Approach"><span className="dock-app-icon dock-about"><UserRound size={22}/></span></button>
+   <button className={scene===3?"is-active":""} onClick={()=>{setFlipDirection("next");setScene(3)}} title="Contact" aria-label="Contact"><span className="dock-app-icon dock-contact"><Mail size={22}/></span></button>
+   <button className="os-os-trigger" onClick={()=>setOsMenuOpen(v=>!v)} aria-label="Change operating system" title="Change operating system" aria-expanded={osMenuOpen}><span className="dock-app-icon dock-settings"><MonitorCog size={22}/></span></button>
+  </div>
 
   </div>
  </div>
