@@ -36,6 +36,7 @@ export default function Home(){
  useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{
   if(!boot)return;
+  const introStarted=Date.now();
   let audio:AudioContext|null=null, interval:number|undefined, stopTimer:number|undefined, started=false;
   const tick=()=>{
    if(!audio||audio.state!=="running")return;
@@ -48,7 +49,7 @@ export default function Home(){
    oscillator.start();oscillator.stop(audio.currentTime+0.02);
   };
   const start=()=>{
-   if(started)return;started=true;
+   if(started||Date.now()-introStarted>3200)return;started=true;
    try{const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;if(!AudioContextClass)return;
     audio=new AudioContextClass();void audio.resume();tick();interval=window.setInterval(tick,105);stopTimer=window.setTimeout(()=>{if(interval)window.clearInterval(interval);if(audio)void audio.close()},3300);
    }catch{}
