@@ -787,3 +787,39 @@
  .os-linux .scene-navigation{left:20px}
  .wallpaper-orb{right:0;top:16%}
 }
+
+
+/* Full-screen desktop chapters: wheel / swipe driven, with a physical page-turn feel */
+.os-brand{display:flex;align-items:center;gap:8px;border:0;background:transparent;color:inherit;padding:3px 5px 3px 0;margin:0;cursor:pointer;border-radius:7px;transition:background .18s,transform .18s}
+.os-brand:hover{background:#ffffff75;transform:translateY(-1px)}
+.os-brand:focus-visible{outline:2px solid #718b70;outline-offset:3px}
+.desktop-wallpaper{touch-action:pan-y;cursor:default;perspective:1400px;isolation:isolate}
+.desktop-wallpaper:before{content:"";position:absolute;inset:-2%;z-index:-2;background-image:linear-gradient(90deg,#0b1114b5 0%,#0b11144d 54%,#0b11143b 100%),linear-gradient(0deg,#07101472,transparent 46%),url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=3840&q=90");background-size:cover;background-position:center 48%;transform:scale(1.035);transition:filter .7s ease,transform 1s ease}
+.desktop-wallpaper:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(120deg,#10191b30,transparent 55%),linear-gradient(0deg,#08101332,transparent 35%)}
+.wallpaper-art{display:none}
+.desktop-wallpaper.wallpaper-scene-1:before{background-image:linear-gradient(90deg,#101a20c9 0%,#101a2055 57%,#101a2033 100%),linear-gradient(0deg,#07101472,transparent 46%),url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=3840&q=90");background-position:center 52%}
+.desktop-wallpaper.wallpaper-scene-2:before{background-image:linear-gradient(90deg,#111b20d4 0%,#111b205c 57%,#111b2033 100%),linear-gradient(0deg,#07101472,transparent 46%),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=3840&q=90");background-position:center 50%}
+.desktop-wallpaper.wallpaper-scene-3:before{background-image:linear-gradient(90deg,#080f1bd9 0%,#080f1b66 57%,#080f1b30 100%),linear-gradient(0deg,#0509118a,transparent 50%),url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=3840&q=90");background-position:center 48%}
+.desktop-wallpaper.flip-next:before{animation:screen-turn-next .82s cubic-bezier(.2,.72,.18,1) both}
+.desktop-wallpaper.flip-prev:before{animation:screen-turn-prev .82s cubic-bezier(.2,.72,.18,1) both}
+.desktop-wallpaper.flip-next .desktop-copy{animation:screen-copy-next .68s cubic-bezier(.2,.72,.18,1) both}
+.desktop-wallpaper.flip-prev .desktop-copy{animation:screen-copy-prev .68s cubic-bezier(.2,.72,.18,1) both}
+@keyframes screen-turn-next{0%{opacity:.55;transform:scale(1.09) rotateX(3deg) translateY(2.5%);filter:blur(5px)}100%{opacity:1;transform:scale(1.035) rotateX(0) translateY(0);filter:blur(0)}}
+@keyframes screen-turn-prev{0%{opacity:.55;transform:scale(1.09) rotateX(-3deg) translateY(-2.5%);filter:blur(5px)}100%{opacity:1;transform:scale(1.035) rotateX(0) translateY(0);filter:blur(0)}}
+@keyframes screen-copy-next{0%{opacity:0;transform:translateY(34px) rotateX(-4deg);filter:blur(7px)}100%{opacity:1;transform:none;filter:blur(0)}}
+@keyframes screen-copy-prev{0%{opacity:0;transform:translateY(-34px) rotateX(4deg);filter:blur(7px)}100%{opacity:1;transform:none;filter:blur(0)}}
+.desktop-copy{transform-origin:center center}
+.desktop-hint{bottom:26px;left:8%;padding:10px 13px;border:1px solid #ffffff30;border-radius:30px;background:#08131775;backdrop-filter:blur(12px);font-size:9px}
+.desktop-icons{z-index:4}
+.os-window{z-index:12}
+@media(max-width:760px){
+ .desktop-wallpaper:before{background-position:58% center}
+ .desktop-wallpaper.wallpaper-scene-1:before,.desktop-wallpaper.wallpaper-scene-2:before,.desktop-wallpaper.wallpaper-scene-3:before{background-position:58% center}
+ .desktop-hint{left:14px;bottom:14px;max-width:calc(100% - 28px);font-size:8px}
+ .os-menu-left{gap:10px}
+ .os-brand{gap:5px}
+ .os-menu-left button{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ .desktop-wallpaper.flip-next:before,.desktop-wallpaper.flip-prev:before,.desktop-wallpaper.flip-next .desktop-copy,.desktop-wallpaper.flip-prev .desktop-copy{animation:none}
+}
