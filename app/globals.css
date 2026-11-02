@@ -1280,3 +1280,72 @@
 @media(prefers-reduced-motion:reduce){
   .os-dock button:hover .dock-app-icon,.os-dock button:focus-visible .dock-app-icon{transform:none}
 }
+
+
+/* Final polish: generous Liquid Glass navigation and full project-by-project browsing */
+.os-topbar{
+  background:rgba(15,24,19,.24)!important;
+  border-bottom:1px solid rgba(255,255,255,.2)!important;
+  box-shadow:0 8px 30px rgba(0,0,0,.12)!important;
+  -webkit-backdrop-filter:blur(32px) saturate(185%)!important;
+  backdrop-filter:blur(32px) saturate(185%)!important;
+}
+.os-topbar:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.09),transparent 70%)}
+.os-dock{
+  width:min(920px,calc(100% - 80px))!important;
+  height:116px!important;min-height:116px!important;
+  justify-content:space-around!important;
+  gap:clamp(30px,5vw,76px)!important;
+  padding:17px clamp(32px,5vw,68px) 19px!important;
+  border-radius:34px!important;
+  background:rgba(229,239,234,.16)!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.12)!important;
+  -webkit-backdrop-filter:blur(38px) saturate(190%)!important;
+  backdrop-filter:blur(38px) saturate(190%)!important;
+}
+.os-dock button,.os-dock a{width:76px!important;height:76px!important;flex:0 0 76px!important}
+.dock-app-icon{
+  width:74px;height:74px;border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 11px 24px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -6px 12px rgba(0,0,0,.13);
+}
+.dock-app-icon svg{width:100%;height:100%;padding:9px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.15))}
+.dock-app-icon:before{background:linear-gradient(145deg,rgba(255,255,255,.48),rgba(255,255,255,.08) 43%,rgba(0,0,0,.18))}
+.dock-home{background:linear-gradient(145deg,#83d9e7,#28758a 62%,#1d4c63)}
+.dock-projects{background:linear-gradient(145deg,#ffdc9c,#e79a48 58%,#a75d32)}
+.dock-about{background:linear-gradient(145deg,#d0d4ff,#7888d6 58%,#48548e)}
+.dock-contact{background:linear-gradient(145deg,#b5efc5,#5eae7c 58%,#28694f)}
+.dock-settings{background:linear-gradient(145deg,#d9e1df,#879b99 58%,#4f6667)}
+.os-dock button:hover .dock-app-icon,.os-dock button:focus-visible .dock-app-icon{transform:translateY(-10px) scale(1.08);filter:brightness(1.08)}
+.os-dock button.is-active .dock-app-icon{outline:2px solid rgba(255,255,255,.95);outline-offset:4px}
+.desktop-copy-scene.scene-content-1{scroll-behavior:smooth;scroll-snap-type:y mandatory;scroll-padding-top:18px}
+.work-scroll-area{gap:0!important}
+.work-scroll-project{
+  min-height:calc(100svh - 170px)!important;
+  scroll-snap-align:start!important;
+  scroll-snap-stop:always;
+  scroll-margin-top:18px!important;
+  padding:22px 0 34px!important;
+}
+.work-scroll-visual{height:clamp(260px,38vh,410px)!important}
+.work-scroll-info h2{margin:10px 0!important}
+.work-scroll-info>p{line-height:1.65!important}
+.work-project-role{margin-top:12px!important}
+.work-project-stack{margin-top:9px!important}
+.work-project-links{margin-top:15px!important}
+@media(max-width:760px){
+ .os-topbar{-webkit-backdrop-filter:blur(28px) saturate(180%)!important;backdrop-filter:blur(28px) saturate(180%)!important}
+ .os-dock{width:calc(100% - 26px)!important;height:88px!important;min-height:88px!important;gap:clamp(8px,3.2vw,20px)!important;padding:10px 10px 12px!important;border-radius:27px!important;bottom:12px!important}
+ .os-dock button,.os-dock a{width:54px!important;height:54px!important;flex:0 0 54px!important}
+ .dock-app-icon{width:52px;height:52px;border-radius:16px}
+ .dock-app-icon svg{padding:6px}
+ .desktop-copy-scene.scene-content-1{scroll-snap-type:y mandatory;scroll-padding-top:12px}
+ .work-scroll-project{min-height:0!important;display:block!important;padding:16px 0 36px!important;scroll-margin-top:10px!important}
+ .work-scroll-visual{height:250px!important}
+}
+@media(max-width:390px){
+ .os-dock{gap:6px!important;padding-left:7px!important;padding-right:7px!important}
+ .os-dock button,.os-dock a{width:47px!important;height:49px!important;flex-basis:47px!important}
+ .dock-app-icon{width:46px;height:46px;border-radius:14px}
+}
