@@ -829,3 +829,23 @@
 .desktop-wallpaper.flip-prev.flip-step-0:before,.desktop-wallpaper.flip-prev.flip-step-1:before,.desktop-wallpaper.flip-prev.flip-step-2:before{animation:screen-turn-prev .82s cubic-bezier(.2,.72,.18,1) both}
 .desktop-wallpaper.flip-next.flip-step-1 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-2 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-3 .desktop-copy{animation:screen-copy-next .68s cubic-bezier(.2,.72,.18,1) both}
 .desktop-wallpaper.flip-prev.flip-step-0 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-1 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-2 .desktop-copy{animation:screen-copy-prev .68s cubic-bezier(.2,.72,.18,1) both}
+
+
+/* Active chapter marker: a quiet, persistent sense of place */
+.scene-status{position:absolute;z-index:6;left:8%;bottom:25px;width:205px;padding:11px 13px;border:1px solid #ffffff35;border-radius:10px;background:#081317a8;color:#eaf0e7;backdrop-filter:blur(14px);box-shadow:0 10px 32px #0002}
+.scene-status-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.scene-status-top>span{font:7px var(--mono);letter-spacing:.16em;color:#c3d0c3a8}
+.scene-status-top strong{font:8px var(--mono);letter-spacing:.1em;color:#e8eee4}
+.scene-status-track{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:10px 0 8px}
+.scene-status-track span{height:2px;border-radius:3px;background:#ffffff40;transition:background .35s,transform .35s}
+.scene-status-track span.is-current{background:var(--desk-accent);transform:scaleY(1.8)}
+.scene-status-track span.is-complete{background:#dce9d2a8}
+.scene-status small{display:flex;align-items:center;gap:5px;color:#d2ddd0a8;font:8px var(--sans);letter-spacing:.02em}
+.scene-status small i{font-style:normal;color:var(--desk-accent);font-size:11px}
+@media(max-width:760px){
+ .scene-status{left:14px;bottom:13px;width:184px;padding:9px 11px;border-radius:8px}
+ .scene-status-top>span{font-size:6px}
+ .scene-status-top strong{font-size:7px}
+ .scene-status-track{margin:8px 0 6px}
+ .scene-status small{font-size:7px}
+}
