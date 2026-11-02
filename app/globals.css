@@ -1120,3 +1120,68 @@
  .contact-scene-bottom{align-items:flex-start;flex-direction:column;margin-top:30px}
 }
 @media(prefers-reduced-motion:reduce){.os-dock button,.os-dock a{transition:none!important}}
+
+
+/* Glass desktop chrome and a roomier, app-like dock */
+.os-topbar{
+ position:sticky;top:0;z-index:60;
+ background:rgba(231,238,229,.34)!important;
+ border-bottom:1px solid rgba(255,255,255,.28)!important;
+ box-shadow:0 5px 24px rgba(0,0,0,.08)!important;
+ -webkit-backdrop-filter:blur(26px) saturate(165%);
+ backdrop-filter:blur(26px) saturate(165%);
+}
+.os-topbar-brand,.os-topbar-status{color:#edf2e9!important;text-shadow:0 1px 10px rgba(0,0,0,.24)}
+.os-topbar-brand>span{color:#d1dacd!important;border-color:#ffffff55!important}
+.os-topbar-status i{background:#ffffff66!important}
+.os-topbar-status svg{color:#edf2e9!important}
+.os-dock{
+ width:min(590px,calc(100% - 48px))!important;
+ min-height:88px!important;height:88px!important;
+ gap:clamp(17px,3vw,32px)!important;
+ padding:12px 30px 13px!important;
+ border:1px solid rgba(255,255,255,.32)!important;
+ border-radius:27px!important;
+ background:rgba(232,239,232,.22)!important;
+ color:#fff!important;
+ box-shadow:0 18px 55px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.28)!important;
+ -webkit-backdrop-filter:blur(30px) saturate(175%);
+ backdrop-filter:blur(30px) saturate(175%);
+}
+.os-dock button,.os-dock a{
+ width:62px!important;height:62px!important;flex:0 0 62px!important;
+ padding:0!important;border:0!important;border-radius:18px!important;
+ background:transparent!important;box-shadow:none!important;color:#fff!important;
+}
+.dock-app-icon{
+ width:58px;height:58px;display:grid;place-items:center;
+ border-radius:17px;color:white;position:relative;overflow:hidden;
+ border:1px solid rgba(255,255,255,.38);
+ box-shadow:0 6px 16px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.4);
+ transition:transform .22s cubic-bezier(.2,.8,.2,1),filter .22s;
+}
+.dock-app-icon:before{content:"";position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.38),transparent 48%,rgba(0,0,0,.16));pointer-events:none}
+.dock-app-icon svg{position:relative;z-index:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.22));stroke-width:1.8}
+.dock-home{background:linear-gradient(145deg,#80b8c4,#386d81)}
+.dock-projects{background:linear-gradient(145deg,#e6b86c,#b36c39)}
+.dock-about{background:linear-gradient(145deg,#9ca7d6,#565f9a)}
+.dock-contact{background:linear-gradient(145deg,#8bbd9b,#39775a)}
+.dock-settings{background:linear-gradient(145deg,#aab4b0,#626e6b)}
+.os-dock button:hover .dock-app-icon,.os-dock button:focus-visible .dock-app-icon{transform:translateY(-8px) scale(1.07);filter:brightness(1.08)}
+.os-dock button.is-active .dock-app-icon{outline:2px solid rgba(255,255,255,.9);outline-offset:3px}
+.os-dock button.is-active{background:transparent!important;box-shadow:none!important}
+.os-dock button.is-active:after{content:"";position:absolute;bottom:5px;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 9px #fff}
+.os-dock .os-os-trigger{margin-left:0!important}
+.os-dock .os-os-trigger .dock-app-icon{background:linear-gradient(145deg,#aab4b0,#626e6b)}
+@media(max-width:760px){
+ .os-topbar{background:rgba(231,238,229,.27)!important}
+ .os-dock{width:calc(100% - 30px)!important;min-height:75px!important;height:75px!important;gap:clamp(8px,3vw,18px)!important;padding:9px 12px 10px!important;border-radius:23px!important;bottom:12px!important}
+ .os-dock button,.os-dock a{width:48px!important;height:48px!important;flex-basis:48px!important}
+ .dock-app-icon{width:46px;height:46px;border-radius:14px}
+ .dock-app-icon svg{width:19px;height:19px}
+}
+@media(max-width:390px){
+ .os-dock{gap:7px!important;padding-left:8px!important;padding-right:8px!important}
+ .os-dock button,.os-dock a{width:44px!important;height:46px!important;flex-basis:44px!important}
+ .dock-app-icon{width:43px;height:43px;border-radius:13px}
+}
