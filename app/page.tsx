@@ -33,7 +33,8 @@ export default function Home(){
  const flipLock=useRef(false);
  const touchStart=useRef<number|null>(null);
  const wallpaperRef=useRef<HTMLDivElement>(null);
- useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
+ const bootStartedAt=useRef(0);
+ useEffect(()=>{bootStartedAt.current=performance.now();const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{
   if(!boot)return;
   let audio:AudioContext|null=null, timers:number[]=[];
@@ -58,10 +59,12 @@ export default function Home(){
       timers.push(timer);
      }
     };
-    typeRun(0,.45,.075,850);
-    typeRun(0,1,.075,2050);
-    typeRun(0,1.15,.075,3550);
-    typeRun(0,.85,.075,5150);
+    const elapsed=performance.now()-bootStartedAt.current;
+    const sync=(at:number)=>Math.max(0,at-elapsed);
+    typeRun(0,.45,.075,sync(850));
+    typeRun(0,1,.075,sync(2050));
+    typeRun(0,1.15,.075,sync(3550));
+    typeRun(0,.85,.075,sync(5150));
     timers.push(window.setTimeout(()=>{if(audio&&audio.state!=="closed")void audio.close()},6400));
    }catch{}
   };
