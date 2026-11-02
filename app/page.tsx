@@ -36,7 +36,7 @@ export default function Home(){
  useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{
   if(!boot)return;
-  let audio:AudioContext|null=null, interval:number|undefined, started=false;
+  let audio:AudioContext|null=null, interval:number|undefined, stopTimer:number|undefined, started=false;
   const tick=()=>{
    if(!audio||audio.state!=="running")return;
    const oscillator=audio.createOscillator(),gain=audio.createGain();
@@ -50,11 +50,11 @@ export default function Home(){
   const start=()=>{
    if(started)return;started=true;
    try{const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;if(!AudioContextClass)return;
-    audio=new AudioContextClass();void audio.resume();tick();interval=window.setInterval(tick,105);
+    audio=new AudioContextClass();void audio.resume();tick();interval=window.setInterval(tick,105);stopTimer=window.setTimeout(()=>{if(interval)window.clearInterval(interval);if(audio)void audio.close()},3300);
    }catch{}
   };
   window.addEventListener("pointerdown",start,{once:true});window.addEventListener("keydown",start,{once:true});
-  return()=>{window.removeEventListener("pointerdown",start);window.removeEventListener("keydown",start);if(interval)window.clearInterval(interval);if(audio)void audio.close()};
+  return()=>{window.removeEventListener("pointerdown",start);window.removeEventListener("keydown",start);if(interval)window.clearInterval(interval);if(stopTimer)window.clearTimeout(stopTimer);if(audio&&audio.state!=="closed")void audio.close()};
  },[boot]);
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.key==="ArrowDown"||event.key==="PageDown"?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
