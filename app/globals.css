@@ -978,3 +978,9 @@
  .scene-project-preview iframe{height:115px}
 }
 @media(prefers-reduced-motion:reduce){.desktop-wallpaper.flip-next:before,.desktop-wallpaper.flip-prev:before,.desktop-wallpaper.flip-next .desktop-copy,.desktop-wallpaper.flip-prev .desktop-copy{animation:none!important}}
+
+/* Keep navigation changes atmospheric, never a page-turn or card flip. */
+.desktop-wallpaper.flip-next.flip-step-0:before,.desktop-wallpaper.flip-next.flip-step-1:before,.desktop-wallpaper.flip-next.flip-step-2:before,.desktop-wallpaper.flip-next.flip-step-3:before,
+.desktop-wallpaper.flip-prev.flip-step-0:before,.desktop-wallpaper.flip-prev.flip-step-1:before,.desktop-wallpaper.flip-prev.flip-step-2:before,.desktop-wallpaper.flip-prev.flip-step-3:before{animation:wallpaper-crossfade .58s cubic-bezier(.2,.7,.2,1) both}
+.desktop-wallpaper.flip-next.flip-step-0 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-1 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-2 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-3 .desktop-copy,
+.desktop-wallpaper.flip-prev.flip-step-0 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-1 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-2 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-3 .desktop-copy{animation:copy-crossfade .48s ease both}
