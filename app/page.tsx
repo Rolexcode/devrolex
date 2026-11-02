@@ -36,26 +36,37 @@ export default function Home(){
  useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{
   if(!boot)return;
-  const introStarted=Date.now();
-  let audio:AudioContext|null=null, interval:number|undefined, stopTimer:number|undefined, started=false;
-  const tick=()=>{
-   if(!audio||audio.state!=="running")return;
-   const oscillator=audio.createOscillator(),gain=audio.createGain();
-   oscillator.type="square";oscillator.frequency.value=880+Math.random()*180;
-   gain.gain.setValueAtTime(0.0001,audio.currentTime);
-   gain.gain.exponentialRampToValueAtTime(0.018,audio.currentTime+0.003);
-   gain.gain.exponentialRampToValueAtTime(0.0001,audio.currentTime+0.018);
-   oscillator.connect(gain);gain.connect(audio.destination);
-   oscillator.start();oscillator.stop(audio.currentTime+0.02);
-  };
+  let audio:AudioContext|null=null, timers:number[]=[];
   const start=()=>{
-   if(started||Date.now()-introStarted>3200)return;started=true;
-   try{const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;if(!AudioContextClass)return;
-    audio=new AudioContextClass();void audio.resume();tick();interval=window.setInterval(tick,105);stopTimer=window.setTimeout(()=>{if(interval)window.clearInterval(interval);if(audio)void audio.close()},3300);
+   if(audio)return;
+   try{
+    const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
+    if(!AudioContextClass)return;
+    audio=new AudioContextClass();void audio.resume();
+    // Soft mechanical key taps timed to the terminal's staggered typing sequence.
+    const typeRun=(from:number,to:number,step:number,delay:number)=>{
+     for(let t=from;t<to;t+=step){
+      const timer=window.setTimeout(()=>{
+       if(!audio||audio.state!=="running")return;
+       const now=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();
+       osc.type="triangle";osc.frequency.setValueAtTime(1250+(Math.random()*260),now);
+       gain.gain.setValueAtTime(0.0001,now);
+       gain.gain.exponentialRampToValueAtTime(0.012,now+0.002);
+       gain.gain.exponentialRampToValueAtTime(0.0001,now+0.014);
+       osc.connect(gain);gain.connect(audio.destination);osc.start(now);osc.stop(now+0.016);
+      },delay+(t-from)*1000);
+      timers.push(timer);
+     }
+    };
+    typeRun(0,.45,.075,850);
+    typeRun(0,1,.075,2050);
+    typeRun(0,1.15,.075,3550);
+    typeRun(0,.85,.075,5150);
+    timers.push(window.setTimeout(()=>{if(audio&&audio.state!=="closed")void audio.close()},6400));
    }catch{}
   };
   window.addEventListener("pointerdown",start,{once:true});window.addEventListener("keydown",start,{once:true});
-  return()=>{window.removeEventListener("pointerdown",start);window.removeEventListener("keydown",start);if(interval)window.clearInterval(interval);if(stopTimer)window.clearTimeout(stopTimer);if(audio&&audio.state!=="closed")void audio.close()};
+  return()=>{window.removeEventListener("pointerdown",start);window.removeEventListener("keydown",start);timers.forEach(window.clearTimeout);if(audio&&audio.state!=="closed")void audio.close()};
  },[boot]);
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.key==="ArrowDown"||event.key==="PageDown"?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
@@ -73,7 +84,7 @@ export default function Home(){
 
  return <main className="os-site">
  {boot&&<div className="intro-loader" role="status" aria-label="Starting portfolio"><div className="terminal-scene"><div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
- <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">whoami</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
+ <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
  <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p>
  <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product design and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p>
  <p className="terminal-line line-nine"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"/></p></div></div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div><div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span><span className="scene-live"><i/> SESSION READY</span></div></div></div>}
@@ -100,7 +111,7 @@ export default function Home(){
         <div className="work-scroll-heading"><span>0{index+1} / 0{projects.length}</span><span>{item.kind} · {item.year}</span></div>
         <div className="work-scroll-grid">
           <div className={`work-scroll-visual work-visual-${item.id}`}>
-            {item.preview?<iframe src={item.preview} title={item.name+" live project preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"/>:<div className="work-scroll-fallback"><span>ZERION HACKATHON BUILD</span><strong>Portfolio watch.<br/><em>On-chain action.</em></strong><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p></div>}
+            {item.preview?<iframe src={item.preview} title={item.name+" live project preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" tabIndex={-1}/>:<div className="work-scroll-fallback"><span>ZERION HACKATHON BUILD</span><strong>Portfolio watch.<br/><em>On-chain action.</em></strong><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p></div>}
             <a href={item.url} target="_blank" rel="noreferrer" className="work-preview-open">Open live project <ArrowUpRight size={13}/></a>
           </div>
           <div className="work-scroll-info"><span className="work-project-type">{item.kind}</span><h2>{item.name}</h2><p>{item.description}</p><div className="work-project-role">{item.role}</div><div className="work-project-stack">{item.stack.split(" · ").map(tag=><span key={tag}>{tag}</span>)}</div><div className="work-project-links"><a href={item.url} target="_blank" rel="noreferrer">Explore project <ArrowUpRight size={13}/></a>{item.repo&&<a href={item.repo} target="_blank" rel="noreferrer">Source code <Github size={13}/></a>}</div></div>
