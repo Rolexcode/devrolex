@@ -13,10 +13,10 @@ type WindowName="work"|"about"|"stack"|"contact"|"readme";
 type Scene=0|1|2|3;
 type DesktopOS="mac"|"windows"|"linux";
 const scenes=[
- {eyebrow:"FULL-STACK DEVELOPER · DIGITAL PRODUCT BUILDER",title:"Let’s bring<br/><em>it to life.</em>",copy:"I turn ideas into useful digital products — from the first sketch of an idea to a finished experience people can use.",tag:"HOME",detail:"IDEAS · EXPERIENCE · PRODUCT",mark:"⌂"},
- {eyebrow:"SELECTED WORK · 2026",title:"A few things<br/>I’ve <em>built.</em>",copy:"Different ideas, different challenges. Each one started with a problem worth solving. Explore the work, then open a live build.",tag:"PROJECTS",detail:"ÌRÒYÌN · CAMPUSGIG · NEXUS · ZENGUARD",mark:"▦"},
- {eyebrow:"A LITTLE ABOUT ME",title:"I like turning<br/><em>what if</em> into what’s next.",copy:"I’m Olabode Olaleye, a full-stack developer. I get into the details of an idea, figure out what it needs, and build the experience and technology that bring it to life.",tag:"ABOUT",detail:"THOUGHTFUL INTERFACES · SOLID ENGINEERING",mark:"◎"},
- {eyebrow:"HAVE SOMETHING IN MIND?",title:"Tell me<br/><em>about it.</em>",copy:"A rough idea, a clear brief or just a problem you want solved — tell me about it. Let’s figure out what we can make.",tag:"CONTACT",detail:"OLALEYEOLABODEJEREMIAH@GMAIL.COM",mark:"↗"}
+ {eyebrow:"Full-stack developer · Digital product builder",title:"Let’s bring<br/><em>it to life.</em>",copy:"I turn ideas into useful digital products — from the first sketch of an idea to a finished experience people can use.",tag:"Home",detail:"Ideas · Experience · Product",mark:"⌂"},
+ {eyebrow:"Selected work · 2026",title:"A few things<br/>I’ve <em>built.</em>",copy:"Different ideas, different challenges. Each one started with a problem worth solving. Explore the work, then open a live build.",tag:"Projects",detail:"Ìròyìn · CampusGig · Nexus · ZenGuard",mark:"▦"},
+ {eyebrow:"A little about me",title:"I like turning<br/><em>what if</em> into what’s next.",copy:"I’m Olabode Olaleye, a full-stack developer. I get into the details of an idea, figure out what it needs, and build the experience and technology that bring it to life.",tag:"About",detail:"Thoughtful interfaces · Solid engineering",mark:"◎"},
+ {eyebrow:"Have something in mind?",title:"Tell me<br/><em>about it.</em>",copy:"A rough idea, a clear brief or just a problem you want solved — tell me about it. Let’s figure out what we can make.",tag:"Contact",detail:"olaleyeolabodejeremiah@gmail.com",mark:"↗"}
 ];
 const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",stack:"The toolkit",contact:"Get in touch",readme:"Start here"};
 export default function Home(){
