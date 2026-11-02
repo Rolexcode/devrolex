@@ -927,3 +927,54 @@
  .os-experience-trigger{right:0;padding:10px 8px;font-size:7px}
  .os-experience-panel{right:12px;width:205px}
 }
+
+/* One unified taskbar; the page icons are the primary navigation. */
+.os-menubar,.os-experience-trigger,.desktop-icons,.scene-status{display:none!important}
+.os-dock{position:absolute;z-index:40;left:50%;right:auto;bottom:18px;transform:translateX(-50%);width:min(620px,calc(100% - 34px));min-height:58px;display:flex;align-items:center;justify-content:center;gap:9px;padding:8px 13px;border:1px solid #ffffff42;border-radius:17px;background:#e9eee8e8;color:#304237;box-shadow:0 14px 42px #0005;backdrop-filter:blur(22px)}
+.os-dock button,.os-dock a{width:40px;height:40px;flex:0 0 40px;border:0;border-radius:11px;display:grid;place-items:center;background:transparent;color:#52665a;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.os-dock button:hover,.os-dock a:hover{background:#dce6dc;color:#243b2d;transform:translateY(-2px)}
+.os-dock button.is-active{background:#dce8d5;color:#263e2c;box-shadow:inset 0 0 0 1px #b8c9ae}
+.os-dock .os-brand{width:auto;flex:0 0 auto;padding:0 9px;border-radius:8px}
+.os-wordmark{font:700 13px var(--mono);letter-spacing:-.09em;color:#263126}
+.os-wordmark-tag{display:inline;margin:0;padding:0;border:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit}
+.os-dock>i{height:27px;width:1px;flex:0 0 1px;background:#b9c5b7;margin:0 3px}
+.os-dock-time{margin-left:2px;color:#68786a;font:9px var(--mono);white-space:nowrap}
+.os-os-trigger{margin-left:auto!important}
+.os-experience-panel{position:absolute;z-index:50;right:max(18px,calc((100% - 620px)/2 + 8px));top:auto;bottom:88px;transform:none;width:218px;padding:14px;border:1px solid #ffffff70;border-radius:13px;background:#edf0e8f5;color:#2d3b30;box-shadow:0 16px 50px #0006;backdrop-filter:blur(20px)}
+.os-experience-panel-head{display:flex;align-items:center;justify-content:space-between;font:8px var(--mono);letter-spacing:.12em;color:#6f7c6d}
+.os-experience-panel-head button{width:23px;height:23px;display:grid;place-items:center;border:0;border-radius:5px;background:#dce3d7;color:#52634f;cursor:pointer}
+.os-experience-panel>p{margin:8px 0 12px;font-size:10px;line-height:1.5;color:#7a8578}
+.os-experience-options{display:grid;gap:6px}
+.os-experience-options>button{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid #d8dfd4;border-radius:7px;background:#f8f8f3;color:#364638;text-align:left;cursor:pointer}
+.os-experience-options>button>span{width:20px;color:#738a68;font-size:16px;text-align:center}
+.os-experience-options>button strong{flex:1;font-size:10px;font-weight:600}
+.os-experience-options>button>svg{color:#68815f}
+.os-experience-options>button:hover,.os-experience-options>button.is-selected{border-color:#9eaf96;background:#e4ebdf}
+.desktop-wallpaper:before{transition:opacity .48s ease,filter .48s ease,transform .7s cubic-bezier(.2,.7,.2,1);transform:scale(1.025)}
+.desktop-wallpaper.flip-next:before,.desktop-wallpaper.flip-prev:before{animation:wallpaper-crossfade .58s cubic-bezier(.2,.7,.2,1) both}
+.desktop-wallpaper.flip-next .desktop-copy,.desktop-wallpaper.flip-prev .desktop-copy{animation:copy-crossfade .48s ease both}
+@keyframes wallpaper-crossfade{0%{opacity:.35;filter:blur(2px);transform:scale(1.045)}100%{opacity:1;filter:blur(0);transform:scale(1.025)}}
+@keyframes copy-crossfade{0%{opacity:0;transform:translateY(9px)}100%{opacity:1;transform:translateY(0)}}
+.desktop-copy{top:14%;width:min(540px,48%)}
+.desktop-copy h1{font-size:clamp(48px,6vw,82px)}
+.scene-project-preview{width:min(460px,100%);margin:18px 0 17px;padding:10px;border:1px solid #ffffff40;border-radius:12px;background:#08130fc9;box-shadow:0 14px 40px #0003;backdrop-filter:blur(12px)}
+.scene-project-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:#eaf0e7;font-size:10px}
+.scene-project-meta span{font:7px var(--mono);letter-spacing:.12em;color:#b7c5b5}
+.scene-project-preview iframe{display:block;width:100%;height:170px;border:0;border-radius:7px;background:#f3f1ea}
+.scene-project-preview>a,.scene-about-links a,.scene-contact-link{display:inline-flex;align-items:center;gap:6px;margin-top:9px;color:#dce8d4;font-size:10px;text-decoration:none}
+.scene-about-links{display:flex;gap:18px;margin:18px 0}
+.scene-contact-link{margin:20px 0;padding:11px 13px;border:1px solid #ffffff55;border-radius:8px;background:#ffffff12}
+@media(max-width:760px){
+ .os-dock{bottom:12px;width:calc(100% - 22px);min-height:54px;gap:3px;padding:6px 7px;border-radius:15px}
+ .os-dock button,.os-dock a{width:35px;height:37px;flex-basis:35px}
+ .os-dock .os-brand{padding:0 5px}
+ .os-wordmark{font-size:10px}
+ .os-dock-time{font-size:8px}
+ .os-experience-panel{right:12px;bottom:76px;width:205px}
+ .desktop-copy{left:22px;top:10%;width:calc(100% - 44px)}
+ .desktop-copy h1{font-size:clamp(38px,9vw,58px);margin:15px 0 12px}
+ .desktop-copy p{font-size:10px;max-width:330px}
+ .scene-project-preview{width:min(390px,100%);margin:12px 0}
+ .scene-project-preview iframe{height:115px}
+}
+@media(prefers-reduced-motion:reduce){.desktop-wallpaper.flip-next:before,.desktop-wallpaper.flip-prev:before,.desktop-wallpaper.flip-next .desktop-copy,.desktop-wallpaper.flip-prev .desktop-copy{animation:none!important}}
