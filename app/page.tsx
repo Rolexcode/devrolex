@@ -12,12 +12,6 @@ const projects = [
 type WindowName="work"|"about"|"stack"|"contact"|"readme";
 type Scene=0|1|2|3;
 type DesktopOS="mac"|"windows"|"linux";
-const palettes=[
- {name:"Nocturne",bg:"#111b20",accent:"#b9d8c5",glow:"#385b5a",paper:"#edf1eb"},
- {name:"Afterglow",bg:"#211b28",accent:"#e9b9a8",glow:"#6b4057",paper:"#f2ece9"},
- {name:"Dune",bg:"#27251e",accent:"#e1c99a",glow:"#746348",paper:"#f3eee3"},
- {name:"Ultraviolet",bg:"#171b31",accent:"#b9b9ef",glow:"#4b4c86",paper:"#eff0f8"}
-];
 const scenes=[
  {eyebrow:"THE STARTING POINT",title:"Every product<br/>starts with <em>an idea.</em>",copy:"I like finding the shape of an idea — what it could become, who it could help, and what it needs to work.",tag:"01 / IDEA"},
  {eyebrow:"THOUGHT MADE TANGIBLE",title:"Give the idea<br/>a <em>clear shape.</em>",copy:"I map the experience, make deliberate design decisions and turn the rough outline into something people can understand.",tag:"02 / SHAPE"},
@@ -52,7 +46,7 @@ export default function Home(){
  <div className={`os-desktop os-${desktopOS??"mac"} ${boot?"os-enter":""}`}>
   {!boot&&!desktopOS&&<div className="os-picker" role="dialog" aria-modal="true" aria-labelledby="os-picker-title"><div className="os-picker-card"><span className="os-picker-kicker">WELCOME TO DEVROLEX</span><h2 id="os-picker-title">Choose your<br/><em>desktop.</em></h2><p>A familiar way to explore. You can switch this later.</p><div className="os-picker-options"><button onClick={()=>setDesktopOS("mac")}><span className="os-picker-symbol">⌘</span><strong>macOS</strong><small>Clean & familiar</small></button><button onClick={()=>setDesktopOS("windows")}><span className="os-picker-symbol">⊞</span><strong>Windows</strong><small>Simple & structured</small></button><button onClick={()=>setDesktopOS("linux")}><span className="os-picker-symbol">⌁</span><strong>Linux</strong><small>Minimal & focused</small></button></div><button className="os-picker-skip" onClick={()=>setDesktopOS("mac")}>Skip — use the default desktop</button></div></div>}
 
-  <div className="os-menubar"><div className="os-menu-left"><span className="os-mark">r.</span><strong>Devrolex</strong><button onClick={()=>openWindow("readme")}>Start here</button><button onClick={()=>openWindow("work")}>Projects</button><button onClick={()=>openWindow("about")}>About</button></div><div className="os-menu-right"><span>ROLEX@DEVROLEX</span><Wifi size={13}/><BatteryFull size={15}/><span>{time}</span></div></div>
+  <div className="os-menubar"><div className="os-menu-left"><span className="os-mark">r.</span><strong>Devrolex</strong><button onClick={()=>openWindow("readme")}>Start here</button><button onClick={()=>openWindow("work")}>Projects</button><button onClick={()=>openWindow("about")}>About</button><button onClick={()=>setDesktopOS(null)}>Switch desktop</button></div><div className="os-menu-right"><span>ROLEX@DEVROLEX</span><Wifi size={13}/><BatteryFull size={15}/><span>{time}</span></div></div>
   <div className="desktop-wallpaper">
    <div className="wallpaper-art"><div className="wallpaper-orb"/><div className="wallpaper-ridge ridge-back"/><div className="wallpaper-ridge ridge-front"/><div className="wallpaper-stars">✳　·　✦　　·　✧　　·　✳</div></div>
    <div className="desktop-copy" key={scene}><span>{scenes[scene].eyebrow}</span><h1 dangerouslySetInnerHTML={{__html:scenes[scene].title}}/><p>{scenes[scene].copy}</p><small>{scenes[scene].tag}</small></div>
