@@ -735,3 +735,55 @@
  .finder-inspector{grid-template-columns:1fr 76px}
 }
 @media(prefers-reduced-motion:reduce){.desktop-copy,.os-window{animation:none!important}}
+
+
+/* End-user refinement: OS choice, quieter chrome, immersive wallpaper */
+.os-picker{position:absolute;inset:0;z-index:100;display:grid;place-items:center;padding:22px;background:#071014a8;backdrop-filter:blur(18px);animation:chapter-arrive .45s ease both}
+.os-picker-card{width:min(540px,100%);padding:clamp(25px,5vw,48px);border:1px solid #ffffff24;border-radius:20px;background:linear-gradient(145deg,#f3f1e8,#e5e8df);color:#24342d;box-shadow:0 35px 100px #0008}
+.os-picker-kicker{font:8px var(--mono);letter-spacing:.18em;color:#78877a}
+.os-picker-card h2{margin:18px 0 10px;font:500 clamp(38px,6vw,58px)/.92 var(--sans);letter-spacing:-.08em}
+.os-picker-card h2 em{font-family:var(--serif);font-weight:500;color:#738c70}
+.os-picker-card>p{margin:0 0 25px;color:#748075;font-size:12px}
+.os-picker-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.os-picker-options button{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:14px 12px;border:1px solid #d3dbd1;border-radius:10px;background:#f8f8f3;color:#314238;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.os-picker-options button:hover{transform:translateY(-3px);border-color:#91a68d;background:#fff}
+.os-picker-symbol{height:31px;font-size:25px;line-height:1;color:#6d876c}
+.os-picker-options strong{font-size:11px}
+.os-picker-options small{font-size:9px;color:#899388}
+.os-picker-skip{margin-top:20px;padding:0;border:0;background:none;color:#778477;font-size:10px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.desktop-wallpaper{background:radial-gradient(ellipse at 74% 24%,#8ca79a 0%,#344e4d 23%,transparent 56%),linear-gradient(145deg,#172a30 0%,#243f43 43%,#101d22 100%)}
+.wallpaper-art{background:radial-gradient(ellipse at 18% 15%,#e2c8a522,transparent 30%),linear-gradient(180deg,transparent 42%,#07121666)}
+.wallpaper-orb{width:clamp(250px,34vw,500px);height:clamp(250px,34vw,500px);right:19%;top:7%;background:radial-gradient(circle at 35% 29%,#fff0d9 0%,#dfc9a8 10%,#9da99b 29%,#526f6b 53%,#233f42 76%);box-shadow:0 0 130px #d6d2b72b,inset -35px -30px 65px #09191bb0}
+.wallpaper-orb:after{inset:-17%;border:1px solid #f0e6d344;transform:rotate(-19deg) scaleY(.22);box-shadow:0 0 0 22px #e4eee508,0 0 0 44px #e4eee506}
+.wallpaper-ridge{height:55%;clip-path:polygon(0 61%,9% 47%,18% 52%,29% 23%,39% 44%,51% 12%,63% 43%,74% 19%,87% 48%,100% 30%,100% 100%,0 100%)}
+.ridge-back{background:linear-gradient(180deg,#87968a 0%,#435d59 82%);opacity:.38;transform:scale(1.06) translateY(-8%)}
+.ridge-front{height:40%;background:linear-gradient(180deg,#334c48,#101f22);clip-path:polygon(0 46%,12% 28%,23% 52%,38% 18%,51% 58%,66% 12%,79% 45%,91% 25%,100% 39%,100% 100%,0 100%)}
+.wallpaper-stars{right:9%;top:13%;font-size:17px;letter-spacing:1.4em;color:#f1ead7a0}
+.os-menubar{backdrop-filter:blur(16px)}
+/* macOS is the polished default; Windows and Linux get familiar, restrained chrome */
+.os-windows .os-menubar{height:43px;background:#e7edf2;color:#233342;border-bottom:1px solid #ffffff80}
+.os-windows .os-menu-left .os-mark{border-radius:5px;background:#2468ad;color:white}
+.os-windows .os-dock{border-radius:9px;background:#e7edf2eF}
+.os-windows .os-dock button,.os-windows .os-dock a{border-radius:7px;background:#d6e0e8;color:#31516c}
+.os-windows .os-window{border-radius:7px}
+.os-linux .os-menubar{height:39px;background:#202725;color:#e7eee8;border-bottom:1px solid #ffffff20}
+.os-linux .os-menu-left button{color:#c5d0c7}
+.os-linux .os-menu-left button:hover{background:#ffffff16}
+.os-linux .os-menu-right{color:#dce5dc}
+.os-linux .os-dock{left:15px;bottom:50%;transform:translateY(50%);flex-direction:column;border-radius:12px;background:#17221edb;border-color:#ffffff30}
+.os-linux .os-dock button,.os-linux .os-dock a{background:#2c3b34;color:#e2e9df}
+.os-linux .os-window{border-radius:5px}
+.os-linux .window-titlebar{background:#dfe6df}
+.os-linux .desktop-wallpaper{background:radial-gradient(ellipse at 70% 25%,#6f9b8a 0%,#29443c 32%,transparent 65%),linear-gradient(140deg,#101c1a,#1e3930 60%,#101d1c)}
+.os-linux .wallpaper-orb{filter:hue-rotate(18deg) saturate(.82)}
+.os-linux .scene-navigation{left:10%}
+@media(max-width:760px){
+ .os-picker-card{padding:25px 19px;border-radius:15px}
+ .os-picker-options{gap:6px}
+ .os-picker-options button{padding:12px 8px}
+ .os-picker-options strong{font-size:10px}
+ .os-picker-options small{font-size:8px}
+ .os-linux .os-dock{left:50%;bottom:12px;top:auto;transform:translateX(-50%);flex-direction:row}
+ .os-linux .scene-navigation{left:20px}
+ .wallpaper-orb{right:0;top:16%}
+}
