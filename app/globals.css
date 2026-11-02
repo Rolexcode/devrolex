@@ -823,3 +823,9 @@
 @media(prefers-reduced-motion:reduce){
  .desktop-wallpaper.flip-next:before,.desktop-wallpaper.flip-prev:before,.desktop-wallpaper.flip-next .desktop-copy,.desktop-wallpaper.flip-prev .desktop-copy{animation:none}
 }
+
+/* Scene-specific selectors restart the page-turn animation on every wheel/swipe */
+.desktop-wallpaper.flip-next.flip-step-1:before,.desktop-wallpaper.flip-next.flip-step-2:before,.desktop-wallpaper.flip-next.flip-step-3:before{animation:screen-turn-next .82s cubic-bezier(.2,.72,.18,1) both}
+.desktop-wallpaper.flip-prev.flip-step-0:before,.desktop-wallpaper.flip-prev.flip-step-1:before,.desktop-wallpaper.flip-prev.flip-step-2:before{animation:screen-turn-prev .82s cubic-bezier(.2,.72,.18,1) both}
+.desktop-wallpaper.flip-next.flip-step-1 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-2 .desktop-copy,.desktop-wallpaper.flip-next.flip-step-3 .desktop-copy{animation:screen-copy-next .68s cubic-bezier(.2,.72,.18,1) both}
+.desktop-wallpaper.flip-prev.flip-step-0 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-1 .desktop-copy,.desktop-wallpaper.flip-prev.flip-step-2 .desktop-copy{animation:screen-copy-prev .68s cubic-bezier(.2,.72,.18,1) both}
