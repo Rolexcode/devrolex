@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, BatteryFull, Check, Code2, ExternalLink, FileText, Folder, Github, Globe2, Mail, Minus, Monitor, Palette, Power, Sparkles, Wifi, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, BatteryFull, Check, Code2, FileText, Folder, Github, Globe2, Mail, Minus, Sparkles, Wifi, X } from "lucide-react";
 
 const projects = [
  {id:"iroyin",name:"Ìròyìn",kind:"Web application",year:"2026",description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.",role:"Product thinking · Frontend · AI integration",stack:"Next.js · Tailwind CSS · Sahara AI · Groq",url:"https://iroyin.vercel.app/",repo:"https://github.com/Rolexcode/iroyin",preview:"https://iroyin.vercel.app/",file:"iroyin.app"},
@@ -11,6 +11,7 @@ const projects = [
 ];
 type WindowName="work"|"about"|"stack"|"contact"|"readme";
 type Scene=0|1|2|3;
+type DesktopOS="mac"|"windows"|"linux";
 const palettes=[
  {name:"Nocturne",bg:"#111b20",accent:"#b9d8c5",glow:"#385b5a",paper:"#edf1eb"},
  {name:"Afterglow",bg:"#211b28",accent:"#e9b9a8",glow:"#6b4057",paper:"#f2ece9"},
@@ -32,25 +33,25 @@ export default function Home(){
  const [time,setTime]=useState("");
  const [copied,setCopied]=useState(false);
  const [scene,setScene]=useState<Scene>(0);
- const [palette,setPalette]=useState(0);
- const [paletteOpen,setPaletteOpen]=useState(false);
- const [mobileHelp,setMobileHelp]=useState(false);
+ const [desktopOS,setDesktopOS]=useState<DesktopOS|null>(null);
  useEffect(()=>{const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
- function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name);setPaletteOpen(false)}
+ function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
  function nextScene(){setScene(v=>(Math.min(3,v+1)) as Scene)}
  function prevScene(){setScene(v=>(Math.max(0,v-1)) as Scene)}
  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
  const project=projects.find(p=>p.id===selected);
- const theme=palettes[palette];
- return <main className="os-site" style={{"--desk-bg":theme.bg,"--desk-accent":theme.accent,"--desk-glow":theme.glow,"--window-paper":theme.paper} as React.CSSProperties}>
+
+ return <main className="os-site">
  {boot&&<div className="intro-loader" role="status" aria-label="Starting portfolio"><div className="terminal-scene"><div className="scene-top"><span>ROLEX@DEVROLEX</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK LOOK BEHIND THE BUILD</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
  <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">whoami</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
  <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_do_you_do</span></p><p className="terminal-output line-four">I turn ideas into working digital products.</p>
  <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">start_with_an_idea</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> shaping the experience</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> building what makes it work</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> getting it out into the world</p>
  <p className="terminal-line line-nine"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"/></p></div></div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div><div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span><span className="scene-live"><i/> SESSION READY</span></div></div></div>}
- <div className={boot?"os-desktop os-enter":"os-desktop"}>
+ <div className={`os-desktop os-${desktopOS??"mac"} ${boot?"os-enter":""}`}>
+  {!boot&&!desktopOS&&<div className="os-picker" role="dialog" aria-modal="true" aria-labelledby="os-picker-title"><div className="os-picker-card"><span className="os-picker-kicker">WELCOME TO DEVROLEX</span><h2 id="os-picker-title">Choose your<br/><em>desktop.</em></h2><p>A familiar way to explore. You can switch this later.</p><div className="os-picker-options"><button onClick={()=>setDesktopOS("mac")}><span className="os-picker-symbol">⌘</span><strong>macOS</strong><small>Clean & familiar</small></button><button onClick={()=>setDesktopOS("windows")}><span className="os-picker-symbol">⊞</span><strong>Windows</strong><small>Simple & structured</small></button><button onClick={()=>setDesktopOS("linux")}><span className="os-picker-symbol">⌁</span><strong>Linux</strong><small>Minimal & focused</small></button></div><button className="os-picker-skip" onClick={()=>setDesktopOS("mac")}>Skip — use the default desktop</button></div></div>}
+
   <div className="os-menubar"><div className="os-menu-left"><span className="os-mark">r.</span><strong>Devrolex</strong><button onClick={()=>openWindow("readme")}>Start here</button><button onClick={()=>openWindow("work")}>Projects</button><button onClick={()=>openWindow("about")}>About</button></div><div className="os-menu-right"><span>ROLEX@DEVROLEX</span><Wifi size={13}/><BatteryFull size={15}/><span>{time}</span></div></div>
   <div className="desktop-wallpaper">
    <div className="wallpaper-art"><div className="wallpaper-orb"/><div className="wallpaper-ridge ridge-back"/><div className="wallpaper-ridge ridge-front"/><div className="wallpaper-stars">✳　·　✦　　·　✧　　·　✳</div></div>
@@ -72,8 +73,7 @@ export default function Home(){
     {name==="readme"&&<div className="readme-window"><span>WELCOME / DEVROLEX</span><h2>A workspace for<br/><em>ideas in motion.</em></h2><p>Explore the desktop, open a folder, or move through the chapters at the bottom. Everything here is designed to be easy to explore — no computer experience required.</p><div className="readme-actions"><button onClick={()=>openWindow("work")}>Explore projects <ArrowUpRight size={13}/></button><button onClick={()=>{setScene(0);closeWindow("readme")}}>Start the story</button></div></div>}
    </section>)}
    <div className="os-dock"><button onClick={()=>openWindow("work")} title="Projects"><Folder size={23} fill="currentColor"/></button><button onClick={()=>openWindow("about")} title="About"><FileText size={22}/></button><button onClick={()=>openWindow("stack")} title="Toolkit"><Code2 size={23}/></button><button onClick={()=>openWindow("contact")} title="Contact"><Mail size={22}/></button><i/><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer" title="GitHub"><Github size={21}/></a></div>
-   <div className="palette-wrap"><button className="palette-trigger" onClick={()=>setPaletteOpen(v=>!v)}><Palette size={15}/> Appearance</button>{paletteOpen&&<div className="palette-popover"><span>DESKTOP APPEARANCE</span>{palettes.map((p,i)=><button key={p.name} onClick={()=>{setPalette(i);setPaletteOpen(false)}} className={palette===i?"palette-active":""}><i style={{background:p.bg}}/><b>{p.name}</b>{palette===i&&<Check size={13}/>}</button>)}</div>}</div>
-   <button className="desktop-help" onClick={()=>setMobileHelp(v=>!v)} aria-label="How to navigate"><span>?</span></button>{mobileHelp&&<div className="help-popover"><strong>Explore Devrolex</strong><p>Use the chapter controls to move through the story. Tap any desktop icon or dock item to open it. In Projects, choose a project to see its preview.</p><button onClick={()=>setMobileHelp(false)}>Got it</button></div>}
+
   </div>
  </div>
  </main>
