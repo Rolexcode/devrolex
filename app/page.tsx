@@ -45,7 +45,8 @@ export default function Home(){
  function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;if((event.target as HTMLElement).closest(".os-window,.os-dock,.os-menubar,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
  function resetDesktop(){setScene(0);setOpened([]);setActive("work");setDesktopOS("mac");setOsMenuOpen(false)}
  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
- const project=projects.find(p=>p.id===selected);\n  const featuredProject=project??projects[0];
+ const project=projects.find(p=>p.id===selected);
+ const featuredProject=project??projects[0];
 
  return <main className="os-site">
  {boot&&<div className="intro-loader" role="status" aria-label="Starting portfolio"><div className="terminal-scene"><div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
