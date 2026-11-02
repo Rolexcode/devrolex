@@ -1186,3 +1186,97 @@
  .os-dock button,.os-dock a{width:44px!important;height:46px!important;flex-basis:44px!important}
  .dock-app-icon{width:43px;height:43px;border-radius:13px}
 }
+
+
+/* Roomier glass dock, refined desktop chrome and project-by-project scrolling */
+.os-topbar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(19,31,24,.28)!important;
+  border-bottom:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.09)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  backdrop-filter:blur(30px) saturate(180%);
+}
+.os-topbar-brand,.os-topbar-status{color:#f2f5ed!important;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.os-topbar-brand>span{color:rgba(242,245,237,.72)!important;border-color:rgba(255,255,255,.32)!important}
+.os-topbar-status i{background:rgba(255,255,255,.35)!important}
+.os-topbar-status svg{color:#f2f5ed!important}
+.os-dock{
+  width:min(760px,calc(100% - 64px))!important;
+  min-height:104px!important;height:104px!important;
+  justify-content:space-evenly!important;
+  gap:clamp(24px,4vw,54px)!important;
+  padding:15px clamp(24px,4vw,48px) 17px!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  border-radius:31px!important;
+  background:rgba(235,242,239,.19)!important;
+  box-shadow:0 20px 65px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.32)!important;
+  -webkit-backdrop-filter:blur(34px) saturate(185%);
+  backdrop-filter:blur(34px) saturate(185%);
+}
+.os-dock button,.os-dock a{
+  width:70px!important;height:70px!important;flex:0 0 70px!important;
+  border-radius:21px!important;
+}
+.dock-app-icon{
+  width:68px;height:68px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.52);
+  box-shadow:0 9px 20px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.56),inset 0 -5px 12px rgba(0,0,0,.12);
+}
+.dock-app-icon:before{
+  background:linear-gradient(150deg,rgba(255,255,255,.48),rgba(255,255,255,.06) 42%,rgba(0,0,0,.18));
+}
+.dock-app-icon:after{
+  content:"";position:absolute;inset:1px;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 38%);
+  pointer-events:none;
+}
+.dock-app-icon svg{width:27px;height:27px;stroke-width:1.9;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.dock-home{background:linear-gradient(145deg,#72c8d7 0%,#31788c 54%,#225165 100%)}
+.dock-projects{background:linear-gradient(145deg,#ffd58a 0%,#e79a48 52%,#a95c31 100%)}
+.dock-about{background:linear-gradient(145deg,#c2c8fa 0%,#7e8bd4 52%,#4b579a 100%)}
+.dock-contact{background:linear-gradient(145deg,#a5e6bb 0%,#5ba77b 52%,#286b50 100%)}
+.dock-settings{background:linear-gradient(145deg,#d0d8d6 0%,#879a9a 52%,#526568 100%)}
+.os-dock button:hover .dock-app-icon,.os-dock button:focus-visible .dock-app-icon{transform:translateY(-10px) scale(1.09);filter:brightness(1.1)}
+.os-dock button.is-active .dock-app-icon{outline:2px solid rgba(255,255,255,.95);outline-offset:4px}
+.os-dock button.is-active:after{bottom:6px;width:5px;height:5px;background:#fff;box-shadow:0 0 12px #fff}
+.desktop-copy-scene.scene-content-1{
+  scroll-snap-type:y proximity;
+  scroll-padding-top:24px;
+  overscroll-behavior-y:contain;
+}
+.work-scroll-area{gap:30px}
+.work-scroll-project{
+  min-height:calc(100vh - 190px);
+  display:flex;flex-direction:column;justify-content:center;
+  scroll-snap-align:start;scroll-margin-top:22px;
+  padding:26px 0 38px;
+}
+.work-scroll-grid{align-items:center}
+.work-scroll-visual{height:clamp(300px,42vh,470px)}
+.work-scroll-visual iframe{pointer-events:none}
+.work-preview-open{z-index:2}
+@media(max-width:760px){
+  .os-topbar{background:rgba(19,31,24,.24)!important}
+  .os-dock{
+    width:calc(100% - 34px)!important;
+    min-height:82px!important;height:82px!important;
+    gap:clamp(10px,3.6vw,22px)!important;
+    padding:10px 13px 12px!important;border-radius:25px!important;
+    bottom:13px!important;
+  }
+  .os-dock button,.os-dock a{width:52px!important;height:52px!important;flex-basis:52px!important}
+  .dock-app-icon{width:50px;height:50px;border-radius:15px}
+  .dock-app-icon svg{width:21px;height:21px}
+  .desktop-copy-scene.scene-content-1{scroll-snap-type:y proximity}
+  .work-scroll-project{min-height:0;display:block;padding:14px 0 34px;scroll-margin-top:10px}
+  .work-scroll-visual{height:260px}
+}
+@media(max-width:390px){
+  .os-dock{gap:8px!important;padding-left:8px!important;padding-right:8px!important}
+  .os-dock button,.os-dock a{width:46px!important;height:48px!important;flex-basis:46px!important}
+  .dock-app-icon{width:45px;height:45px;border-radius:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  .os-dock button:hover .dock-app-icon,.os-dock button:focus-visible .dock-app-icon{transform:none}
+}
