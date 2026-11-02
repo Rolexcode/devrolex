@@ -887,3 +887,23 @@
  .about-selected-grid button{padding:7px;gap:6px}
  .about-work-mark{width:27px;height:27px;flex-basis:27px}
 }
+
+
+/* Final workstation refinements */
+.os-site{overflow:hidden;overscroll-behavior:none;touch-action:pan-y}
+.os-desktop{min-height:0;overflow:hidden;overscroll-behavior:none}
+.desktop-wallpaper{overscroll-behavior:contain;touch-action:pan-y}
+.os-wordmark{font-size:11px;gap:1px;letter-spacing:-.085em}
+.os-wordmark-tag{display:inline;margin:0;padding:0;border:0;border-radius:0;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;line-height:inherit}
+.os-brand:hover .os-wordmark-tag{background:transparent;color:#617a4e}
+.os-dock{left:50%;right:auto;bottom:17px;transform:translateX(-50%);flex-direction:row}
+.scene-status{left:50%;right:auto;bottom:84px;transform:translateX(-50%);width:224px;z-index:24}
+.scene-status-icons button.is-current{transform:translateY(-5px)}
+@media(max-width:760px){
+ .os-wordmark{font-size:10px}
+ .os-dock{left:50%;right:auto;bottom:13px;transform:translateX(-50%);flex-direction:row;gap:5px;padding:7px 9px}
+ .os-dock button,.os-dock a{width:39px;height:39px}
+ .scene-status{left:50%;right:auto;bottom:68px;width:194px;transform:translateX(-50%);padding:9px 11px}
+ .scene-status-icons{gap:5px}
+ .scene-status-icons button{height:30px;font-size:11px}
+}
