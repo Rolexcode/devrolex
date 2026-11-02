@@ -303,7 +303,7 @@
 .terminal-line{display:flex;gap:9px;white-space:nowrap;overflow:hidden}
 .terminal-prompt{color:#b9d58f;flex:0 0 auto}
 .typed{display:inline-block;width:0;overflow:hidden;white-space:nowrap;color:#edf1e9;vertical-align:bottom}
-.typed-one{animation:type-one .45s steps(6,end) .85s forwards}
+.typed-one{animation:type-one .6s steps(8,end) .85s forwards}
 .typed-two{animation:type-two 1s steps(15,end) 2.05s forwards}
 .typed-three{animation:type-three 1.15s steps(18,end) 3.55s forwards}
 .typed-four{animation:type-four .85s steps(14,end) 5.15s forwards}
@@ -320,7 +320,7 @@
 .scene-live{display:flex;align-items:center;gap:9px}
 .scene-live i{width:6px;height:6px;border-radius:50%;background:#c8ed72;box-shadow:0 0 12px #c8ed72;animation:live-pulse 1.2s ease infinite}
 .site-entering{animation:site-arrive .95s cubic-bezier(.2,.8,.2,1) 6.1s both}
-@keyframes type-one{to{width:6ch}}@keyframes type-two{to{width:15ch}}@keyframes type-three{to{width:18ch}}@keyframes type-four{to{width:14ch}}
+@keyframes type-one{to{width:8ch}}@keyframes type-two{to{width:15ch}}@keyframes type-three{to{width:18ch}}@keyframes type-four{to{width:14ch}}
 @keyframes output-in{to{opacity:1}}@keyframes scene-rise{to{opacity:1;transform:translateY(0)}}
 @keyframes scene-out{0%{opacity:1;visibility:visible;clip-path:inset(0 0 0 0)}65%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;visibility:hidden;clip-path:inset(0 0 100% 0);pointer-events:none}}
 @keyframes site-arrive{0%{opacity:0;transform:translateY(18px);filter:blur(5px)}70%{filter:blur(0)}100%{opacity:1;transform:none}}
