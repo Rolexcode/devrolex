@@ -21,6 +21,7 @@ const scenes=[
 const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",stack:"The toolkit",contact:"Get in touch",readme:"Start here"};
 export default function Home(){
  const [boot,setBoot]=useState(true);
+ const [introStarted,setIntroStarted]=useState(false);
  const [opened,setOpened]=useState<WindowName[]>([]);
  const [active,setActive]=useState<WindowName>("work");
  const [selected,setSelected]=useState<string|null>(null);
@@ -34,66 +35,44 @@ export default function Home(){
  const touchStart=useRef<number|null>(null);
  const wallpaperRef=useRef<HTMLDivElement>(null);
  const bootStartedAt=useRef(0);
- useEffect(()=>{bootStartedAt.current=performance.now();const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{
-  if(!boot)return;
-  let audio:AudioContext|null=null;
-  let started=false;
-  const start=async()=>{
-   if(started)return;
-   started=true;
-   try{
-    const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
-    if(!AudioContextClass)return;
-    audio=new AudioContextClass();
-    if(audio.state!=="running")await audio.resume();
-    if(!audio||audio.state!=="running")return;
-    // Start an audible mechanical-keyboard sequence only after a real user gesture unlocks audio.
-    const playBurst=(count:number,interval:number,at:number)=>{
+  if(!introStarted)return;
+  bootStartedAt.current=performance.now();
+  const t=window.setTimeout(()=>setBoot(false),6900);
+  return()=>window.clearTimeout(t);
+ },[introStarted]);
+ function beginIntro(){
+  if(introStarted)return;
+  setIntroStarted(true);
+  try{
+   const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
+   if(!AudioContextClass)return;
+   const audio=new AudioContextClass();
+   const play=()=>{
+    if(audio.state!=="running")return;
+    const burst=(count:number,interval:number,offset:number)=>{
      for(let i=0;i<count;i++){
-      const when=at+i*interval;
-      const length=Math.floor(audio!.sampleRate*.055);
-      const buffer=audio!.createBuffer(1,length,audio!.sampleRate);
+      const when=audio.currentTime+offset+i*interval;
+      const length=Math.floor(audio.sampleRate*.055);
+      const buffer=audio.createBuffer(1,length,audio.sampleRate);
       const data=buffer.getChannelData(0);
       for(let j=0;j<length;j++)data[j]=(Math.random()*2-1)*Math.pow(1-j/length,3.2);
-      const noise=audio!.createBufferSource();
-      const filter=audio!.createBiquadFilter();
-      const clickGain=audio!.createGain();
-      filter.type="bandpass";
-      filter.frequency.setValueAtTime(2600+Math.random()*1100,when);
-      filter.Q.setValueAtTime(1.05,when);
-      clickGain.gain.setValueAtTime(.0001,when);
-      clickGain.gain.exponentialRampToValueAtTime(.12,when+.001);
-      clickGain.gain.exponentialRampToValueAtTime(.0001,when+.042);
-      noise.buffer=buffer;
-      noise.connect(filter);filter.connect(clickGain);clickGain.connect(audio!.destination);
-      noise.start(when);noise.stop(when+.055);
-      const thock=audio!.createOscillator();
-      const body=audio!.createGain();
-      thock.type="triangle";
-      thock.frequency.setValueAtTime(145+Math.random()*55,when);
-      body.gain.setValueAtTime(.0001,when);
-      body.gain.exponentialRampToValueAtTime(.035,when+.001);
-      body.gain.exponentialRampToValueAtTime(.0001,when+.032);
-      thock.connect(body);body.connect(audio!.destination);
-      thock.start(when);thock.stop(when+.035);
+      const noise=audio.createBufferSource(),filter=audio.createBiquadFilter(),gain=audio.createGain();
+      filter.type="bandpass";filter.frequency.setValueAtTime(2600+Math.random()*1100,when);filter.Q.setValueAtTime(1.05,when);
+      gain.gain.setValueAtTime(.0001,when);gain.gain.exponentialRampToValueAtTime(.12,when+.001);gain.gain.exponentialRampToValueAtTime(.0001,when+.042);
+      noise.buffer=buffer;noise.connect(filter);filter.connect(gain);gain.connect(audio.destination);noise.start(when);noise.stop(when+.055);
+      const thock=audio.createOscillator(),body=audio.createGain();
+      thock.type="triangle";thock.frequency.setValueAtTime(145+Math.random()*55,when);
+      body.gain.setValueAtTime(.0001,when);body.gain.exponentialRampToValueAtTime(.035,when+.001);body.gain.exponentialRampToValueAtTime(.0001,when+.032);
+      thock.connect(body);body.connect(audio.destination);thock.start(when);thock.stop(when+.035);
      }
     };
-    const now=audio.currentTime+.08;
-    playBurst(8,.075,now);
-    playBurst(15,.067,now+.95);
-    playBurst(18,.064,now+2.05);
-    playBurst(15,.067,now+3.55);
-   }catch(error){console.warn("Terminal keyboard audio could not start",error)}
-  };
-  window.addEventListener("pointerdown",start,{once:true});
-  window.addEventListener("keydown",start,{once:true});
-  return()=>{
-   window.removeEventListener("pointerdown",start);
-   window.removeEventListener("keydown",start);
-   if(audio&&audio.state!=="closed")void audio.close();
-  };
- },[boot]);
+    burst(8,.075,.08);burst(15,.067,1.03);burst(18,.064,2.13);burst(15,.067,3.63);
+    window.setTimeout(()=>{if(audio.state!=="closed")void audio.close()},6500);
+   };
+   if(audio.state==="running")play();else void audio.resume().then(play).catch(()=>{});
+  }catch(error){console.warn("Terminal keyboard audio could not start",error)}
+ }
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
@@ -123,7 +102,7 @@ export default function Home(){
  const featuredProject=project??projects[0];
 
  return <main className="os-site">
- {boot&&<div className="intro-loader" role="status" aria-label="Starting portfolio"><div className="terminal-scene"><div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
+ {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro}><span className="intro-start-dot"/> TAP TO START <span>↗</span></button>}<div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
  <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
  <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p>
  <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product design and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p>
