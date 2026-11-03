@@ -1349,3 +1349,19 @@
  .os-dock button,.os-dock a{width:47px!important;height:49px!important;flex-basis:47px!important}
  .dock-app-icon{width:46px;height:46px;border-radius:14px}
 }
+
+
+/* Refined status-bar battery glyph */
+.battery-status{
+ display:inline-flex;align-items:center;justify-content:center;
+ width:29px;height:22px;margin-left:-3px;
+ color:#f4f8ef;
+ border:1px solid rgba(255,255,255,.34);
+ border-radius:7px;
+ background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.045));
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 2px 8px rgba(0,0,0,.08);
+ -webkit-backdrop-filter:blur(10px);
+ backdrop-filter:blur(10px);
+}
+.battery-status svg{filter:drop-shadow(0 1px 3px rgba(0,0,0,.18))}
+.desktop-copy-scene.scene-content-1{overscroll-behavior-y:auto}
