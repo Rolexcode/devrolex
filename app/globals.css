@@ -1365,3 +1365,13 @@
 }
 .battery-status svg{filter:drop-shadow(0 1px 3px rgba(0,0,0,.18))}
 .desktop-copy-scene.scene-content-1{overscroll-behavior-y:auto}
+
+
+/* The opening sequence waits for a deliberate tap so audio and typing begin together. */
+.intro-loader:not(.intro-started),
+.intro-loader:not(.intro-started) *{animation-play-state:paused!important}
+.intro-start-prompt{position:absolute;z-index:5;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:12px;padding:13px 17px;border:1px solid #60705b;border-radius:999px;background:#111a13eF;color:#e8eee3;font:9px var(--mono);letter-spacing:.16em;white-space:nowrap;cursor:pointer;box-shadow:0 12px 45px #0008;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.intro-start-prompt:hover{background:#1c2a1e;border-color:#b9d58f;transform:translate(-50%,-50%) scale(1.035)}
+.intro-start-prompt>span:last-child{color:#c8ed72;font-size:13px}
+.intro-start-dot{width:7px;height:7px;border-radius:50%;background:#c8ed72;box-shadow:0 0 12px #c8ed72;animation:live-pulse 1.2s ease infinite!important}
+@media(max-width:650px){.intro-start-prompt{font-size:8px;padding:12px 15px;gap:9px}}
