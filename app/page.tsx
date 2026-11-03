@@ -37,44 +37,62 @@ export default function Home(){
  useEffect(()=>{bootStartedAt.current=performance.now();const t=window.setTimeout(()=>setBoot(false),6900);return()=>window.clearTimeout(t)},[]);
  useEffect(()=>{
   if(!boot)return;
-  let audio:AudioContext|null=null, timers:number[]=[];
-  const start=()=>{
-   if(audio)return;
+  let audio:AudioContext|null=null;
+  let started=false;
+  const start=async()=>{
+   if(started)return;
+   started=true;
    try{
     const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
     if(!AudioContextClass)return;
-    audio=new AudioContextClass();void audio.resume();
-    // Soft mechanical key taps timed to the terminal's staggered typing sequence.
-    const typeRun=(from:number,to:number,step:number,delay:number)=>{
-     for(let t=from;t<to;t+=step){
-      const timer=window.setTimeout(()=>{
-       if(!audio||audio.state!=="running")return;
-       const now=audio.currentTime;
-       // Short filtered-noise transient gives each keystroke a dry, physical switch-click.
-       const length=Math.floor(audio.sampleRate*.045),buffer=audio.createBuffer(1,length,audio.sampleRate),data=buffer.getChannelData(0);
-       for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/length,3);
-       const noise=audio.createBufferSource(),filter=audio.createBiquadFilter(),gain=audio.createGain();
-       filter.type="bandpass";filter.frequency.setValueAtTime(2100+Math.random()*900,now);filter.Q.setValueAtTime(.8,now);
-       gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.045,now+.0015);gain.gain.exponentialRampToValueAtTime(.0001,now+.038);
-       noise.buffer=buffer;noise.connect(filter);filter.connect(gain);gain.connect(audio.destination);noise.start(now);noise.stop(now+.045);
-       const thock=audio.createOscillator(),body=audio.createGain();thock.type="sine";thock.frequency.setValueAtTime(180+Math.random()*45,now);
-       body.gain.setValueAtTime(.0001,now);body.gain.exponentialRampToValueAtTime(.012,now+.001);body.gain.exponentialRampToValueAtTime(.0001,now+.025);
-       thock.connect(body);body.connect(audio.destination);thock.start(now);thock.stop(now+.027);
-      },delay+(t-from)*1000);
-      timers.push(timer);
+    audio=new AudioContextClass();
+    if(audio.state!=="running")await audio.resume();
+    if(!audio||audio.state!=="running")return;
+    // Start an audible mechanical-keyboard sequence only after a real user gesture unlocks audio.
+    const playBurst=(count:number,interval:number,at:number)=>{
+     for(let i=0;i<count;i++){
+      const when=at+i*interval;
+      const length=Math.floor(audio!.sampleRate*.055);
+      const buffer=audio!.createBuffer(1,length,audio!.sampleRate);
+      const data=buffer.getChannelData(0);
+      for(let j=0;j<length;j++)data[j]=(Math.random()*2-1)*Math.pow(1-j/length,3.2);
+      const noise=audio!.createBufferSource();
+      const filter=audio!.createBiquadFilter();
+      const clickGain=audio!.createGain();
+      filter.type="bandpass";
+      filter.frequency.setValueAtTime(2600+Math.random()*1100,when);
+      filter.Q.setValueAtTime(1.05,when);
+      clickGain.gain.setValueAtTime(.0001,when);
+      clickGain.gain.exponentialRampToValueAtTime(.12,when+.001);
+      clickGain.gain.exponentialRampToValueAtTime(.0001,when+.042);
+      noise.buffer=buffer;
+      noise.connect(filter);filter.connect(clickGain);clickGain.connect(audio!.destination);
+      noise.start(when);noise.stop(when+.055);
+      const thock=audio!.createOscillator();
+      const body=audio!.createGain();
+      thock.type="triangle";
+      thock.frequency.setValueAtTime(145+Math.random()*55,when);
+      body.gain.setValueAtTime(.0001,when);
+      body.gain.exponentialRampToValueAtTime(.035,when+.001);
+      body.gain.exponentialRampToValueAtTime(.0001,when+.032);
+      thock.connect(body);body.connect(audio!.destination);
+      thock.start(when);thock.stop(when+.035);
      }
     };
-    const elapsed=performance.now()-bootStartedAt.current;
-    const sync=(at:number)=>Math.max(0,at-elapsed);
-    typeRun(0,.45,.075,sync(850));
-    typeRun(0,1,.075,sync(2050));
-    typeRun(0,1.15,.075,sync(3550));
-    typeRun(0,.85,.075,sync(5150));
-    timers.push(window.setTimeout(()=>{if(audio&&audio.state!=="closed")void audio.close()},6400));
-   }catch{}
+    const now=audio.currentTime+.08;
+    playBurst(8,.075,now);
+    playBurst(15,.067,now+.95);
+    playBurst(18,.064,now+2.05);
+    playBurst(15,.067,now+3.55);
+   }catch(error){console.warn("Terminal keyboard audio could not start",error)}
   };
-  window.addEventListener("pointerdown",start,{once:true});window.addEventListener("keydown",start,{once:true});
-  return()=>{window.removeEventListener("pointerdown",start);window.removeEventListener("keydown",start);timers.forEach(window.clearTimeout);if(audio&&audio.state!=="closed")void audio.close()};
+  window.addEventListener("pointerdown",start,{once:true});
+  window.addEventListener("keydown",start,{once:true});
+  return()=>{
+   window.removeEventListener("pointerdown",start);
+   window.removeEventListener("keydown",start);
+   if(audio&&audio.state!=="closed")void audio.close();
+  };
  },[boot]);
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
