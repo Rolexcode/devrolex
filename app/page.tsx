@@ -22,6 +22,7 @@ const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",s
 export default function Home(){
  const [boot,setBoot]=useState(true);
  const [introStarted,setIntroStarted]=useState(false);
+ const [musicStarted,setMusicStarted]=useState(false);
  const [opened,setOpened]=useState<WindowName[]>([]);
  const [active,setActive]=useState<WindowName>("work");
  const [selected,setSelected]=useState<string|null>(null);
@@ -44,34 +45,7 @@ export default function Home(){
  function beginIntro(){
   if(introStarted)return;
   setIntroStarted(true);
-  try{
-   const AudioContextClass=window.AudioContext||(window as typeof window & {webkitAudioContext?:typeof AudioContext}).webkitAudioContext;
-   if(!AudioContextClass)return;
-   const audio=new AudioContextClass();
-   const play=()=>{
-    if(audio.state!=="running")return;
-    const burst=(count:number,interval:number,offset:number)=>{
-     for(let i=0;i<count;i++){
-      const when=audio.currentTime+offset+i*interval;
-      const length=Math.floor(audio.sampleRate*.055);
-      const buffer=audio.createBuffer(1,length,audio.sampleRate);
-      const data=buffer.getChannelData(0);
-      for(let j=0;j<length;j++)data[j]=(Math.random()*2-1)*Math.pow(1-j/length,3.2);
-      const noise=audio.createBufferSource(),filter=audio.createBiquadFilter(),gain=audio.createGain();
-      filter.type="bandpass";filter.frequency.setValueAtTime(2600+Math.random()*1100,when);filter.Q.setValueAtTime(1.05,when);
-      gain.gain.setValueAtTime(.0001,when);gain.gain.exponentialRampToValueAtTime(.12,when+.001);gain.gain.exponentialRampToValueAtTime(.0001,when+.042);
-      noise.buffer=buffer;noise.connect(filter);filter.connect(gain);gain.connect(audio.destination);noise.start(when);noise.stop(when+.055);
-      const thock=audio.createOscillator(),body=audio.createGain();
-      thock.type="triangle";thock.frequency.setValueAtTime(145+Math.random()*55,when);
-      body.gain.setValueAtTime(.0001,when);body.gain.exponentialRampToValueAtTime(.035,when+.001);body.gain.exponentialRampToValueAtTime(.0001,when+.032);
-      thock.connect(body);body.connect(audio.destination);thock.start(when);thock.stop(when+.035);
-     }
-    };
-    burst(8,.075,.08);burst(15,.067,1.03);burst(18,.064,2.13);burst(15,.067,3.63);
-    window.setTimeout(()=>{if(audio.state!=="closed")void audio.close()},6500);
-   };
-   if(audio.state==="running")play();else void audio.resume().then(play).catch(()=>{});
-  }catch(error){console.warn("Terminal keyboard audio could not start",error)}
+  setMusicStarted(true);
  }
  useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
@@ -169,6 +143,10 @@ export default function Home(){
   </div>
 
   </div>
+  {musicStarted&&<div className="intro-music-player" aria-label="Now playing NF HAPPY">
+   <div className="intro-music-label"><span className="intro-music-pulse"/> NOW PLAYING <strong>NF — HAPPY</strong></div>
+   <iframe src="https://www.youtube-nocookie.com/embed/vhumOLNSSJY?autoplay=1&controls=1&playsinline=1&rel=0" title="NF — HAPPY (official music video)" allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/>
+  </div>}
  </div>
  </main>
 }
