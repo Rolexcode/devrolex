@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, BatteryFull, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X } from "lucide-react";
+import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X } from "lucide-react";
 
 const projects = [
  {id:"iroyin",name:"Ìròyìn",kind:"Web application",year:"2026",description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.",role:"Product thinking · Frontend · AI integration",stack:"Next.js · Tailwind CSS · Sahara AI · Groq",url:"https://iroyin.vercel.app/",repo:"https://github.com/Rolexcode/iroyin",preview:"https://iroyin.vercel.app/",file:"iroyin.app"},
@@ -49,12 +49,17 @@ export default function Home(){
      for(let t=from;t<to;t+=step){
       const timer=window.setTimeout(()=>{
        if(!audio||audio.state!=="running")return;
-       const now=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();
-       osc.type="triangle";osc.frequency.setValueAtTime(1250+(Math.random()*260),now);
-       gain.gain.setValueAtTime(0.0001,now);
-       gain.gain.exponentialRampToValueAtTime(0.012,now+0.002);
-       gain.gain.exponentialRampToValueAtTime(0.0001,now+0.014);
-       osc.connect(gain);gain.connect(audio.destination);osc.start(now);osc.stop(now+0.016);
+       const now=audio.currentTime;
+       // Short filtered-noise transient gives each keystroke a dry, physical switch-click.
+       const length=Math.floor(audio.sampleRate*.045),buffer=audio.createBuffer(1,length,audio.sampleRate),data=buffer.getChannelData(0);
+       for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*Math.pow(1-i/length,3);
+       const noise=audio.createBufferSource(),filter=audio.createBiquadFilter(),gain=audio.createGain();
+       filter.type="bandpass";filter.frequency.setValueAtTime(2100+Math.random()*900,now);filter.Q.setValueAtTime(.8,now);
+       gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.045,now+.0015);gain.gain.exponentialRampToValueAtTime(.0001,now+.038);
+       noise.buffer=buffer;noise.connect(filter);filter.connect(gain);gain.connect(audio.destination);noise.start(now);noise.stop(now+.045);
+       const thock=audio.createOscillator(),body=audio.createGain();thock.type="sine";thock.frequency.setValueAtTime(180+Math.random()*45,now);
+       body.gain.setValueAtTime(.0001,now);body.gain.exponentialRampToValueAtTime(.012,now+.001);body.gain.exponentialRampToValueAtTime(.0001,now+.025);
+       thock.connect(body);body.connect(audio.destination);thock.start(now);thock.stop(now+.027);
       },delay+(t-from)*1000);
       timers.push(timer);
      }
@@ -78,7 +83,21 @@ export default function Home(){
  function goScene(direction:"next"|"prev"){setScene(v=>{const next=Math.max(0,Math.min(3,v+(direction==="next"?1:-1))) as Scene;if(next!==v)setFlipDirection(direction);return next})}
  function nextScene(){goScene("next")}
  function prevScene(){goScene("prev")}
- function handleWheel(event:React.WheelEvent<HTMLDivElement>){const target=event.target as HTMLElement;const projectScroller=target.closest(".scene-content-1") as HTMLElement|null;if(projectScroller){const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-8;const atTop=projectScroller.scrollTop<=8;if((event.deltaY>0&&atBottom)||(event.deltaY<0&&atTop)){event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.deltaY>0?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}return}if(target.closest(".os-window,.os-dock,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(event.deltaY)<12)return;event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(event.deltaY>0?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}
+ function handleWheel(event:React.WheelEvent<HTMLDivElement>){
+  const target=event.target as HTMLElement;
+  if(Math.abs(event.deltaY)<12)return;
+  if(target.closest(".os-window,.os-dock,.scene-content-2,button,a,input,textarea"))return;
+  const projectScroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;
+  if(scene===1&&projectScroller&&target.closest(".scene-content-1")){
+   const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-24;
+   const atTop=projectScroller.scrollTop<=24;
+   if((event.deltaY>0&&!atBottom)||(event.deltaY<0&&!atTop))return;
+  }
+  event.preventDefault();
+  if(flipLock.current)return;
+  flipLock.current=true;goScene(event.deltaY>0?"next":"prev");
+  window.setTimeout(()=>{flipLock.current=false},480);
+ }
  function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;const target=event.target as HTMLElement;const projectScroller=target.closest(".scene-content-1") as HTMLElement|null;if(projectScroller){const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-8;const atTop=projectScroller.scrollTop<=8;if(Math.abs(delta)>55&&((delta>0&&atBottom)||(delta<0&&atTop)))goScene(delta>0?"next":"prev");return}if(target.closest(".os-window,.os-dock,.os-menubar,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
  function resetDesktop(){setScene(0);setOpened([]);setActive("work");setDesktopOS("mac");setOsMenuOpen(false)}
  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
@@ -96,7 +115,7 @@ export default function Home(){
   {osMenuOpen&&<div className="os-experience-panel" role="dialog" aria-label="Change operating system"><div className="os-experience-panel-head"><span>CHANGE OPERATING SYSTEM</span><button onClick={()=>setOsMenuOpen(false)} aria-label="Close selector"><X size={13}/></button></div><p>Choose your preferred desktop environment.</p><div className="os-experience-options"><button className={desktopOS==="mac"?"is-selected":""} onClick={()=>{setDesktopOS("mac");setOsMenuOpen(false)}}><span>⌘</span><strong>macOS</strong>{desktopOS==="mac"&&<Check size={13}/>}</button><button className={desktopOS==="windows"?"is-selected":""} onClick={()=>{setDesktopOS("windows");setOsMenuOpen(false)}}><span>⊞</span><strong>Windows</strong>{desktopOS==="windows"&&<Check size={13}/>}</button><button className={desktopOS==="linux"?"is-selected":""} onClick={()=>{setDesktopOS("linux");setOsMenuOpen(false)}}><span>⌁</span><strong>Linux</strong>{desktopOS==="linux"&&<Check size={13}/>}</button></div></div>}
   <div className="os-topbar">
    <button className="os-topbar-brand" onClick={resetDesktop}><strong>dev{"</>"}rolex</strong><span>Portfolio</span></button>
-   <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><BatteryFull size={16}/></div>
+   <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><span className="battery-status" aria-label="Battery status"><BatteryCharging size={17} strokeWidth={1.7}/></span></div>
   </div>
   <div ref={wallpaperRef} className={`desktop-wallpaper wallpaper-scene-${scene} flip-${flipDirection} flip-step-${scene}`} onTouchStart={event=>{touchStart.current=event.touches[0].clientY}} onTouchEnd={handleTouchEnd}>
    <div className="wallpaper-art"><div className="wallpaper-orb"/><div className="wallpaper-ridge ridge-back"/><div className="wallpaper-ridge ridge-front"/><div className="wallpaper-stars">✳　·　✦　　·　✧　　·　✳</div></div>
