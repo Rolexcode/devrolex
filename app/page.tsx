@@ -13,15 +13,16 @@ type WindowName="work"|"about"|"stack"|"contact"|"readme";
 type Scene=0|1|2|3;
 type DesktopOS="mac"|"windows"|"linux";
 const scenes=[
- {eyebrow:"About me · Full-stack developer",title:"I’m Olabode<br/><em>Olaleye.</em>",copy:"I build digital products from the first question to the working system — thoughtful interfaces, reliable engineering and the details that make the whole experience feel right.",tag:"About me",detail:"Product thinking · Full-stack development",mark:"◎"},
- {eyebrow:"Selected work · 2026",title:"A few things<br/>I’ve <em>built.</em>",copy:"A selection of products and experiments, each with a different problem to solve. Scroll through the work and open any build to experience it.",tag:"Selected work",detail:"Ìròyìn · CampusGig · Nexus · ZenGuard",mark:"▦"},
- {eyebrow:"How I build · What I bring",title:"From first thought<br/>to <em>finished product.</em>",copy:"I work across the experience and the engineering: understanding the problem, shaping the interface, building the system and connecting the pieces.",tag:"Approach",detail:"Web experiences · Full-stack products · AI & integrations",mark:"⌘"},
+ {eyebrow:"About me · Full-stack developer",title:"I’m Olabode<br/><em>Olaleye.</em>",copy:"I build web applications and digital products across the frontend, backend and the systems that connect them.",tag:"About me",detail:"Product thinking · Full-stack development",mark:"◎"},
+ {eyebrow:"Selected work · 2026",title:"A few things<br/>I’ve <em>built.</em>",copy:"Live products, working prototypes and the engineering behind them. Explore each build, then open the live version or its source.",tag:"Selected work",detail:"Ìròyìn · CampusGig · Nexus · ZenGuard",mark:"▦"},
+ {eyebrow:"How I build · What I bring",title:"From first thought<br/>to <em>finished product.</em>",copy:"From interface to data models, authentication and integrations, I work across the parts that make a web product function.",tag:"Approach",detail:"Web experiences · Full-stack products · AI & integrations",mark:"⌘"},
  {eyebrow:"Have something in mind?",title:"Let’s make<br/><em>something useful.</em>",copy:"A rough idea, a clear brief or a problem you want solved — tell me what you’re thinking. We can work out the right next step together.",tag:"Contact",detail:"olaleyeolabodejeremiah@gmail.com",mark:"↗"}
 ];
 const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",stack:"The toolkit",contact:"Get in touch",readme:"Start here"};
 export default function Home(){
  const [boot,setBoot]=useState(true);
  const [introStarted,setIntroStarted]=useState(false);
+ const [loadedPreviews,setLoadedPreviews]=useState<string[]>([]);
  const [opened,setOpened]=useState<WindowName[]>([]);
  const [active,setActive]=useState<WindowName>("work");
  const [selected,setSelected]=useState<string|null>(null);
@@ -38,7 +39,7 @@ export default function Home(){
  useEffect(()=>{
   if(!introStarted)return;
   bootStartedAt.current=performance.now();
-  const t=window.setTimeout(()=>setBoot(false),6900);
+  const t=window.setTimeout(()=>setBoot(false),4300);
   return()=>window.clearTimeout(t);
  },[introStarted]);
  function beginIntro(){
@@ -74,7 +75,7 @@ export default function Home(){
  const featuredProject=project??projects[0];
 
  return <main className="os-site">
- {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro} aria-label="Power on portfolio"><Power size={27} strokeWidth={1.8}/></button>}<div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
+ {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro} aria-label="Power on portfolio"><Power size={27} strokeWidth={1.8}/></button>}{introStarted&&<button className="intro-skip" onClick={()=>setBoot(false)}>SKIP INTRO <ArrowUpRight size={12}/></button>}<div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
  <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
  <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p>
  <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product design and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p>
@@ -102,7 +103,7 @@ export default function Home(){
         <div className="work-scroll-heading"><span>0{index+1} / 0{projects.length}</span><span>{item.kind} · {item.year}</span></div>
         <div className="work-scroll-grid">
           <div className={`work-scroll-visual work-visual-${item.id}`}>
-            {item.preview?<iframe src={item.preview} title={item.name+" live project preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" tabIndex={-1}/>:<div className="work-scroll-fallback"><span>ZERION HACKATHON BUILD</span><strong>Portfolio watch.<br/><em>On-chain action.</em></strong><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p></div>}
+            {item.preview?<><div className={`preview-loading ${loadedPreviews.includes(item.id)?"is-loaded":""}`} aria-hidden="true"><span className="preview-loading-mark"/><span>Loading live preview</span><i/></div><iframe src={item.preview} title={item.name+" live project preview"} loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-forms allow-scripts allow-same-origin allow-popups" tabIndex={-1} onLoad={()=>setLoadedPreviews(current=>current.includes(item.id)?current:[...current,item.id])}/></>:<div className="work-scroll-fallback"><span>ZERION HACKATHON BUILD</span><strong>Portfolio watch.<br/><em>On-chain action.</em></strong><p>A Telegram agent that monitors positions and acts on preset risk rules on Base.</p></div>}
             <a href={item.url} target="_blank" rel="noreferrer" className="work-preview-open">Open live project <ArrowUpRight size={13}/></a>
           </div>
           <div className="work-scroll-info"><span className="work-project-type">{item.kind}</span><h2>{item.name}</h2><p>{item.description}</p><div className="work-project-role">{item.role}</div><div className="work-project-stack">{item.stack.split(" · ").map(tag=><span key={tag}>{tag}</span>)}</div><div className="work-project-links"><a href={item.url} target="_blank" rel="noreferrer">Explore project <ArrowUpRight size={13}/></a>{item.repo&&<a href={item.repo} target="_blank" rel="noreferrer">Source code <Github size={13}/></a>}</div></div>
