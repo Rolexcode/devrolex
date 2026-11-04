@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X } from "lucide-react";
+import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Power } from "lucide-react";
 
 const projects = [
  {id:"iroyin",name:"Ìròyìn",kind:"Web application",year:"2026",description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.",role:"Product thinking · Frontend · AI integration",stack:"Next.js · Tailwind CSS · Sahara AI · Groq",url:"https://iroyin.vercel.app/",repo:"https://github.com/Rolexcode/iroyin",preview:"https://iroyin.vercel.app/",file:"iroyin.app"},
@@ -22,7 +22,6 @@ const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",s
 export default function Home(){
  const [boot,setBoot]=useState(true);
  const [introStarted,setIntroStarted]=useState(false);
- const [musicStarted,setMusicStarted]=useState(false);
  const [opened,setOpened]=useState<WindowName[]>([]);
  const [active,setActive]=useState<WindowName>("work");
  const [selected,setSelected]=useState<string|null>(null);
@@ -45,9 +44,8 @@ export default function Home(){
  function beginIntro(){
   if(introStarted)return;
   setIntroStarted(true);
-  setMusicStarted(true);
  }
- useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
+ useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"prev":"next");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
@@ -66,7 +64,7 @@ export default function Home(){
   }
   event.preventDefault();
   if(flipLock.current)return;
-  flipLock.current=true;goScene(event.deltaY>0?"next":"prev");
+  flipLock.current=true;goScene(event.deltaY>0?"prev":"next");
   window.setTimeout(()=>{flipLock.current=false},480);
  }
  function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;const target=event.target as HTMLElement;const projectScroller=target.closest(".scene-content-1") as HTMLElement|null;if(projectScroller){const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-8;const atTop=projectScroller.scrollTop<=8;if(Math.abs(delta)>55&&((delta>0&&atBottom)||(delta<0&&atTop)))goScene(delta>0?"next":"prev");return}if(target.closest(".os-window,.os-dock,.os-menubar,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
@@ -76,7 +74,7 @@ export default function Home(){
  const featuredProject=project??projects[0];
 
  return <main className="os-site">
- {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro}><span className="intro-start-dot"/> TAP TO START <span>↗</span></button>}<div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
+ {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro} aria-label="Power on portfolio"><Power size={27} strokeWidth={1.8}/></button>}<div className="scene-top"><span>dev{"</>"}rolex</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/devrolex</span><span>zsh — 80×24</span></div><div className="terminal-body">
  <p className="terminal-line line-one"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
  <p className="terminal-line line-three"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p>
  <p className="terminal-line line-five"><span className="terminal-prompt">rolex@devrolex %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product design and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p>
@@ -86,7 +84,7 @@ export default function Home(){
   {osMenuOpen&&<div className="os-experience-panel" role="dialog" aria-label="Change operating system"><div className="os-experience-panel-head"><span>CHANGE OPERATING SYSTEM</span><button onClick={()=>setOsMenuOpen(false)} aria-label="Close selector"><X size={13}/></button></div><p>Choose your preferred desktop environment.</p><div className="os-experience-options"><button className={desktopOS==="mac"?"is-selected":""} onClick={()=>{setDesktopOS("mac");setOsMenuOpen(false)}}><span>⌘</span><strong>macOS</strong>{desktopOS==="mac"&&<Check size={13}/>}</button><button className={desktopOS==="windows"?"is-selected":""} onClick={()=>{setDesktopOS("windows");setOsMenuOpen(false)}}><span>⊞</span><strong>Windows</strong>{desktopOS==="windows"&&<Check size={13}/>}</button><button className={desktopOS==="linux"?"is-selected":""} onClick={()=>{setDesktopOS("linux");setOsMenuOpen(false)}}><span>⌁</span><strong>Linux</strong>{desktopOS==="linux"&&<Check size={13}/>}</button></div></div>}
   <div className="os-topbar">
    <button className="os-topbar-brand" onClick={resetDesktop}><strong>dev{"</>"}rolex</strong><span>Portfolio</span></button>
-   <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><span className="battery-status" aria-label="Battery status"><BatteryCharging size={17} strokeWidth={1.7}/></span></div>
+   <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><BatteryCharging size={17} strokeWidth={1.7}/></div>
   </div>
   <div ref={wallpaperRef} className={`desktop-wallpaper wallpaper-scene-${scene} flip-${flipDirection} flip-step-${scene}`} onTouchStart={event=>{touchStart.current=event.touches[0].clientY}} onTouchEnd={handleTouchEnd}>
    <div className="wallpaper-art"><div className="wallpaper-orb"/><div className="wallpaper-ridge ridge-back"/><div className="wallpaper-ridge ridge-front"/><div className="wallpaper-stars">✳　·　✦　　·　✧　　·　✳</div></div>
@@ -143,10 +141,6 @@ export default function Home(){
   </div>
 
   </div>
-  {musicStarted&&<div className="intro-music-player" aria-label="Now playing NF HAPPY">
-   <div className="intro-music-label"><span className="intro-music-pulse"/> NOW PLAYING <strong>NF — HAPPY</strong></div>
-   <iframe src="https://www.youtube-nocookie.com/embed/vhumOLNSSJY?autoplay=1&controls=1&playsinline=1&rel=0" title="NF — HAPPY (official music video)" allow="autoplay; encrypted-media; picture-in-picture" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/>
-  </div>}
  </div>
  </main>
 }
