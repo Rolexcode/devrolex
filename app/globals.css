@@ -1396,3 +1396,25 @@
  .intro-music-label{padding:8px 10px;font-size:7px}
  .intro-music-player iframe{height:124px}
 }
+
+
+/* Power-on control: a restrained physical power key, not a generic CTA */
+.intro-start-prompt{
+ width:82px;height:82px;padding:0!important;gap:0!important;
+ align-items:center;justify-content:center;
+ border:1px solid rgba(220,239,210,.5)!important;
+ border-radius:50%!important;
+ background:radial-gradient(circle at 35% 25%,rgba(210,235,200,.2),rgba(13,22,16,.94) 72%)!important;
+ color:#e8f3e4!important;
+ box-shadow:0 0 0 7px rgba(220,239,210,.045),0 0 38px rgba(194,230,164,.16),0 18px 55px #0009!important;
+ transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;
+}
+.intro-start-prompt:hover{
+ transform:translate(-50%,-50%) scale(1.07)!important;
+ border-color:#d9efc9!important;
+ box-shadow:0 0 0 9px rgba(220,239,210,.07),0 0 48px rgba(194,230,164,.25),0 18px 55px #0009!important;
+}
+.intro-start-prompt svg{filter:drop-shadow(0 0 9px rgba(211,239,190,.5))}
+@media(max-width:650px){.intro-start-prompt{width:72px;height:72px}}
+/* Restore the simple original battery glyph; no framed battery treatment. */
+.os-topbar-status>svg{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
