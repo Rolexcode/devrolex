@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Olabode Olaleye — Full-Stack Developer",
-  description: "I build thoughtful websites, web applications and digital products. Explore selected work by Olabode Olaleye, also known as Rolex.",
+  description: "I build web applications and digital products across the frontend, backend and connected systems. Explore projects by Olabode Olaleye.",
   metadataBase: new URL("https://devrolex.vercel.app"),
   icons: { icon: "/favicon.svg" },
-  openGraph: { title: "Olabode Olaleye — Full-Stack Developer", description: "Thoughtful websites, web applications and digital products, built with care.", type: "website" },
-  twitter: { card: "summary_large_image", title: "Olabode Olaleye — Full-Stack Developer", description: "I turn ideas into useful digital experiences." }
+  openGraph: { title: "Olabode Olaleye — Full-Stack Developer", description: "Web applications and digital products across frontend, backend and integrations.", type: "website" },
+  twitter: { card: "summary_large_image", title: "Olabode Olaleye — Full-Stack Developer", description: "I build web applications and digital products across frontend, backend and integrations." }
 };
 export const viewport: Viewport = { themeColor: "#f4f2ec", colorScheme: "light" };
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode}>) {
