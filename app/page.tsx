@@ -94,7 +94,7 @@ export default function Home(){
     <p>{scenes[scene].copy}</p>
     {scene===0&&<div className="about-scene-details">
       <div className="about-scene-note"><span>WHAT I DO</span><strong>Software development, from interface to backend.</strong></div>
-      <div className="about-scene-note"><span>HOW I THINK</span><strong>Start with the problem. Build what actually helps.</strong></div>
+      <div className="about-scene-note"><span>WHAT I DO BEST</span><strong>I help turn ideas and real problems into useful digital products.</strong></div>
       <div className="about-scene-links"><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124b" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={13}/></a></div>
     </div>}
     {scene===1&&<div className="work-scroll-area">
