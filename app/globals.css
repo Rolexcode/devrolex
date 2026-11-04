@@ -1418,3 +1418,102 @@
 @media(max-width:650px){.intro-start-prompt{width:72px;height:72px}}
 /* Restore the simple original battery glyph; no framed battery treatment. */
 .os-topbar-status>svg{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
+
+
+/* OS-specific desktop identities. These rules intentionally sit last so the
+   shared glass-dock polish above cannot flatten the selected environment. */
+.os-desktop.os-mac .os-topbar{
+  background:rgba(20,30,24,.24)!important;
+  border-bottom:1px solid rgba(255,255,255,.2)!important;
+}
+.os-desktop.os-mac .os-dock{
+  left:50%!important;right:auto!important;bottom:16px!important;top:auto!important;
+  width:min(920px,calc(100% - 80px))!important;height:116px!important;min-height:116px!important;
+  flex-direction:row!important;justify-content:space-around!important;
+  border-radius:34px!important;background:rgba(229,239,234,.16)!important;
+  border:1px solid rgba(255,255,255,.38)!important;
+  -webkit-backdrop-filter:blur(38px) saturate(190%)!important;backdrop-filter:blur(38px) saturate(190%)!important;
+}
+.os-desktop.os-mac .os-window{border-radius:16px!important}
+.os-desktop.os-mac .window-titlebar{background:rgba(238,242,232,.92)!important}
+
+.os-desktop.os-windows .os-topbar{
+  background:rgba(226,237,248,.94)!important;color:#20354b!important;
+  border-bottom:1px solid rgba(44,76,110,.2)!important;box-shadow:0 2px 12px rgba(12,34,58,.12)!important;
+  -webkit-backdrop-filter:blur(18px)!important;backdrop-filter:blur(18px)!important;
+}
+.os-desktop.os-windows .os-topbar-brand,
+.os-desktop.os-windows .os-topbar-status{color:#20354b!important;text-shadow:none!important}
+.os-desktop.os-windows .os-topbar-brand>span{color:#60768b!important;border-color:#aebfd0!important}
+.os-desktop.os-windows .os-topbar-status i{background:#aebfd0!important}
+.os-desktop.os-windows .os-topbar-status svg{color:#3d668c!important}
+.os-desktop.os-windows .os-dock{
+  left:0!important;right:0!important;top:auto!important;bottom:0!important;transform:none!important;
+  width:100%!important;height:66px!important;min-height:66px!important;
+  flex-direction:row!important;justify-content:center!important;gap:18px!important;
+  padding:7px 18px!important;border:0!important;border-top:1px solid rgba(255,255,255,.72)!important;
+  border-radius:0!important;background:rgba(224,235,246,.92)!important;color:#24405b!important;
+  box-shadow:0 -8px 28px rgba(9,29,51,.18)!important;
+  -webkit-backdrop-filter:blur(24px) saturate(150%)!important;backdrop-filter:blur(24px) saturate(150%)!important;
+}
+.os-desktop.os-windows .os-dock button,
+.os-desktop.os-windows .os-dock a{
+  width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:9px!important;
+}
+.os-desktop.os-windows .dock-app-icon{
+  width:42px!important;height:42px!important;border-radius:9px!important;
+  box-shadow:0 2px 7px rgba(20,47,75,.2),inset 0 1px 0 rgba(255,255,255,.7)!important;
+}
+.os-desktop.os-windows .os-dock button.is-active .dock-app-icon{outline:2px solid #4b8bc5!important;outline-offset:2px!important}
+.os-desktop.os-windows .os-window{border-radius:8px!important;box-shadow:0 18px 50px rgba(9,31,54,.3)!important}
+.os-desktop.os-windows .window-titlebar{background:#e5edf5!important;border-bottom:1px solid #c4d1df!important}
+.os-desktop.os-windows .desktop-wallpaper .wallpaper-orb{filter:hue-rotate(165deg) saturate(1.12)!important}
+.os-desktop.os-windows .desktop-wallpaper .wallpaper-ridge{filter:hue-rotate(155deg) saturate(1.2)!important}
+.os-desktop.os-windows .os-experience-panel{border-radius:8px!important;background:rgba(235,243,250,.97)!important}
+
+.os-desktop.os-linux .os-topbar{
+  background:rgba(24,32,30,.96)!important;color:#e5eee8!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;box-shadow:0 3px 18px rgba(0,0,0,.25)!important;
+  -webkit-backdrop-filter:blur(18px)!important;backdrop-filter:blur(18px)!important;
+}
+.os-desktop.os-linux .os-topbar-brand,
+.os-desktop.os-linux .os-topbar-status{color:#e5eee8!important;text-shadow:none!important}
+.os-desktop.os-linux .os-topbar-brand>span{color:#aab9ae!important;border-color:#526057!important}
+.os-desktop.os-linux .os-topbar-status i{background:#526057!important}
+.os-desktop.os-linux .os-topbar-status svg{color:#b9d5c2!important}
+.os-desktop.os-linux .os-dock{
+  left:14px!important;right:auto!important;top:50%!important;bottom:auto!important;
+  transform:translateY(-50%)!important;width:78px!important;height:auto!important;min-height:0!important;
+  flex-direction:column!important;justify-content:center!important;gap:12px!important;
+  padding:14px 9px!important;border:1px solid rgba(255,255,255,.15)!important;border-radius:15px!important;
+  background:rgba(22,31,27,.88)!important;color:#e1ebe3!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.3)!important;
+  -webkit-backdrop-filter:blur(22px)!important;backdrop-filter:blur(22px)!important;
+}
+.os-desktop.os-linux .os-dock button,
+.os-desktop.os-linux .os-dock a{
+  width:54px!important;height:54px!important;flex:0 0 54px!important;border-radius:12px!important;
+}
+.os-desktop.os-linux .dock-app-icon{
+  width:46px!important;height:46px!important;border-radius:12px!important;
+  box-shadow:0 4px 12px rgba(0,0,0,.32)!important;
+}
+.os-desktop.os-linux .os-dock button.is-active .dock-app-icon{outline:2px solid #a6d5b2!important;outline-offset:2px!important}
+.os-desktop.os-linux .os-window{border-radius:5px!important;box-shadow:0 18px 50px rgba(0,0,0,.42)!important}
+.os-desktop.os-linux .window-titlebar{background:#dce5de!important;border-bottom:1px solid #b9c8bd!important}
+.os-desktop.os-linux .desktop-wallpaper{background:radial-gradient(ellipse at 72% 24%,#648c79 0%,#29473b 34%,transparent 66%),linear-gradient(140deg,#101a17,#1b342a 62%,#0e1915)!important}
+.os-desktop.os-linux .wallpaper-orb{filter:hue-rotate(12deg) saturate(.72)!important}
+.os-desktop.os-linux .os-experience-panel{background:rgba(31,43,36,.97)!important;color:#e2ebe3!important;border-color:#ffffff25!important}
+.os-desktop.os-linux .os-experience-panel-head{color:#b8c9bb!important}
+.os-desktop.os-linux .os-experience-options button{color:#e2ebe3!important}
+.os-desktop.os-linux .os-experience-options button.is-selected{background:#344a3b!important}
+
+@media(max-width:760px){
+ .os-desktop.os-mac .os-dock{left:50%!important;right:auto!important;top:auto!important;bottom:12px!important;transform:translateX(-50%)!important;width:calc(100% - 26px)!important;height:88px!important;min-height:88px!important;flex-direction:row!important;gap:clamp(8px,3.2vw,20px)!important;padding:10px!important;border-radius:27px!important}
+ .os-desktop.os-windows .os-dock{left:0!important;right:0!important;top:auto!important;bottom:0!important;transform:none!important;width:100%!important;height:62px!important;min-height:62px!important;gap:clamp(7px,2vw,14px)!important;padding:5px 8px!important}
+ .os-desktop.os-windows .os-dock button,.os-desktop.os-windows .os-dock a{width:43px!important;height:46px!important;flex-basis:43px!important}
+ .os-desktop.os-windows .dock-app-icon{width:38px!important;height:38px!important}
+ .os-desktop.os-linux .os-dock{left:50%!important;right:auto!important;top:auto!important;bottom:12px!important;transform:translateX(-50%)!important;width:calc(100% - 26px)!important;height:72px!important;min-height:72px!important;flex-direction:row!important;gap:clamp(7px,2.4vw,14px)!important;padding:8px!important;border-radius:18px!important}
+ .os-desktop.os-linux .os-dock button,.os-desktop.os-linux .os-dock a{width:46px!important;height:48px!important;flex-basis:46px!important}
+ .os-desktop.os-linux .dock-app-icon{width:42px!important;height:42px!important}
+}
