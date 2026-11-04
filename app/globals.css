@@ -1517,3 +1517,50 @@
  .os-desktop.os-linux .os-dock button,.os-desktop.os-linux .os-dock a{width:46px!important;height:48px!important;flex-basis:46px!important}
  .os-desktop.os-linux .dock-app-icon{width:42px!important;height:42px!important}
 }
+
+
+/* Faster, readable boot sequence with an immediate escape hatch. */
+.intro-loader{animation:scene-out .55s cubic-bezier(.7,0,.2,1) 3.65s forwards!important}
+.intro-skip{
+ position:absolute;z-index:8;top:0;right:0;display:inline-flex;align-items:center;gap:7px;
+ padding:10px 12px;border:1px solid #ffffff30;border-radius:999px;
+ background:#ffffff0b;color:#cbd4c7;font:8px var(--mono);letter-spacing:.13em;cursor:pointer;
+ transition:background .18s ease,color .18s ease,border-color .18s ease
+}
+.intro-skip:hover{background:#ffffff18;color:#fff;border-color:#ffffff65}
+.typed-one{animation-duration:.34s!important;animation-delay:.35s!important}
+.typed-two{animation-duration:.48s!important;animation-delay:1.05s!important}
+.typed-three{animation-duration:.55s!important;animation-delay:1.85s!important}
+.typed-four{animation-duration:.42s!important;animation-delay:2.85s!important}
+.line-two{animation-delay:.78s!important}
+.line-four{animation-delay:1.62s!important}
+.line-six{animation-delay:2.42s!important}
+.line-seven{animation-delay:2.53s!important}
+.line-eight{animation-delay:2.64s!important}
+.scene-endline{animation-delay:3.25s!important}
+@media(max-width:650px){.intro-skip{top:-2px;right:-2px;padding:9px 10px;font-size:7px}}
+
+/* A live preview should look intentionally busy while its iframe starts up. */
+.work-scroll-visual{position:relative;isolation:isolate;background:linear-gradient(135deg,#e8e7df,#d8ddd4)!important}
+.work-scroll-visual iframe{position:relative;z-index:1}
+.preview-loading{
+ position:absolute;z-index:2;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;
+ color:#536052;background:linear-gradient(135deg,#eeeee7,#dfe4dc);
+ font:9px var(--mono);letter-spacing:.09em;text-transform:uppercase;
+ transition:opacity .35s ease,visibility .35s ease
+}
+.preview-loading-mark{width:38px;height:38px;border:1px solid #aab5a5;border-radius:12px;position:relative;background:#ffffff75}
+.preview-loading-mark:before,.preview-loading-mark:after{content:"";position:absolute;left:8px;right:8px;height:4px;border-radius:4px;background:#bdc8b8}
+.preview-loading-mark:before{top:10px}.preview-loading-mark:after{top:19px;right:14px}
+.preview-loading i{width:72px;height:2px;overflow:hidden;background:#cbd2c7;position:relative}
+.preview-loading i:after{content:"";position:absolute;inset:0;width:38%;background:#667b62;animation:preview-progress 1.15s ease-in-out infinite}
+.preview-loading.is-loaded{opacity:0;visibility:hidden;pointer-events:none}
+@keyframes preview-progress{from{transform:translateX(-110%)}to{transform:translateX(280%)}}
+@media(prefers-reduced-motion:reduce){.preview-loading i:after{animation:none;width:100%}}
+
+/* Keep project actions clear of the fixed dock on small screens. */
+@media(max-width:760px){
+ .desktop-copy-scene.scene-content-1{padding-bottom:calc(112px + env(safe-area-inset-bottom))!important}
+ .work-scroll-area{padding-bottom:calc(100px + env(safe-area-inset-bottom))!important}
+ .work-scroll-project{padding-bottom:46px!important}
+}
