@@ -46,7 +46,7 @@ export default function Home(){
   if(introStarted)return;
   setIntroStarted(true);
  }
- useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"prev":"next");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
+ useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
@@ -65,7 +65,7 @@ export default function Home(){
   }
   event.preventDefault();
   if(flipLock.current)return;
-  flipLock.current=true;goScene(event.deltaY>0?"prev":"next");
+  flipLock.current=true;goScene(event.deltaY>0?"next":"prev");
   window.setTimeout(()=>{flipLock.current=false},480);
  }
  function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;const target=event.target as HTMLElement;const projectScroller=target.closest(".scene-content-1") as HTMLElement|null;if(projectScroller){const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-8;const atTop=projectScroller.scrollTop<=8;if(Math.abs(delta)>55&&((delta>0&&atBottom)||(delta<0&&atTop)))goScene(delta>0?"next":"prev");return}if(target.closest(".os-window,.os-dock,.os-menubar,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
