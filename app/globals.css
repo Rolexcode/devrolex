@@ -1613,3 +1613,42 @@
  .intro-loader{animation:none!important}
  .desktop-copy-scene.scene-content-1{scroll-behavior:auto!important}
 }
+
+
+/* Content-first navigation refinement: keep the desktop concept, remove forced page turns. */
+.desktop-wallpaper{perspective:none!important}
+.desktop-wallpaper.flip-next:before,.desktop-wallpaper.flip-prev:before,
+.desktop-wallpaper.flip-next .desktop-copy,.desktop-wallpaper.flip-prev .desktop-copy{animation:none!important}
+.desktop-copy{animation:chapter-arrive .32s ease both}
+.desktop-copy-scene.scene-content-1{
+  max-height:calc(100% - 132px)!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-y:contain!important;
+  scroll-behavior:smooth!important;
+  scroll-snap-type:none!important;
+  scrollbar-width:thin;
+  scrollbar-color:#d8e0d477 transparent;
+  touch-action:pan-y!important;
+}
+.work-scroll-area{gap:34px!important;padding-bottom:28px!important}
+.work-scroll-project{
+  min-height:0!important;
+  scroll-snap-align:none!important;
+  scroll-snap-stop:normal!important;
+  scroll-margin-top:0!important;
+  padding:22px 0 30px!important;
+}
+@media(max-width:760px){
+  .desktop-copy-scene.scene-content-1{
+    top:7%!important;left:7%!important;width:86%!important;
+    max-height:calc(100% - 126px)!important;
+    padding:0 8px 28px 0!important;
+    scroll-snap-type:none!important;
+  }
+  .work-scroll-project{padding:14px 0 28px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .desktop-copy{animation:none!important}
+  .desktop-copy-scene.scene-content-1{scroll-behavior:auto!important}
+}
