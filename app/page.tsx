@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Linkedin, MessageCircle } from "lucide-react";
 
 function BrandMark(){return <><span>rolex</span><span className="brand-code-mark">{"</>"}</span><span>code</span></>}
@@ -32,7 +32,7 @@ export default function Home(){
  const [scene,setScene]=useState<Scene>(0);
  const [desktopOS,setDesktopOS]=useState<DesktopOS>("mac");
   const [osMenuOpen,setOsMenuOpen]=useState(false);
- useEffect(()=>{const timer=window.setTimeout(()=>setBoot(false),3000);return()=>window.clearTimeout(timer)},[]);
+ useEffect(()=>{const timer=window.setTimeout(()=>setBoot(false),2600);return()=>window.clearTimeout(timer)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
@@ -51,7 +51,7 @@ export default function Home(){
    <button className="os-topbar-brand" onClick={resetDesktop}><strong className="role-code-wordmark"><BrandMark/></strong><span>Portfolio</span></button>
    <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><BatteryCharging size={17} strokeWidth={1.7}/></div>
   </div>
-  <div ref={wallpaperRef} className={`desktop-wallpaper wallpaper-scene-${scene}`}>
+  <div className={`desktop-wallpaper wallpaper-scene-${scene}`}>
    <div className="wallpaper-art"><div className="wallpaper-orb"/><div className="wallpaper-ridge ridge-back"/><div className="wallpaper-ridge ridge-front"/><div className="wallpaper-stars">✳　·　✦　　·　✧　　·　✳</div></div>
    <div className={`desktop-copy desktop-copy-scene scene-content-${scene}`} key={scene}>
     <span>{scenes[scene].eyebrow}</span>
