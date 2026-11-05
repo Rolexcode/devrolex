@@ -22,6 +22,7 @@ const scenes=[
 ];
 const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",stack:"The toolkit",contact:"Get in touch",readme:"Start here"};
 export default function Home(){
+ const [boot,setBoot]=useState(true);
  const [loadedPreviews,setLoadedPreviews]=useState<string[]>([]);
  const [opened,setOpened]=useState<WindowName[]>([]);
  const [active,setActive]=useState<WindowName>("work");
@@ -31,6 +32,7 @@ export default function Home(){
  const [scene,setScene]=useState<Scene>(0);
  const [desktopOS,setDesktopOS]=useState<DesktopOS>("mac");
   const [osMenuOpen,setOsMenuOpen]=useState(false);
+ useEffect(()=>{const timer=window.setTimeout(()=>setBoot(false),3000);return()=>window.clearTimeout(timer)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
@@ -40,6 +42,8 @@ export default function Home(){
  const featuredProject=project??projects[0];
 
  return <main className="os-site">
+ {boot&&<div className="intro-loader intro-started" role="status" aria-label="Introducing the portfolio"><div className="terminal-scene"><button className="intro-skip" onClick={()=>setBoot(false)}>SKIP INTRO <ArrowUpRight size={12}/></button><div className="scene-top"><span><BrandMark/></span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/rolex-code</span><span>zsh — 80×24</span></div><div className="terminal-body"><p className="terminal-line line-one"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p><p className="terminal-line line-three"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p><p className="terminal-line line-five"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product thinking and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p><p className="terminal-line line-nine"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"/></p></div></div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div><div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span></div></div></div>}
+
  <div className={`os-desktop os-${desktopOS??"mac"}`}>
 
   {osMenuOpen&&<div className="os-experience-panel" role="dialog" aria-label="Change operating system"><div className="os-experience-panel-head"><span>CHANGE OPERATING SYSTEM</span><button onClick={()=>setOsMenuOpen(false)} aria-label="Close selector"><X size={13}/></button></div><p>Choose your preferred desktop environment.</p><div className="os-experience-options"><button className={desktopOS==="mac"?"is-selected":""} onClick={()=>{setDesktopOS("mac");setOsMenuOpen(false)}}><span>⌘</span><strong>macOS</strong>{desktopOS==="mac"&&<Check size={13}/>}</button><button className={desktopOS==="windows"?"is-selected":""} onClick={()=>{setDesktopOS("windows");setOsMenuOpen(false)}}><span>⊞</span><strong>Windows</strong>{desktopOS==="windows"&&<Check size={13}/>}</button><button className={desktopOS==="linux"?"is-selected":""} onClick={()=>{setDesktopOS("linux");setOsMenuOpen(false)}}><span>⌁</span><strong>Linux</strong>{desktopOS==="linux"&&<Check size={13}/>}</button></div></div>}
