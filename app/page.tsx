@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Power, Linkedin, MessageCircle } from "lucide-react";
+import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Linkedin, MessageCircle } from "lucide-react";
 
 function BrandMark(){return <><span>rolex</span><span className="brand-code-mark">{"</>"}</span><span>code</span></>}
 
@@ -22,8 +22,6 @@ const scenes=[
 ];
 const windowTitles:Record<WindowName,string>={work:"Projects",about:"About me",stack:"The toolkit",contact:"Get in touch",readme:"Start here"};
 export default function Home(){
- const [boot,setBoot]=useState(true);
- const [introStarted,setIntroStarted]=useState(false);
  const [loadedPreviews,setLoadedPreviews]=useState<string[]>([]);
  const [opened,setOpened]=useState<WindowName[]>([]);
  const [active,setActive]=useState<WindowName>("work");
@@ -33,63 +31,23 @@ export default function Home(){
  const [scene,setScene]=useState<Scene>(0);
  const [desktopOS,setDesktopOS]=useState<DesktopOS>("mac");
   const [osMenuOpen,setOsMenuOpen]=useState(false);
- const [flipDirection,setFlipDirection]=useState<"next"|"prev">("next");
- const flipLock=useRef(false);
- const touchStart=useRef<number|null>(null);
- const wallpaperRef=useRef<HTMLDivElement>(null);
- const bootStartedAt=useRef(0);
- useEffect(()=>{
-  if(!introStarted)return;
-  bootStartedAt.current=performance.now();
-  const t=window.setTimeout(()=>setBoot(false),4300);
-  return()=>window.clearTimeout(t);
- },[introStarted]);
- function beginIntro(){
-  if(introStarted)return;
-  setIntroStarted(true);
- }
- useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".desktop-copy-scene") as HTMLElement|null;if(scroller&&scroller.scrollHeight>scroller.clientHeight+8){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
- function goScene(direction:"next"|"prev"){setScene(v=>{const next=Math.max(0,Math.min(3,v+(direction==="next"?1:-1))) as Scene;if(next!==v)setFlipDirection(direction);return next})}
- function nextScene(){goScene("next")}
- function prevScene(){goScene("prev")}
- function handleWheel(event:React.WheelEvent<HTMLDivElement>){
-  const target=event.target as HTMLElement;
-  if(Math.abs(event.deltaY)<12)return;
-  if(target.closest(".os-window,.os-dock,button,a,input,textarea"))return;
-  const contentScroller=target.closest(".desktop-copy-scene") as HTMLElement|null;
-  if(contentScroller&&contentScroller.scrollHeight>contentScroller.clientHeight+8){
-   const atBottom=contentScroller.scrollTop+contentScroller.clientHeight>=contentScroller.scrollHeight-16;
-   const atTop=contentScroller.scrollTop<=16;
-   if((event.deltaY>0&&!atBottom)||(event.deltaY<0&&!atTop))return;
-  }
-  event.preventDefault();
-  if(flipLock.current)return;
-  flipLock.current=true;goScene(event.deltaY>0?"next":"prev");
-  window.setTimeout(()=>{flipLock.current=false},480);
- }
- function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;const target=event.target as HTMLElement;if(target.closest(".os-window,.os-dock,.os-menubar,button,a,input,textarea"))return;const contentScroller=target.closest(".desktop-copy-scene") as HTMLElement|null;if(contentScroller&&contentScroller.scrollHeight>contentScroller.clientHeight+8){const atBottom=contentScroller.scrollTop+contentScroller.clientHeight>=contentScroller.scrollHeight-12;const atTop=contentScroller.scrollTop<=12;if(Math.abs(delta)>55&&((delta>0&&atBottom)||(delta<0&&atTop)))goScene(delta>0?"next":"prev");return}if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
  function resetDesktop(){setScene(0);setOpened([]);setActive("work");setDesktopOS("mac");setOsMenuOpen(false)}
  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
  const project=projects.find(p=>p.id===selected);
  const featuredProject=project??projects[0];
 
  return <main className="os-site">
- {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro} aria-label="Power on portfolio"><Power size={27} strokeWidth={1.8}/></button>}{introStarted&&<button className="intro-skip" onClick={()=>setBoot(false)}>SKIP INTRO <ArrowUpRight size={12}/></button>}<div className="scene-top"><span><BrandMark/></span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/rolex-code</span><span>zsh — 80×24</span></div><div className="terminal-body">
- <p className="terminal-line line-one"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
- <p className="terminal-line line-three"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p>
- <p className="terminal-line line-five"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product design and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p>
- <p className="terminal-line line-nine"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-four">open /portfolio</span><span className="terminal-caret"/></p></div></div><p className="scene-endline">GOOD IDEAS DESERVE TO BE BUILT.</p></div><div className="scene-bottom"><span>IDEA <i>→</i> EXPERIENCE <i>→</i> PRODUCT</span></div></div></div>}
- <div className={`os-desktop os-${desktopOS??"mac"} ${boot?"os-enter":""}`} onWheel={handleWheel}>
+ <div className={`os-desktop os-${desktopOS??"mac"}`}>
 
   {osMenuOpen&&<div className="os-experience-panel" role="dialog" aria-label="Change operating system"><div className="os-experience-panel-head"><span>CHANGE OPERATING SYSTEM</span><button onClick={()=>setOsMenuOpen(false)} aria-label="Close selector"><X size={13}/></button></div><p>Choose your preferred desktop environment.</p><div className="os-experience-options"><button className={desktopOS==="mac"?"is-selected":""} onClick={()=>{setDesktopOS("mac");setOsMenuOpen(false)}}><span>⌘</span><strong>macOS</strong>{desktopOS==="mac"&&<Check size={13}/>}</button><button className={desktopOS==="windows"?"is-selected":""} onClick={()=>{setDesktopOS("windows");setOsMenuOpen(false)}}><span>⊞</span><strong>Windows</strong>{desktopOS==="windows"&&<Check size={13}/>}</button><button className={desktopOS==="linux"?"is-selected":""} onClick={()=>{setDesktopOS("linux");setOsMenuOpen(false)}}><span>⌁</span><strong>Linux</strong>{desktopOS==="linux"&&<Check size={13}/>}</button></div></div>}
   <div className="os-topbar">
    <button className="os-topbar-brand" onClick={resetDesktop}><strong className="role-code-wordmark"><BrandMark/></strong><span>Portfolio</span></button>
    <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><BatteryCharging size={17} strokeWidth={1.7}/></div>
   </div>
-  <div ref={wallpaperRef} className={`desktop-wallpaper wallpaper-scene-${scene} flip-${flipDirection} flip-step-${scene}`} onTouchStart={event=>{touchStart.current=event.touches[0].clientY}} onTouchEnd={handleTouchEnd}>
+  <div ref={wallpaperRef} className={`desktop-wallpaper wallpaper-scene-${scene}`}>
    <div className="wallpaper-art"><div className="wallpaper-orb"/><div className="wallpaper-ridge ridge-back"/><div className="wallpaper-ridge ridge-front"/><div className="wallpaper-stars">✳　·　✦　　·　✧　　·　✳</div></div>
    <div className={`desktop-copy desktop-copy-scene scene-content-${scene}`} key={scene}>
     <span>{scenes[scene].eyebrow}</span>
@@ -133,13 +91,13 @@ export default function Home(){
     {name==="about"&&<div className="textedit-window about-work-window"><div className="textedit-meta">PROFILE / OLABODE OLALEYE <span>SELECTED WORK</span></div><div className="profile-layout"><div className="profile-monogram">r<span>.</span></div><div><span className="profile-kicker">FULL-STACK DEVELOPER</span><h2>Olabode<br/><em>Olaleye.</em></h2><p>I build web applications from interface to backend, including the data, authentication and integrations that make them work.</p><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13}/></a></div></div><div className="about-selected"><div className="about-selected-heading"><span>SELECTED WORK</span><small>2026 / 04</small></div><div className="about-selected-grid">{projects.map(p=><button key={p.id} onClick={()=>{setSelected(p.id);openWindow("work")}}><span className={"about-work-mark thumb-"+p.id}>{p.id==="iroyin"?"Ì":p.id==="campusgig"?"C":p.id==="nexus"?"N":"Z"}</span><span><strong>{p.name}</strong><small>{p.kind}</small></span><ArrowUpRight size={13}/></button>)}</div></div></div>}
     {name==="stack"&&<div className="system-window"><div className="system-hero"><span className="system-chip"><Code2 size={24}/></span><div><h2>The toolkit</h2><p>Tools I use to turn ideas into products.</p></div></div><div className="system-spec"><span>LANGUAGES</span><strong>TypeScript · JavaScript · Python · Rust · Solidity</strong></div><div className="system-spec"><span>FRONTEND</span><strong>React · Next.js · Tailwind CSS</strong></div><div className="system-spec"><span>BACKEND & DATA</span><strong>Node.js · Firebase · APIs · SQL</strong></div><div className="system-spec"><span>AI & WEB3</span><strong>AI integrations · Agents · Solana · EVM</strong></div><div className="system-spec"><span>WORKFLOW</span><strong>Git · GitHub · Vercel · Figma</strong></div></div>}
     {name==="contact"&&<div className="mail-window"><div className="mail-toolbar"><span>LET'S TALK</span><strong>olaleyeolabodejeremiah@gmail.com</strong></div><h2>Have something<br/><em>in mind?</em></h2><p>Tell me what you're thinking. Let's see what we can build.</p><div className="mail-actions"><a href="mailto:olaleyeolabodejeremiah@gmail.com?subject=Let's%20build%20something"><Mail size={14}/> Compose email <ArrowUpRight size={13}/></a><button onClick={copyEmail}>{copied?<><Check size={13}/> Copied</>:<>Copy email</>}</button></div></div>}
-    {name==="readme"&&<div className="readme-window"><span>WELCOME / Rolex Code</span><h2>A workspace for<br/><em>ideas in motion.</em></h2><p>Move through the portfolio with the taskbar or scroll between pages. Open a project to explore the live build, then get in touch if you have something in mind.</p><div className="readme-actions"><button onClick={()=>openWindow("work")}>Explore projects <ArrowUpRight size={13}/></button><button onClick={()=>{setScene(0);closeWindow("readme")}}>Start the story</button></div></div>}
+    {name==="readme"&&<div className="readme-window"><span>WELCOME / Rolex Code</span><h2>A workspace for<br/><em>ideas in motion.</em></h2><p>Use the taskbar to explore the portfolio. Open a project to explore the live build, then get in touch if you have something in mind.</p><div className="readme-actions"><button onClick={()=>openWindow("work")}>Explore projects <ArrowUpRight size={13}/></button><button onClick={()=>{setScene(0);closeWindow("readme")}}>Start the story</button></div></div>}
    </section>)}
    <div className="os-dock" role="navigation" aria-label="Portfolio pages">
-   <button className={scene===0?"is-active":""} onClick={()=>{setFlipDirection(scene>0?"prev":"next");setScene(0)}} title="Home" aria-label="Home"><span className="dock-app-icon dock-home"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 29 32 11l22 18v23H38V37H26v15H10Z" fill="#f5fbff"/><path d="m7 29 25-21 25 21" fill="none" stroke="#d8f5ff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><path d="M17 33h9v9h-9zm21 0h9v9h-9z" fill="#7cc9db"/></svg></span></button>
-   <button className={scene===1?"is-active":""} onClick={()=>{setFlipDirection(scene>1?"prev":"next");setScene(1)}} title="Projects" aria-label="Projects"><span className="dock-app-icon dock-projects"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 18a5 5 0 0 1 5-5h14l6 7h18a5 5 0 0 1 5 5v23a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5Z" fill="#fff3d5"/><path d="M8 27h48" stroke="#b66b32" strokeWidth="3"/><path d="m24 39 6 6 12-13" fill="none" stroke="#d88c3f" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/></svg></span></button>
-   <button className={scene===2?"is-active":""} onClick={()=>{setFlipDirection(scene>2?"prev":"next");setScene(2)}} title="How I build" aria-label="How I build"><span className="dock-app-icon dock-approach"><Code2 size={32} strokeWidth={2.2}/></span></button>
-   <button className={scene===3?"is-active":""} onClick={()=>{setFlipDirection("next");setScene(3)}} title="Contact" aria-label="Contact"><span className="dock-app-icon dock-contact"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="15" width="46" height="34" rx="8" fill="#f0fff4"/><path d="m12 20 20 16 20-16" fill="none" stroke="#55a979" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 45 25 33m27 12L39 33" fill="none" stroke="#9bd8af" strokeWidth="3" strokeLinecap="round"/></svg></span></button>
+   <button className={scene===0?"is-active":""} onClick={()=>{setScene(0)}} title="Home" aria-label="Home"><span className="dock-app-icon dock-home"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 29 32 11l22 18v23H38V37H26v15H10Z" fill="#f5fbff"/><path d="m7 29 25-21 25 21" fill="none" stroke="#d8f5ff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><path d="M17 33h9v9h-9zm21 0h9v9h-9z" fill="#7cc9db"/></svg></span></button>
+   <button className={scene===1?"is-active":""} onClick={()=>{setScene(1)}} title="Projects" aria-label="Projects"><span className="dock-app-icon dock-projects"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 18a5 5 0 0 1 5-5h14l6 7h18a5 5 0 0 1 5 5v23a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5Z" fill="#fff3d5"/><path d="M8 27h48" stroke="#b66b32" strokeWidth="3"/><path d="m24 39 6 6 12-13" fill="none" stroke="#d88c3f" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/></svg></span></button>
+   <button className={scene===2?"is-active":""} onClick={()=>{setScene(2)}} title="How I build" aria-label="How I build"><span className="dock-app-icon dock-approach"><Code2 size={32} strokeWidth={2.2}/></span></button>
+   <button className={scene===3?"is-active":""} onClick={()=>{setScene(3)}} title="Contact" aria-label="Contact"><span className="dock-app-icon dock-contact"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="9" y="15" width="46" height="34" rx="8" fill="#f0fff4"/><path d="m12 20 20 16 20-16" fill="none" stroke="#55a979" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 45 25 33m27 12L39 33" fill="none" stroke="#9bd8af" strokeWidth="3" strokeLinecap="round"/></svg></span></button>
    <button className="os-os-trigger" onClick={()=>setOsMenuOpen(v=>!v)} aria-label="Change operating system" title="Change operating system" aria-expanded={osMenuOpen}><span className="dock-app-icon dock-settings"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="21" fill="none" stroke="#f1f5f2" strokeWidth="7" strokeDasharray="8 4"/><circle cx="32" cy="32" r="8" fill="#e6eeee"/><path d="M32 4v8M32 52v8M4 32h8m40 0h8" stroke="#f1f5f2" strokeWidth="4" strokeLinecap="round"/></svg></span></button>
   </div>
 
