@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Power } from "lucide-react";
+import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Power, Linkedin, MessageCircle } from "lucide-react";
 
-function BrandMark(){return <><span>Rolex</span><span className="brand-code-mark">{"</>"}</span><span>Code</span></>}
+function BrandMark(){return <><span>rolex</span><span className="brand-code-mark">{"</>"}</span><span>code</span></>}
 
 const projects = [
  {id:"iroyin",name:"Ìròyìn",kind:"Web application",year:"2026",description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.",role:"Product thinking · Frontend · AI integration",stack:"Next.js · Tailwind CSS · Sahara AI · Groq",url:"https://iroyin.vercel.app/",repo:"https://github.com/Rolexcode/iroyin",preview:"https://iroyin.vercel.app/",file:"iroyin.app"},
@@ -98,7 +98,7 @@ export default function Home(){
     {scene===0&&<div className="about-scene-details">
       <div className="about-scene-note"><span>WHAT I DO</span><strong>Software development, from interface to backend.</strong></div>
       <div className="about-scene-note"><span>WHAT I DO BEST</span><strong>I help turn ideas and real problems into useful digital products.</strong></div>
-      <div className="about-scene-links"><a href="https://x.com/rolexthexplorer" target="_blank" rel="noreferrer">X / Twitter <ArrowUpRight size={13}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124b" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={13}/></a><a href="https://wa.me/2347058041930" target="_blank" rel="noreferrer">WhatsApp <ArrowUpRight size={13}/></a><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13}/></a></div>
+      <div className="about-scene-links"><a href="https://x.com/rolexthexplorer" target="_blank" rel="noreferrer">X / Twitter <ArrowUpRight size={13}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124b" target="_blank" rel="noreferrer"><Linkedin size={13}/> LinkedIn <ArrowUpRight size={13}/></a><a href="https://wa.me/2347058041930" target="_blank" rel="noreferrer"><MessageCircle size={13}/> WhatsApp <ArrowUpRight size={13}/></a><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13}/></a></div>
     </div>}
     {scene===1&&<div className="work-scroll-area">
       {projects.map((item,index)=><article className="work-scroll-project" key={item.id}>
