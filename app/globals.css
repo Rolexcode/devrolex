@@ -1652,3 +1652,45 @@
   .desktop-copy{animation:none!important}
   .desktop-copy-scene.scene-content-1{scroll-behavior:auto!important}
 }
+
+
+/* 2026 portfolio pass: keep the personality, remove the friction. */
+/* The terminal intro is automatic and brief; there is no power-on step. */
+.intro-start-prompt{display:none!important}
+.intro-loader{animation:scene-out .45s ease 2.8s forwards!important}
+.typed-one{animation-duration:.28s!important;animation-delay:.25s!important}
+.typed-two{animation-duration:.34s!important;animation-delay:.82s!important}
+.typed-three{animation-duration:.34s!important;animation-delay:1.38s!important}
+.typed-four{animation-duration:.32s!important;animation-delay:2.02s!important}
+.line-two{animation-delay:.57s!important}
+.line-four{animation-delay:1.17s!important}
+.line-six{animation-delay:1.78s!important}
+.line-seven{animation-delay:1.88s!important}
+.line-eight{animation-delay:1.98s!important}
+.scene-endline{animation-delay:2.38s!important}
+
+/* Section changes stay polished, but ordinary scrolling remains ordinary. */
+@keyframes section-soft-enter{
+  from{opacity:0;transform:translateY(9px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.desktop-copy{animation:section-soft-enter .24s ease both!important}
+.desktop-wallpaper{perspective:none!important}
+.desktop-wallpaper.flip-next:before,
+.desktop-wallpaper.flip-prev:before,
+.desktop-wallpaper.flip-next .desktop-copy,
+.desktop-wallpaper.flip-prev .desktop-copy{animation:none!important}
+.desktop-copy-scene.scene-content-1{
+  scroll-behavior:smooth!important;
+  scroll-snap-type:none!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+.work-scroll-project{scroll-snap-align:none!important;scroll-snap-stop:normal!important}
+.desktop-wallpaper:before{transform:none!important;transition:opacity .3s ease,filter .3s ease!important}
+.wallpaper-stars{opacity:.55}
+@media(prefers-reduced-motion:reduce){
+  .desktop-copy{animation:none!important}
+  .intro-loader{animation:none!important;display:none!important}
+  .desktop-copy-scene.scene-content-1{scroll-behavior:auto!important}
+}
