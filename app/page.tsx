@@ -123,7 +123,7 @@ export default function Home(){
     </div>}
     {scene===3&&<div className="contact-scene-details">
       <a className="scene-contact-link" href="mailto:olaleyeolabodejeremiah@gmail.com?subject=Let’s%20build%20something">olaleyeolabodejeremiah@gmail.com <ArrowUpRight size={14}/></a>
-      <div className="contact-scene-bottom"><span>OPEN TO SOFTWARE ROLES & PRODUCT BUILDS</span><div><a href="https://x.com/rolexthexplorer" target="_blank" rel="noreferrer">X / Twitter <ArrowUpRight size={13}/></a><a href="https://wa.me/2347058041930" target="_blank" rel="noreferrer">WhatsApp <ArrowUpRight size={13}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124b" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={13}/></a><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={13}/></a></div></div>
+      <div className="contact-scene-bottom"><span>OPEN TO SOFTWARE ROLES & PRODUCT BUILDS</span><div><a href="https://x.com/rolexthexplorer" target="_blank" rel="noreferrer">X / Twitter <ArrowUpRight size={13}/></a><a href="https://wa.me/2347058041930" target="_blank" rel="noreferrer"><MessageCircle size={13}/> WhatsApp <ArrowUpRight size={13}/></a><a href="https://www.linkedin.com/in/olabode-olaleye-62290124b" target="_blank" rel="noreferrer"><Linkedin size={13}/> LinkedIn <ArrowUpRight size={13}/></a><a href="https://github.com/Rolexcode" target="_blank" rel="noreferrer"><Github size={13}/> GitHub <ArrowUpRight size={13}/></a></div></div>
     </div>}
     <small>{scenes[scene].tag}</small>
    </div>
