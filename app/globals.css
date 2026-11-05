@@ -1564,3 +1564,16 @@
  .work-scroll-area{padding-bottom:calc(100px + env(safe-area-inset-bottom))!important}
  .work-scroll-project{padding-bottom:46px!important}
 }
+
+
+/* Rolex</>Code wordmark and clearer approach-page identity. */
+.role-code-wordmark{display:inline-flex!important;align-items:baseline;gap:0!important;white-space:nowrap}
+.brand-code-mark{display:inline-block;margin:0 .12em;color:#a7c879;font-weight:800;letter-spacing:-.12em}
+.os-topbar-brand .brand-code-mark{font-size:1.02em}
+.scene-top .brand-code-mark{color:#c8ed72}
+.dock-approach{display:grid;place-items:center;background:linear-gradient(145deg,#d5e7d1,#83a98a 58%,#426a55);color:#f5fff4}
+.dock-approach svg{filter:drop-shadow(0 2px 2px rgba(0,0,0,.16))}
+.desktop-copy-scene.scene-content-2{overscroll-behavior-y:contain;scrollbar-width:thin;scrollbar-color:#82947c55 transparent}
+@media(max-width:760px){
+ .desktop-copy-scene.scene-content-2{top:8%!important;left:7%!important;width:86%!important;max-height:calc(100% - 118px)!important;padding-right:8px!important;padding-bottom:24px!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y}
+}
