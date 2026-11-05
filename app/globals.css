@@ -1598,3 +1598,18 @@
  .os-desktop.os-mac .os-dock a{width:46px!important;height:48px!important;flex-basis:46px!important}
  .os-desktop.os-mac .dock-app-icon{width:44px!important;height:44px!important}
 }
+
+
+/* 2026 refinement: preserve the desktop identity, remove forced navigation. */
+.intro-start-prompt{display:none!important}
+.intro-loader{animation:scene-out .45s ease 2.55s forwards!important}
+.intro-skip{top:18px!important;right:18px!important}
+.desktop-wallpaper:before{transition:opacity .35s ease,filter .35s ease}
+.desktop-copy{animation:chapter-arrive .38s ease both}
+.desktop-copy-scene.scene-content-1{scroll-snap-type:y proximity!important;scroll-behavior:smooth!important}
+.work-scroll-project{scroll-snap-stop:normal!important}
+@media(prefers-reduced-motion:reduce){
+ .desktop-copy{animation:none!important}
+ .intro-loader{animation:none!important}
+ .desktop-copy-scene.scene-content-1{scroll-behavior:auto!important}
+}
