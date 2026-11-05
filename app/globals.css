@@ -1577,3 +1577,24 @@
 @media(max-width:760px){
  .desktop-copy-scene.scene-content-2{top:8%!important;left:7%!important;width:86%!important;max-height:calc(100% - 118px)!important;padding-right:8px!important;padding-bottom:24px!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y}
 }
+
+
+/* Tighter mobile dock: keep the icons grouped instead of stretching them
+   across the entire bottom edge of the screen. */
+@media(max-width:760px){
+ .os-desktop.os-mac .os-dock{
+  width:max-content!important;max-width:calc(100% - 24px)!important;
+  justify-content:center!important;
+  gap:12px!important;
+  padding:10px 16px 12px!important;
+ }
+ .os-desktop.os-mac .os-dock button,
+ .os-desktop.os-mac .os-dock a{width:52px!important;height:54px!important;flex:0 0 52px!important}
+ .os-desktop.os-mac .dock-app-icon{width:50px!important;height:50px!important}
+}
+@media(max-width:390px){
+ .os-desktop.os-mac .os-dock{gap:8px!important;padding:8px 10px 10px!important}
+ .os-desktop.os-mac .os-dock button,
+ .os-desktop.os-mac .os-dock a{width:46px!important;height:48px!important;flex-basis:46px!important}
+ .os-desktop.os-mac .dock-app-icon{width:44px!important;height:44px!important}
+}
