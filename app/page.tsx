@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, BatteryCharging, BriefcaseBusiness, Check, Code2, FileText, Folder, Github, Globe2, House, Mail, Minus, MonitorCog, UserRound, Wifi, X, Power } from "lucide-react";
 
+function BrandMark(){return <><span>Rolex</span><span className="brand-code-mark">{"</>"}</span><span>Code</span></>}
+
 const projects = [
  {id:"iroyin",name:"Ìròyìn",kind:"Web application",year:"2026",description:"A multilingual reporting experience built to make news feel closer to the people reading it. Switch between English, Nigerian Pidgin and Yoruba.",role:"Product thinking · Frontend · AI integration",stack:"Next.js · Tailwind CSS · Sahara AI · Groq",url:"https://iroyin.vercel.app/",repo:"https://github.com/Rolexcode/iroyin",preview:"https://iroyin.vercel.app/",file:"iroyin.app"},
  {id:"campusgig",name:"CampusGig",kind:"Marketplace",year:"2026",description:"A marketplace connecting students to flexible work, with gig discovery, applications, messaging and a Solana USDC payment flow.",role:"Full-stack development · Product build",stack:"Next.js · TypeScript · Solana · USDC",url:"https://campus-gigtit6.vercel.app/",repo:"",preview:"https://campus-gigtit6.vercel.app/",file:"campusgig.app"},
@@ -46,7 +48,7 @@ export default function Home(){
   if(introStarted)return;
   setIntroStarted(true);
  }
- useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;if(scroller&&wallpaperRef.current?.classList.contains("wallpaper-scene-1")){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
+ useEffect(()=>{const onKeyDown=(event:KeyboardEvent)=>{if((event.target as HTMLElement|null)?.closest(".os-window,input,textarea,button,a"))return;if(["ArrowDown","PageDown","ArrowUp","PageUp"].includes(event.key)){const down=event.key==="ArrowDown"||event.key==="PageDown";const scroller=wallpaperRef.current?.querySelector(".desktop-copy-scene") as HTMLElement|null;if(scroller&&scroller.scrollHeight>scroller.clientHeight+8){const atBottom=scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-8;const atTop=scroller.scrollTop<=8;if((down&&!atBottom)||(!down&&!atTop))return;}event.preventDefault();if(flipLock.current)return;flipLock.current=true;goScene(down?"next":"prev");window.setTimeout(()=>{flipLock.current=false},520)}};window.addEventListener("keydown",onKeyDown);return()=>window.removeEventListener("keydown",onKeyDown)},[]);
  useEffect(()=>{const update=()=>setTime(new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date()));update();const t=window.setInterval(update,30000);return()=>window.clearInterval(t)},[]);
  function openWindow(name:WindowName){setOpened(v=>v.includes(name)?v:[...v,name]);setActive(name)}
  function closeWindow(name:WindowName){setOpened(v=>v.filter(x=>x!==name));if(active===name){const left=opened.filter(x=>x!==name);if(left.length)setActive(left[left.length-1])}}
@@ -56,11 +58,11 @@ export default function Home(){
  function handleWheel(event:React.WheelEvent<HTMLDivElement>){
   const target=event.target as HTMLElement;
   if(Math.abs(event.deltaY)<12)return;
-  if(target.closest(".os-window,.os-dock,.scene-content-2,button,a,input,textarea"))return;
-  const projectScroller=wallpaperRef.current?.querySelector(".scene-content-1") as HTMLElement|null;
-  if(scene===1&&projectScroller&&target.closest(".scene-content-1")){
-   const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-24;
-   const atTop=projectScroller.scrollTop<=24;
+  if(target.closest(".os-window,.os-dock,button,a,input,textarea"))return;
+  const contentScroller=target.closest(".desktop-copy-scene") as HTMLElement|null;
+  if(contentScroller&&contentScroller.scrollHeight>contentScroller.clientHeight+8){
+   const atBottom=contentScroller.scrollTop+contentScroller.clientHeight>=contentScroller.scrollHeight-16;
+   const atTop=contentScroller.scrollTop<=16;
    if((event.deltaY>0&&!atBottom)||(event.deltaY<0&&!atTop))return;
   }
   event.preventDefault();
@@ -68,14 +70,14 @@ export default function Home(){
   flipLock.current=true;goScene(event.deltaY>0?"next":"prev");
   window.setTimeout(()=>{flipLock.current=false},480);
  }
- function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;const target=event.target as HTMLElement;const projectScroller=target.closest(".scene-content-1") as HTMLElement|null;if(projectScroller){const atBottom=projectScroller.scrollTop+projectScroller.clientHeight>=projectScroller.scrollHeight-8;const atTop=projectScroller.scrollTop<=8;if(Math.abs(delta)>55&&((delta>0&&atBottom)||(delta<0&&atTop)))goScene(delta>0?"next":"prev");return}if(target.closest(".os-window,.os-dock,.os-menubar,.scene-content-2,button,a,input,textarea"))return;if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
+ function handleTouchEnd(event:React.TouchEvent<HTMLDivElement>){if(touchStart.current===null)return;const delta=touchStart.current-event.changedTouches[0].clientY;touchStart.current=null;const target=event.target as HTMLElement;if(target.closest(".os-window,.os-dock,.os-menubar,button,a,input,textarea"))return;const contentScroller=target.closest(".desktop-copy-scene") as HTMLElement|null;if(contentScroller&&contentScroller.scrollHeight>contentScroller.clientHeight+8){const atBottom=contentScroller.scrollTop+contentScroller.clientHeight>=contentScroller.scrollHeight-12;const atTop=contentScroller.scrollTop<=12;if(Math.abs(delta)>55&&((delta>0&&atBottom)||(delta<0&&atTop)))goScene(delta>0?"next":"prev");return}if(Math.abs(delta)>55)goScene(delta>0?"next":"prev")}
  function resetDesktop(){setScene(0);setOpened([]);setActive("work");setDesktopOS("mac");setOsMenuOpen(false)}
  async function copyEmail(){try{await navigator.clipboard.writeText("olaleyeolabodejeremiah@gmail.com");setCopied(true);window.setTimeout(()=>setCopied(false),1800)}catch{window.location.href="mailto:olaleyeolabodejeremiah@gmail.com"}}
  const project=projects.find(p=>p.id===selected);
  const featuredProject=project??projects[0];
 
  return <main className="os-site">
- {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro} aria-label="Power on portfolio"><Power size={27} strokeWidth={1.8}/></button>}{introStarted&&<button className="intro-skip" onClick={()=>setBoot(false)}>SKIP INTRO <ArrowUpRight size={12}/></button>}<div className="scene-top"><span>Rolex Code</span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/rolex-code</span><span>zsh — 80×24</span></div><div className="terminal-body">
+ {boot&&<div className={`intro-loader ${introStarted?"intro-started":""}`} role="status" aria-label="Starting portfolio"><div className="terminal-scene">{!introStarted&&<button className="intro-start-prompt" onClick={beginIntro} aria-label="Power on portfolio"><Power size={27} strokeWidth={1.8}/></button>}{introStarted&&<button className="intro-skip" onClick={()=>setBoot(false)}>SKIP INTRO <ArrowUpRight size={12}/></button>}<div className="scene-top"><span><BrandMark/></span><span>AN IDEA BECOMES REAL</span></div><div className="scene-center"><p className="scene-overline">A QUICK INTRODUCTION</p><div className="terminal-screen"><div className="terminal-heading"><span>~/rolex-code</span><span>zsh — 80×24</span></div><div className="terminal-body">
  <p className="terminal-line line-one"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-one">who am I?</span></p><p className="terminal-output line-two">Olabode Olaleye <span className="terminal-dim">— developer & builder</span></p>
  <p className="terminal-line line-three"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-two">what_i_build</span></p><p className="terminal-output line-four">Websites, applications and digital products.</p>
  <p className="terminal-line line-five"><span className="terminal-prompt">rolex@rolex-code %</span> <span className="typed typed-three">my_work</span></p><p className="terminal-output line-six"><span className="terminal-ok">→</span> full-stack development</p><p className="terminal-output line-seven"><span className="terminal-ok">→</span> product design and problem-solving</p><p className="terminal-output line-eight"><span className="terminal-ok">→</span> AI, APIs and Web3 integrations</p>
@@ -84,7 +86,7 @@ export default function Home(){
 
   {osMenuOpen&&<div className="os-experience-panel" role="dialog" aria-label="Change operating system"><div className="os-experience-panel-head"><span>CHANGE OPERATING SYSTEM</span><button onClick={()=>setOsMenuOpen(false)} aria-label="Close selector"><X size={13}/></button></div><p>Choose your preferred desktop environment.</p><div className="os-experience-options"><button className={desktopOS==="mac"?"is-selected":""} onClick={()=>{setDesktopOS("mac");setOsMenuOpen(false)}}><span>⌘</span><strong>macOS</strong>{desktopOS==="mac"&&<Check size={13}/>}</button><button className={desktopOS==="windows"?"is-selected":""} onClick={()=>{setDesktopOS("windows");setOsMenuOpen(false)}}><span>⊞</span><strong>Windows</strong>{desktopOS==="windows"&&<Check size={13}/>}</button><button className={desktopOS==="linux"?"is-selected":""} onClick={()=>{setDesktopOS("linux");setOsMenuOpen(false)}}><span>⌁</span><strong>Linux</strong>{desktopOS==="linux"&&<Check size={13}/>}</button></div></div>}
   <div className="os-topbar">
-   <button className="os-topbar-brand" onClick={resetDesktop}><strong>Rolex Code</strong><span>Portfolio</span></button>
+   <button className="os-topbar-brand" onClick={resetDesktop}><strong className="role-code-wordmark"><BrandMark/></strong><span>Portfolio</span></button>
    <div className="os-topbar-status"><span>{time}</span><i/><Wifi size={14}/><BatteryCharging size={17} strokeWidth={1.7}/></div>
   </div>
   <div ref={wallpaperRef} className={`desktop-wallpaper wallpaper-scene-${scene} flip-${flipDirection} flip-step-${scene}`} onTouchStart={event=>{touchStart.current=event.touches[0].clientY}} onTouchEnd={handleTouchEnd}>
